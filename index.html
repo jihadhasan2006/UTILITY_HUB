@@ -3,25 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Account Vault (Cloud)</title>
-    <!-- এক্সেল লাইব্রেরি -->
+    <title>Premium Account Vault</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <!-- ফায়ারবেস লাইব্রেরি (HTML এর জন্য) -->
-    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
-    <!-- গুগল ফন্ট -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <style>
         * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body { margin: 0; min-height: 100vh; background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%); display: flex; justify-content: center; align-items: flex-start; padding: 50px 20px; color: #ffffff; }
         .glass-container { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); border-radius: 24px; padding: 40px; width: 100%; max-width: 850px; }
-        h2 { text-align: center; margin-top: 0; font-weight: 600; font-size: 28px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 15px; margin-bottom: 10px; }
-        .cloud-tag { text-align: center; color: #00d2ff; font-size: 13px; margin-bottom: 30px; font-weight: 500; letter-spacing: 1px; }
+        h2 { text-align: center; margin-top: 0; font-weight: 600; font-size: 28px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 15px; margin-bottom: 30px; }
         .input-group { margin-bottom: 25px; }
         label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 400; color: rgba(255, 255, 255, 0.8); }
-        input[type="text"] { width: 100%; padding: 16px; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: #ffffff; font-size: 16px; outline: none; transition: all 0.3s ease; }
-        input[type="text"]:focus { background: rgba(0, 0, 0, 0.3); border-color: #00d2ff; box-shadow: 0 0 15px rgba(0, 210, 255, 0.2); }
+        input[type="text"], input[type="password"] { width: 100%; padding: 16px; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: #ffffff; font-size: 16px; outline: none; transition: 0.3s ease; }
+        input[type="text"]:focus, input[type="password"]:focus { background: rgba(0, 0, 0, 0.3); border-color: #00d2ff; box-shadow: 0 0 15px rgba(0, 210, 255, 0.2); }
         .checkbox-wrapper { display: flex; align-items: center; margin-top: 10px; }
         .checkbox-wrapper input[type="checkbox"] { appearance: none; width: 20px; height: 20px; border: 2px solid rgba(255,255,255,0.3); border-radius: 6px; margin-right: 10px; cursor: pointer; position: relative; transition: 0.3s; }
         .checkbox-wrapper input[type="checkbox"]:checked { background-color: #00d2ff; border-color: #00d2ff; }
@@ -39,14 +33,21 @@
         td { padding: 16px 20px; border-top: 1px solid rgba(255, 255, 255, 0.05); font-size: 14px; color: rgba(255, 255, 255, 0.9); word-break: break-all; }
         tr:hover td { background: rgba(255, 255, 255, 0.03); }
         .key-text { font-family: monospace; color: #a8ff78; letter-spacing: 1px; }
-        .date-text { color: #f6d365; font-size: 12px; }
+        .status { text-align: center; margin-top: 15px; font-size: 14px; font-weight: 500; }
+        .link-box { background: rgba(0, 210, 255, 0.1); border: 1px dashed #00d2ff; padding: 20px; border-radius: 12px; margin-bottom: 30px; }
     </style>
 </head>
 <body>
 
 <div class="glass-container">
     <h2>Secure Data Vault</h2>
-    <div class="cloud-tag" id="statusBox">☁️ Connecting to Firebase...</div>
+    
+    <div class="link-box">
+        <div class="input-group" style="margin-bottom: 0;">
+            <label style="color: #00d2ff;">🔗 GOOGLE SHEET WEB APP URL</label>
+            <input type="password" id="sheetUrl" placeholder="Paste your script.google.com/... link here" autocomplete="off">
+        </div>
+    </div>
     
     <div class="input-group">
         <label>USERNAME / EMAIL</label>
@@ -58,7 +59,7 @@
         <input type="text" id="passWord" placeholder="Enter account password" autocomplete="off">
         <div class="checkbox-wrapper">
             <input type="checkbox" id="keepPass">
-            <label for="keepPass">Lock Password (পরবর্তী ইনপুটের জন্য রেখে দিন)</label>
+            <label for="keepPass">Lock Password</label>
         </div>
     </div>
     
@@ -68,81 +69,51 @@
     </div>
     
     <div class="btn-group">
-        <button class="btn-save" onclick="saveToFirebase()">✦ Save to Cloud</button>
+        <button class="btn-save" onclick="saveData()">✦ Save to Sheet</button>
         <button class="btn-download" onclick="downloadExcel()">⭳ Export Excel</button>
     </div>
+
+    <div id="statusBox" class="status"></div>
 
     <div class="table-wrap">
         <table id="dataTable">
             <thead>
                 <tr>
-                    <th>Date</th>
                     <th>Username</th>
                     <th>Password</th>
                     <th>2FA Secret</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Data will appear here automatically from Firebase -->
+                <!-- Data will appear here locally after saving -->
             </tbody>
         </table>
     </div>
 </div>
 
 <script>
-    // আপনার ফায়ারবেস কনফিগ
-    const firebaseConfig = {
-        apiKey: "AIzaSyBjr_AEXXEPF4LrOmZIk1Pkwd2LgfR5_Xg",
-        authDomain: "data-vault-4967d.firebaseapp.com",
-        projectId: "data-vault-4967d",
-        storageBucket: "data-vault-4967d.firebasestorage.app",
-        messagingSenderId: "272709882645",
-        appId: "1:272709882645:web:6233b276f9704f7b938f1c",
-        measurementId: "G-PPNMG1LMQX"
-    };
-
-    // ফায়ারবেস চালু করা
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-    
     let allData = [];
 
-    // ফায়ারবেস থেকে লাইভ ডাটা আনা (রিলোড দিলেও হারাবে না)
-    db.collection("SavedAccounts").onSnapshot((snapshot) => {
-        allData = [];
-        
-        snapshot.forEach((doc) => {
-            allData.push(doc.data());
-        });
+    window.onload = function() {
+        if(localStorage.getItem("MySheetLink")) {
+            document.getElementById('sheetUrl').value = localStorage.getItem("MySheetLink");
+        }
+        if(localStorage.getItem("LocalVaultData_NoDate")) {
+            allData = JSON.parse(localStorage.getItem("LocalVaultData_NoDate"));
+            renderTable();
+        }
+    };
 
-        // নতুন ডাটাগুলো অটোমেটিক সবার উপরে দেখানোর জন্য সাজানো
-        allData.sort((a, b) => (b.timeSort || 0) - (a.timeSort || 0));
-
-        const tableBody = document.querySelector('#dataTable tbody');
-        tableBody.innerHTML = '';
-
-        allData.forEach((item) => {
-            const row = `<tr>
-                <td class="date-text">${item.Date}</td>
-                <td>${item.Username}</td>
-                <td>${item.Password}</td>
-                <td class="key-text">${item["2FA_Key"]}</td>
-            </tr>`;
-            tableBody.insertAdjacentHTML('beforeend', row);
-        });
-
-        document.getElementById('statusBox').innerText = "🟢 Connected to Cloud (Live)";
-        document.getElementById('statusBox').style.color = "#38ef7d";
-    }, (error) => {
-        document.getElementById('statusBox').innerText = "🔴 Firebase Rules Error! চেক করুন।";
-        document.getElementById('statusBox').style.color = "#ef473a";
-    });
-
-    // ফায়ারবেসে ডাটা সেভ করা
-    function saveToFirebase() {
+    function saveData() {
+        const scriptURL = document.getElementById('sheetUrl').value.trim();
         const user = document.getElementById('userName').value.trim();
         const pass = document.getElementById('passWord').value.trim();
         let key = document.getElementById('secretKey').value.trim();
+
+        if(!scriptURL.startsWith("https://script.google.com")) {
+            alert("⚠️ দয়া করে বক্সে সঠিক Web App URL (script.google.com...) লিংকটি দিন।");
+            return;
+        }
 
         if (!user || !pass || !key) {
             alert("⚠️ দয়া করে ইউজারনেম, পাসওয়ার্ড এবং ২এফএ—তিনটি তথ্যই পূরণ করুন।");
@@ -152,54 +123,57 @@
         if (key.includes('#')) key = key.split('#')[1];
         if (key.includes('secret=')) key = key.split('secret=')[1].split('&')[0];
 
-        const today = new Date().toISOString().slice(0, 10);
+        localStorage.setItem("MySheetLink", scriptURL);
 
-        // ফায়ারবেস ডাটাবেসে পাঠানো
-        db.collection("SavedAccounts").add({
-            Date: today,
-            Username: user,
-            Password: pass,
-            "2FA_Key": key,
-            timeSort: Date.now() // সিরিয়াল ঠিক রাখার জন্য
-        }).then(() => {
-            document.getElementById('userName').value = '';
-            document.getElementById('secretKey').value = '';
-            if (!document.getElementById('keepPass').checked) {
-                document.getElementById('passWord').value = '';
-            }
-            document.getElementById('userName').focus();
-        }).catch((error) => {
-            alert("Error saving data: " + error.message);
+        document.getElementById('statusBox').innerText = "⏳ Saving to Google Sheets...";
+        document.getElementById('statusBox').style.color = "#f6d365";
+
+        const formData = new FormData();
+        formData.append('username', user);
+        formData.append('password', pass);
+        formData.append('secret', key);
+
+        fetch(scriptURL, { method: 'POST', body: formData })
+            .then(response => {
+                document.getElementById('statusBox').innerText = "✅ Saved Successfully to Google Sheet!";
+                document.getElementById('statusBox').style.color = "#38ef7d";
+                
+                allData.unshift({ "Username": user, "Password": pass, "2FA_Key": key });
+                localStorage.setItem("LocalVaultData_NoDate", JSON.stringify(allData));
+                renderTable();
+
+                document.getElementById('userName').value = '';
+                document.getElementById('secretKey').value = '';
+                if (!document.getElementById('keepPass').checked) document.getElementById('passWord').value = '';
+                document.getElementById('userName').focus();
+            })
+            .catch(error => {
+                document.getElementById('statusBox').innerText = "❌ Error! Check Internet or Link.";
+                document.getElementById('statusBox').style.color = "#ef473a";
+            });
+    }
+
+    function renderTable() {
+        const tableBody = document.querySelector('#dataTable tbody');
+        tableBody.innerHTML = '';
+        allData.forEach(item => {
+            const row = `<tr>
+                <td>${item.Username}</td>
+                <td>${item.Password}</td>
+                <td class="key-text">${item["2FA_Key"]}</td>
+            </tr>`;
+            tableBody.insertAdjacentHTML('beforeend', row);
         });
     }
 
-    // এক্সেল ডাউনলোড করা
     function downloadExcel() {
-        if (allData.length === 0) {
-            alert("⚠️ ডাউনলোড করার মতো কোনো ডাটা নেই!");
-            return;
-        }
-
+        if (allData.length === 0) return alert("⚠️ ডাউনলোড করার মতো কোনো ডাটা নেই!");
+        
         const workbook = XLSX.utils.book_new();
-        const dataByDate = {};
+        const worksheet = XLSX.utils.json_to_sheet(allData);
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Vault_Data");
         
-        allData.forEach(item => {
-            if (!dataByDate[item.Date]) dataByDate[item.Date] = [];
-            dataByDate[item.Date].push({
-                Date: item.Date,
-                Username: item.Username,
-                Password: item.Password,
-                "2FA_Key": item["2FA_Key"]
-            });
-        });
-
-        for (const date in dataByDate) {
-            const worksheet = XLSX.utils.json_to_sheet(dataByDate[date]);
-            XLSX.utils.book_append_sheet(workbook, worksheet, date);
-        }
-        
-        const today = new Date().toISOString().slice(0, 10);
-        XLSX.writeFile(workbook, `Secure_Vault_${today}.xlsx`);
+        XLSX.writeFile(workbook, `Secure_Vault_Data.xlsx`);
     }
 </script>
 
