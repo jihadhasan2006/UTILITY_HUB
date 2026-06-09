@@ -3,178 +3,451 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Account Vault</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
+    <title>JIH4D // PREMIUM UTIL V3.2 // SECURE HUB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/otpauth/9.2.2/otpauth.umd.min.js"></script>
     <style>
-        * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { margin: 0; min-height: 100vh; background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%); display: flex; justify-content: center; align-items: flex-start; padding: 50px 20px; color: #ffffff; }
-        .glass-container { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); border-radius: 24px; padding: 40px; width: 100%; max-width: 850px; }
-        h2 { text-align: center; margin-top: 0; font-weight: 600; font-size: 28px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 15px; margin-bottom: 30px; }
-        .input-group { margin-bottom: 25px; }
-        label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 400; color: rgba(255, 255, 255, 0.8); }
-        input[type="text"], input[type="password"] { width: 100%; padding: 16px; background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: #ffffff; font-size: 16px; outline: none; transition: 0.3s ease; }
-        input[type="text"]:focus, input[type="password"]:focus { background: rgba(0, 0, 0, 0.3); border-color: #00d2ff; box-shadow: 0 0 15px rgba(0, 210, 255, 0.2); }
-        .checkbox-wrapper { display: flex; align-items: center; margin-top: 10px; }
-        .checkbox-wrapper input[type="checkbox"] { appearance: none; width: 20px; height: 20px; border: 2px solid rgba(255,255,255,0.3); border-radius: 6px; margin-right: 10px; cursor: pointer; position: relative; transition: 0.3s; }
-        .checkbox-wrapper input[type="checkbox"]:checked { background-color: #00d2ff; border-color: #00d2ff; }
-        .checkbox-wrapper input[type="checkbox"]:checked::after { content: "✔"; position: absolute; color: #000; font-size: 14px; font-weight: bold; top: -1px; left: 3px; }
-        .checkbox-wrapper label { margin: 0; cursor: pointer; color: #00d2ff; font-weight: 500; }
-        .btn-group { display: flex; gap: 15px; margin-top: 35px; }
-        button { flex: 1; padding: 15px; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; transition: 0.3s; color: #ffffff; display: flex; justify-content: center; align-items: center; }
-        .btn-save { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
-        .btn-save:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(56, 239, 125, 0.5); }
-        .btn-download { background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%); }
-        .btn-download:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0, 114, 255, 0.5); }
-        .table-wrap { margin-top: 40px; background: rgba(0, 0, 0, 0.2); border-radius: 16px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05); }
-        table { width: 100%; border-collapse: collapse; text-align: left; }
-        th { background: rgba(255, 255, 255, 0.05); padding: 18px 20px; font-weight: 500; color: #00d2ff; text-transform: uppercase; font-size: 13px; }
-        td { padding: 16px 20px; border-top: 1px solid rgba(255, 255, 255, 0.05); font-size: 14px; color: rgba(255, 255, 255, 0.9); word-break: break-all; }
-        tr:hover td { background: rgba(255, 255, 255, 0.03); }
-        .key-text { font-family: monospace; color: #a8ff78; letter-spacing: 1px; }
-        .status { text-align: center; margin-top: 15px; font-size: 14px; font-weight: 500; }
-        .link-box { background: rgba(0, 210, 255, 0.1); border: 1px dashed #00d2ff; padding: 20px; border-radius: 12px; margin-bottom: 30px; }
+        /* =========================================
+           ULTRA PREMIUM VARIABLE ENGINE
+           ========================================= */
+        :root {
+            --bg-base: #f1f5f9;
+            --blob-1: rgba(56, 189, 248, 0.15);
+            --blob-2: rgba(168, 85, 247, 0.15);
+            --card-bg: rgba(255, 255, 255, 0.5);
+            --card-border: rgba(255, 255, 255, 0.6);
+            --text-main: #111827;
+            --text-muted: #6b7280;
+            --primary: #38bdf8;
+            --shadow-premium: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+            --input-bg: rgba(255, 255, 255, 0.7);
+            --toast-glowing-default: 0 10px 30px rgba(56, 189, 248, 0.2);
+            --toast-glowing-code: 0 10px 30px rgba(34, 197, 94, 0.3);
+            --toast-glowing-identity: 0 10px 30px rgba(139, 92, 246, 0.3);
+        }
+
+        .dark-theme {
+            --bg-base: #030712;
+            --blob-1: rgba(56, 189, 248, 0.15);
+            --blob-2: rgba(168, 85, 247, 0.15);
+            --card-bg: rgba(17, 24, 39, 0.3);
+            --card-border: rgba(255, 255, 255, 0.04);
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
+            --primary: #38bdf8;
+            --shadow-premium: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            --input-bg: rgba(17, 24, 39, 0.6);
+            --toast-glowing-default: 0 10px 30px rgba(56, 189, 248, 0.2);
+            --toast-glowing-code: 0 10px 30px rgba(34, 197, 94, 0.3);
+            --toast-glowing-identity: 0 10px 30px rgba(139, 92, 246, 0.3);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+            transition: background 0.5s ease;
+        }
+
+        .blob { position: absolute; border-radius: 50%; filter: blur(80px); z-index: 1; animation: blobFloat 25s infinite alternate ease-in-out; }
+        .blob-1 { width: 400px; height: 400px; background: var(--blob-1); top: -100px; left: -100px; }
+        .blob-2 { width: 350px; height: 350px; background: var(--blob-2); bottom: -80px; right: -80px; animation-delay: -5s; }
+
+        @keyframes blobFloat { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(60px, 40px) scale(1.1); } }
+
+        .app-container {
+            background: var(--card-bg); backdrop-filter: blur(35px); -webkit-backdrop-filter: blur(35px);
+            border: 1px solid var(--card-border); width: 90%; max-width: 420px; height: 720px;
+            border-radius: 36px; box-shadow: var(--shadow-premium); display: flex; flex-direction: column;
+            overflow: hidden; position: relative; z-index: 10;
+        }
+        .app-container::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 40%; background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, transparent 100%); pointer-events: none; }
+
+        /* প্যাডিং কমিয়ে লেখাগুলো উপরে তুলে দেওয়া হয়েছে */
+        .status-bar { padding: 12px 28px 4px; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
+        .status-bar span.handle { color: var(--primary); font-weight: 700; animation: signaturePulse 2s infinite; }
+        @keyframes signaturePulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+
+        .header { padding: 4px 28px 12px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); }
+        .header h2 { font-family: 'Space Grotesk', sans-serif; font-size: 21px; font-weight: 700; background: linear-gradient(135deg, var(--primary), var(--blob-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .theme-btn { background: rgba(255,255,255,0.02); border: 1px solid var(--card-border); width: 40px; height: 40px; border-radius: 12px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.3s; color: var(--text-main); }
+        .theme-btn:hover { background: var(--primary); color: #fff; box-shadow: 0 0 15px rgba(56, 189, 248, 0.2); }
+
+        /* কন্টেন্ট এরিয়ার উপরের প্যাডিং কমানো হয়েছে */
+        .content { padding: 15px 28px; flex-grow: 1; overflow-y: auto; scrollbar-width: none; }
+        .content::-webkit-scrollbar { display: none; }
+
+        h3 { font-family: 'Space Grotesk', sans-serif; font-size: 19px; margin-bottom: 4px; color: var(--primary); }
+        p.desc { font-size: 13px; color: var(--text-muted); margin-bottom: 15px; line-height: 1.6; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+        .btn { background: var(--input-bg); color: var(--text-main); border: 1px solid var(--card-border); padding: 14px; border-radius: 14px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; gap: 7px; }
+        .btn::after { content: ''; position: absolute; top: -50%; left: -70%; width: 30%; height: 200%; background: rgba(255, 255, 255, 0.08); transform: rotate(25deg); transition: none; }
+        .btn:hover::after { left: 130%; transition: all 0.6s ease-in-out; }
+        .btn:hover { transform: translateY(-2px); border-color: var(--primary); background: var(--card-bg); }
+
+        .btn-primary { background: var(--primary); color: #fff; border: none; box-shadow: 0 8px 15px -4px rgba(56, 189, 248, 0.3); }
+        .btn-primary:hover { background: #7dd3fc; box-shadow: 0 10px 20px -4px rgba(56, 189, 248, 0.4); }
+
+        .input-box { width: 100%; padding: 14px; margin-bottom: 5px; border: 1px solid var(--card-border); background: var(--input-bg); color: var(--text-main); border-radius: 14px; font-size: 14px; outline: none; transition: 0.3s; }
+        .input-box:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.1); background: var(--card-bg); }
+
+        /* Toggle Switch CSS */
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(100, 116, 139, 0.3); transition: .4s; border-radius: 34px; border: 1px solid var(--card-border); }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: #fff; transition: .4s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        input:checked + .slider { background-color: var(--primary); border-color: var(--primary); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .data-card { background: rgba(0,0,0,0.02); border: 1px solid var(--card-border); padding: 15px; border-radius: 18px; margin-bottom: 15px; position: relative; }
+        .dark-theme .data-card { background: rgba(255,255,255,0.01); }
+
+        .code-display { font-family: 'Space Grotesk', sans-serif; font-size: 40px; font-weight: 700; color: var(--primary); text-align: center; letter-spacing: 5px; margin: 10px 0; text-shadow: 0 0 15px rgba(56, 189, 248, 0.3); }
+
+        .clickable-data { color: var(--primary); font-weight: 600; cursor: pointer; padding: 4px 8px; background: rgba(56, 189, 248, 0.1); border-radius: 8px; transition: 0.2s; display: inline-block; margin: 3px; border: 1px solid transparent; }
+        .clickable-data:hover { background: var(--primary); color: #fff; transform: scale(1.05); }
+
+        .divider { height: 1px; background: var(--card-border); margin: 15px 0; position: relative; }
+        .divider::after { content: 'QUICK 2FA'; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--bg-base); padding: 0 10px; font-size: 10px; color: var(--text-muted); font-weight: 700; letter-spacing: 1px; }
+
+        .footer { text-align: center; padding: 15px; font-size: 11px; color: var(--text-muted); border-top: 1px solid var(--card-border); font-weight: 500; }
+        .footer span { color: var(--primary); font-weight: 600; }
+
+        #toast { visibility: hidden; min-width: 180px; background: rgba(0,0,0,0.85); color: #fff; backdrop-filter: blur(10px); text-align: center; border-radius: 50px; padding: 12px 22px; position: fixed; z-index: 100; bottom: 30px; left: 50%; transform: translate(-50%, 20px); font-size: 13px; font-weight: 600; opacity: 0; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: var(--toast-glowing-default); }
+        #toast.show { visibility: visible; opacity: 1; transform: translate(-50%, 0); }
+        .dark-theme #toast { background: rgba(255,255,255,0.95); color: #000; }
+        #toast.code-type { box-shadow: var(--toast-glowing-code); }
+        #toast.identity-type { box-shadow: var(--toast-glowing-identity); }
+
+        .fade-in { animation: fadeIn 0.4s ease forwards; opacity: 0; }
+        @keyframes fadeIn { to { opacity: 1; } }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .spinner { display: inline-block; width: 28px; height: 28px; border: 3px solid var(--card-border); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
+        
+        .dev-link { display: block; text-align: center; font-size: 11px; color: var(--primary); text-decoration: none; font-weight: 600; margin-top: 5px; margin-bottom: 10px; opacity: 0.8; transition: 0.2s; }
+        .dev-link:hover { opacity: 1; text-decoration: underline; }
     </style>
 </head>
-<body>
+<body class="dark-theme">
 
-<div class="glass-container">
-    <h2>Secure Data Vault</h2>
-    
-    <div class="link-box">
-        <div class="input-group" style="margin-bottom: 0;">
-            <label style="color: #00d2ff;">🔗 GOOGLE SHEET WEB APP URL</label>
-            <input type="password" id="sheetUrl" placeholder="Paste your script.google.com/... link here" autocomplete="off">
-        </div>
-    </div>
-    
-    <div class="input-group">
-        <label>USERNAME / EMAIL</label>
-        <input type="text" id="userName" placeholder="Enter your username" autocomplete="off">
-    </div>
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
 
-    <div class="input-group">
-        <label>PASSWORD</label>
-        <input type="text" id="passWord" placeholder="Enter account password" autocomplete="off">
-        <div class="checkbox-wrapper">
-            <input type="checkbox" id="keepPass">
-            <label for="keepPass">Lock Password</label>
-        </div>
+<div class="app-container">
+    <div class="status-bar">
+        <div>PROTOCOLS ONLINE</div>
+        <div class="handle">@JIH4D // CORE</div>
+    </div>
+    <div class="header">
+        <h2>JIH4D // PREMIUM UTIL</h2>
+        <button class="theme-btn" onclick="toggleTheme()" id="themeIcon">☀️</button>
     </div>
     
-    <div class="input-group">
-        <label>2FA SECRET KEY / LINK</label>
-        <input type="text" id="secretKey" placeholder="Paste Base32 Secret Key or URL" autocomplete="off">
-    </div>
-    
-    <div class="btn-group">
-        <button class="btn-save" onclick="saveData()">✦ Save to Sheet</button>
-        <button class="btn-download" onclick="downloadExcel()">⭳ Export Excel</button>
-    </div>
+    <div class="content fade-in" id="app-content"></div>
 
-    <div id="statusBox" class="status"></div>
-
-    <div class="table-wrap">
-        <table id="dataTable">
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Password</th>
-                    <th>2FA Secret</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Data will appear here locally after saving -->
-            </tbody>
-        </table>
+    <div class="footer">
+        VER: 3.2 // <span>JIH4D NETWORK SECURE HUB</span>
     </div>
 </div>
 
+<div id="toast">✅ COPIED</div>
+
 <script>
-    let allData = [];
+    let isDarkMode = true;
+    let autoPasteEnabled = false;
 
-    window.onload = function() {
-        if(localStorage.getItem("MySheetLink")) {
-            document.getElementById('sheetUrl').value = localStorage.getItem("MySheetLink");
-        }
-        if(localStorage.getItem("LocalVaultData_NoDate")) {
-            allData = JSON.parse(localStorage.getItem("LocalVaultData_NoDate"));
-            renderTable();
-        }
-    };
-
-    function saveData() {
-        const scriptURL = document.getElementById('sheetUrl').value.trim();
-        const user = document.getElementById('userName').value.trim();
-        const pass = document.getElementById('passWord').value.trim();
-        let key = document.getElementById('secretKey').value.trim();
-
-        if(!scriptURL.startsWith("https://script.google.com")) {
-            alert("⚠️ দয়া করে বক্সে সঠিক Web App URL (script.google.com...) লিংকটি দিন।");
-            return;
-        }
-
-        if (!user || !pass || !key) {
-            alert("⚠️ দয়া করে ইউজারনেম, পাসওয়ার্ড এবং ২এফএ—তিনটি তথ্যই পূরণ করুন।");
-            return;
-        }
-
-        if (key.includes('#')) key = key.split('#')[1];
-        if (key.includes('secret=')) key = key.split('secret=')[1].split('&')[0];
-
-        localStorage.setItem("MySheetLink", scriptURL);
-
-        document.getElementById('statusBox').innerText = "⏳ Saving to Google Sheets...";
-        document.getElementById('statusBox').style.color = "#f6d365";
-
-        const formData = new FormData();
-        formData.append('username', user);
-        formData.append('password', pass);
-        formData.append('secret', key);
-
-        fetch(scriptURL, { method: 'POST', body: formData })
-            .then(response => {
-                document.getElementById('statusBox').innerText = "✅ Saved Successfully to Google Sheet!";
-                document.getElementById('statusBox').style.color = "#38ef7d";
-                
-                allData.unshift({ "Username": user, "Password": pass, "2FA_Key": key });
-                localStorage.setItem("LocalVaultData_NoDate", JSON.stringify(allData));
-                renderTable();
-
-                document.getElementById('userName').value = '';
-                document.getElementById('secretKey').value = '';
-                if (!document.getElementById('keepPass').checked) document.getElementById('passWord').value = '';
-                document.getElementById('userName').focus();
-            })
-            .catch(error => {
-                document.getElementById('statusBox').innerText = "❌ Error! Check Internet or Link.";
-                document.getElementById('statusBox').style.color = "#ef473a";
-            });
+    function toggleTheme() {
+        isDarkMode = !isDarkMode;
+        document.body.classList.toggle('dark-theme', isDarkMode);
+        document.getElementById('themeIcon').innerText = isDarkMode ? "☀️" : "🌙";
     }
 
-    function renderTable() {
-        const tableBody = document.querySelector('#dataTable tbody');
-        tableBody.innerHTML = '';
-        allData.forEach(item => {
-            const row = `<tr>
-                <td>${item.Username}</td>
-                <td>${item.Password}</td>
-                <td class="key-text">${item["2FA_Key"]}</td>
-            </tr>`;
-            tableBody.insertAdjacentHTML('beforeend', row);
+    function copyText(text, message, type) {
+        navigator.clipboard.writeText(text).then(() => {
+            let toast = document.getElementById("toast");
+            toast.innerText = message || "✅ Copied!";
+            toast.className = "show";
+            if (type === 'code') { toast.classList.add('code-type'); }
+            else if (type === 'identity') { toast.classList.add('identity-type'); }
+            else { toast.classList.add('default-type'); }
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2200);
         });
     }
 
-    function downloadExcel() {
-        if (allData.length === 0) return alert("⚠️ ডাউনলোড করার মতো কোনো ডাটা নেই!");
+    // Advanced 2FA Logic
+    function toggle2FAMode(checked, manualId, autoId, resultId) {
+        autoPasteEnabled = checked;
+        document.getElementById(manualId).style.display = checked ? 'none' : 'block';
+        document.getElementById(autoId).style.display = checked ? 'block' : 'none';
+        document.getElementById(resultId).innerHTML = ''; 
         
-        const workbook = XLSX.utils.book_new();
-        const worksheet = XLSX.utils.json_to_sheet(allData);
-        XLSX.utils.book_append_sheet(workbook, worksheet, "Vault_Data");
-        
-        XLSX.writeFile(workbook, `Secure_Vault_Data.xlsx`);
+        let inp = document.getElementById(manualId).querySelector('input');
+        if(inp) inp.value = '';
     }
+
+    function manualProcess2FA(inputId, targetId) {
+        let secret = document.getElementById(inputId).value.replace(/\s+/g, '').toUpperCase();
+        execute2FACore(secret, targetId, false);
+    }
+
+    function autoPasteProcess2FA(targetId) {
+        navigator.clipboard.readText().then(text => {
+            let secret = text.replace(/\s+/g, '').toUpperCase();
+            execute2FACore(secret, targetId, true);
+        }).catch(err => {
+            document.getElementById(targetId).innerHTML = `<div style="color:#ef4444; font-size:12px; text-align:center; padding:10px; border:1px solid #ef4444; border-radius:10px; margin-top:10px;">⚠️ PERMISSION DENIED BY BROWSER</div>`;
+        });
+    }
+
+    function execute2FACore(secret, targetId, isAuto) {
+        const resultDiv = document.getElementById(targetId);
+        if (!secret) { resultDiv.innerHTML = ``; return; }
+
+        let displaySecret = secret.length > 25 ? secret.substring(0, 25) + '...' : secret;
+
+        try {
+            let totp = new OTPAuth.TOTP({ algorithm: 'SHA1', digits: 6, period: 30, secret: OTPAuth.Secret.fromBase32(secret) });
+            let code = totp.generate();
+            
+            let pastedKeyHTML = isAuto ? `<div style="font-family: 'Space Grotesk', sans-serif; font-size: 11px; color: var(--primary); text-align: center; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px dashed var(--card-border); word-break: break-all; opacity: 0.8;">PASTED KEY: ${secret}</div>` : '';
+
+            resultDiv.innerHTML = `
+                <div class="data-card fade-in" style="cursor: pointer; border-color:var(--primary); margin-top:10px;" onclick="copyText('${code}', '🔑 TOKEN Copied: ${code}', 'code')">
+                    ${pastedKeyHTML}
+                    <p style="text-align:center; font-size:11px; color:#22c55e; letter-spacing:1px; text-transform:uppercase;">Decrypted Token</p>
+                    <div class="code-display" style="font-size: 34px; letter-spacing:4px;">${code}</div>
+                    <p style="text-align:center; font-size:10px; color:var(--text-muted);">TAP TO EXTRACT</p>
+                </div>
+            `;
+            if(isAuto) {
+                copyText(code, `🔑 Auto Copied: ${code}`, 'code');
+            }
+        } catch (e) { 
+            resultDiv.innerHTML = `
+                <div style="color:#ef4444; font-size:11px; text-align:center; margin-top:10px; padding: 12px; border: 1px solid #ef4444; border-radius: 12px; background: rgba(239, 68, 68, 0.05);">
+                    <div style="font-weight: 700; margin-bottom: 5px;">⚠️ ERR: INVALID KEY</div>
+                    <div style="font-size: 10px; color: var(--text-muted); word-break: break-all;">Input Data: ${displaySecret}</div>
+                </div>
+            `; 
+        }
+    }
+
+    function getToggleUI(funcName, manualId, autoId, resultId) {
+        return `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding: 10px 15px; background: rgba(0,0,0,0.1); border-radius: 14px; border: 1px solid var(--card-border);">
+                <div style="display: flex; flex-direction: column;">
+                    <span style="font-size: 13px; font-weight: 600; color: var(--text-main);">Auto Paste Mode</span>
+                    <span style="font-size: 10px; color: var(--text-muted);">Requires browser permission</span>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" onchange="${funcName}(this.checked, '${manualId}', '${autoId}', '${resultId}')" ${autoPasteEnabled ? 'checked' : ''}>
+                    <span class="slider"></span>
+                </label>
+            </div>
+        `;
+    }
+
+    const accountData = {
+        bd: { male_first: ["Rahim", "Karim", "Arif", "Hasan", "Sajid", "Tarik", "Fahim"], female_first: ["Sadia", "Nusrat", "Ayesha", "Mariya", "Jannat", "Riya", "Suma"], last: ["Islam", "Uddin", "Akter", "Rahman", "Hossain", "Chowdhury", "Khan"] },
+        usa: { male_first: ["John", "Michael", "David", "James", "William", "Robert", "Joseph"], female_first: ["Emma", "Olivia", "Sophia", "Isabella", "Mia", "Charlotte", "Amelia"], last: ["Smith", "Johnson", "Williams", "Brown", "Jones", "Miller", "Davis"] },
+        uk: { male_first: ["George", "Harry", "Jack", "Oliver", "Charlie", "Thomas", "Arthur"], female_first: ["Amelia", "Margaret", "Lily", "Emily", "Jessica", "Isla", "Poppy"], last: ["Evans", "Davies", "Wilson", "Taylor", "Thomas", "Roberts", "Walker"] },
+        fr: { male_first: ["Lucas", "Hugo", "Arthur", "Louis", "Gabriel", "Jules", "Paul"], female_first: ["Jade", "Louise", "Alice", "Chloé", "Léa", "Manon", "Emma"], last: ["Martin", "Bernard", "Dubois", "Thomas", "Robert", "Richard", "Petit"] }
+    };
+    const countryNames = {'bd': 'Bangladesh 🇧🇩', 'usa': 'USA 🇺🇸', 'uk': 'UK 🇬🇧', 'fr': 'France 🇫🇷'};
+
+    const contentDiv = document.getElementById('app-content');
+    function renderView(html) {
+        contentDiv.classList.remove("fade-in");
+        void contentDiv.offsetWidth; 
+        contentDiv.innerHTML = html;
+        contentDiv.classList.add("fade-in");
+    }
+
+    function showMainMenu() {
+        renderView(`
+            <h3>UTILITY HUB</h3>
+            <p class="desc">Access optimized premium modules below.</p>
+            <div class="grid-2">
+                <button class="btn" onclick="showComingSoon()">☎️ NUMBERS</button>
+                <button class="btn" onclick="showIgChecker()">🔍 IG INTEL</button>
+                <button class="btn" onclick="show2FA()">🔐 2FA CORE</button>
+                <button class="btn" onclick="showPlatformMenu()">👤 IDENTITY</button>
+            </div>
+            <button class="btn btn-primary" style="margin-top: 15px; width: 100%;" onclick="showComingSoon()">INITIALIZE ALL PROTOCOLS</button>
+        `);
+    }
+
+    function showIgChecker() {
+        renderView(`
+            <h3>INTEL: INSTAGRAM</h3>
+            <p class="desc">Query node presence within network grid.</p>
+            <input type="text" id="igUsername" class="input-box" placeholder="@username" onkeypress="if(event.key === 'Enter') checkIgId()">
+            <a href="mailto:contact@jih4d.com" class="dev-link">Contact Developer (JIH4D)</a>
+            <button class="btn btn-primary" style="width:100%" onclick="checkIgId()">START SCAN</button>
+            <div id="igResult" style="margin-top: 15px;"></div>
+            <button class="btn" style="margin-top: 15px; width: 100%;" onclick="showMainMenu()">← RETURN HUB</button>
+        `);
+    }
+
+    function checkIgId() {
+        let username = document.getElementById('igUsername').value.trim().replace('@', '');
+        let resultDiv = document.getElementById('igResult');
+        if(!username) return;
+        resultDiv.innerHTML = `<div style="text-align:center; padding: 20px;"><div class="spinner"></div></div>`;
+        setTimeout(() => {
+            resultDiv.innerHTML = `
+                <div class="data-card fade-in" style="text-align:center;">
+                    <h3 style="font-size:16px; color:#22c55e;">✔ SCAN COMPLETE</h3>
+                    <p style="margin-bottom: 12px; font-size:14px;">NODE: <span style="color:var(--primary);">@${username}</span></p>
+                    <a href="https://www.instagram.com/${username}/" target="_blank" class="btn btn-primary" style="text-decoration: none; width:100%;">OPEN NODE FEED</a>
+                </div>
+            `;
+        }, 1500);
+    }
+
+    function show2FA() {
+        renderView(`
+            <h3>DECRYPTOR: 2FA CORE</h3>
+            <p class="desc">Extract Security Token.</p>
+            
+            ${getToggleUI('toggle2FAMode', 'manualMain2FA', 'autoMain2FA', 'totpResult')}
+
+            <div id="manualMain2FA" style="display: ${autoPasteEnabled ? 'none' : 'block'};">
+                <input type="text" id="secretKey" class="input-box" placeholder="PASTE SECRET KEY HERE" oninput="manualProcess2FA('secretKey', 'totpResult')">
+                <a href="mailto:contact@jih4d.com" class="dev-link">Contact Developer (JIH4D)</a>
+            </div>
+
+            <div id="autoMain2FA" style="display: ${autoPasteEnabled ? 'block' : 'none'};">
+                <button class="btn btn-primary" style="width:100%; margin-bottom: 5px;" onclick="autoPasteProcess2FA('totpResult')">[ AUTO PASTE & DECRYPT ]</button>
+                <a href="mailto:contact@jih4d.com" class="dev-link">Contact Developer (JIH4D)</a>
+            </div>
+
+            <div id="totpResult"></div>
+            <button class="btn" style="margin-top: 15px; width: 100%;" onclick="showMainMenu()">← RETURN HUB</button>
+        `);
+    }
+
+    let selPlat = '', selCoun = '';
+
+    function showPlatformMenu() {
+        renderView(`
+            <h3>IDENTITY SPOOFER PROTOCOL</h3>
+            <p class="desc">Initialize target network protocol environment.</p>
+            <button class="btn btn-primary" style="margin-bottom: 12px; width:100%;" onclick="selectPlatform('fb')">NETWORK: FACEBOOK</button>
+            <button class="btn btn-primary" style="width:100%;" onclick="selectPlatform('ig')">NETWORK: INSTAGRAM</button>
+            <button class="btn" style="margin-top: 20px; width: 100%;" onclick="showMainMenu()">← HUB</button>
+        `);
+    }
+
+    function selectPlatform(p) {
+        selPlat = p;
+        renderView(`
+            <h3>LOCALE OVERRIDE CFG</h3>
+            <p class="desc">Define geographic origin parameters.</p>
+            <div class="grid-2">
+                <button class="btn" onclick="selectCountry('bd')">🇧🇩 BGD</button>
+                <button class="btn" onclick="selectCountry('usa')">🇺🇸 USA</button>
+                <button class="btn" onclick="selectCountry('uk')">🇬🇧 GBR</button>
+                <button class="btn" onclick="selectCountry('fr')">🇫🇷 FRA</button>
+            </div>
+            <button class="btn" style="margin-top: 20px; width: 100%;" onclick="showPlatformMenu()">← BACK</button>
+        `);
+    }
+
+    function selectCountry(c) {
+        selCoun = c;
+        renderView(`
+            <h3>CLASS CONFIG parameters</h3>
+            <p class="desc">Configure avatar class identity.</p>
+            <div class="grid-2">
+                <button class="btn" onclick="generateName('male')">🚹 MALE</button>
+                <button class="btn" onclick="generateName('female')">🚺 FEMALE</button>
+            </div>
+            <button class="btn" style="margin-top: 20px; width: 100%;" onclick="selectPlatform(selPlat)">← BACK</button>
+        `);
+    }
+
+    function generateName(g) {
+        let fn = accountData[selCoun][`${g}_first`], ln = accountData[selCoun]["last"];
+        let f = fn[Math.floor(Math.random()*fn.length)], l = ln[Math.floor(Math.random()*ln.length)];
+        let textToCopy = '', resultTextHTML = '';
+        
+        if (selPlat === 'fb') {
+            textToCopy = `${f} ${l}`;
+            resultTextHTML = `
+                <div style="font-size:12px; color:var(--text-muted); margin-bottom:6px;">Identity Generated</div>
+                <div class="clickable-data" style="font-size: 16px; width:100%; text-align:center; margin-bottom:8px;" onclick="copyText('${textToCopy}', '👤 Profile Name Copied!', 'identity')">${textToCopy}</div>
+                <div style="display:flex; gap:8px;">
+                    <div class="clickable-data" style="flex:1; text-align:center; font-size:11px;" onclick="copyText('${f}', '👤 F_Name Copied!', 'type')">First: ${f}</div>
+                    <div class="clickable-data" style="flex:1; text-align:center; font-size:11px;" onclick="copyText('${l}', '👤 L_Name Copied!', 'type')">Last: ${l}</div>
+                </div>`;
+        } else {
+            textToCopy = `${f.toLowerCase()}_${l.toLowerCase()}_${Math.floor(Math.random()*9000)+1000}`;
+            resultTextHTML = `
+                <div style="font-size:12px; color:var(--text-muted); margin-bottom:6px;">Username Synthesized</div>
+                <div class="clickable-data" style="font-size: 15px; width:100%; text-align:center;" onclick="copyText('${textToCopy}', '📸 Username Copied!', 'identity')">${textToCopy}</div>
+            `;
+        }
+
+        renderView(`
+            <h3>DATA SYNTHESIS: OUTPUT</h3>
+            <div class="data-card" style="text-align:center">
+                <p style="color:var(--primary); font-size:11px; text-transform:uppercase; font-weight:700; margin-bottom:10px; letter-spacing:1px;">Network Data // CFG: ${countryNames[selCoun]} / ${g.toUpperCase()}</p>
+                ${resultTextHTML}
+            </div>
+
+            <div class="divider"></div>
+            <h3>Quick Protocol // 2FA</h3>
+            
+            ${getToggleUI('toggle2FAMode', 'manualProfile2FA', 'autoProfile2FA', 'profile2FAResult')}
+
+            <div id="manualProfile2FA" style="display: ${autoPasteEnabled ? 'none' : 'block'};">
+                <input type="text" id="secretKeyProfile" class="input-box" placeholder="PASTE SECRET KEY HERE" oninput="manualProcess2FA('secretKeyProfile', 'profile2FAResult')">
+                <a href="mailto:contact@jih4d.com" class="dev-link">Contact Developer (JIH4D)</a>
+            </div>
+
+            <div id="autoProfile2FA" style="display: ${autoPasteEnabled ? 'block' : 'none'};">
+                <button class="btn btn-primary" style="width:100%; margin-bottom: 5px;" onclick="autoPasteProcess2FA('profile2FAResult')">[ AUTO PASTE & DECRYPT ]</button>
+                <a href="mailto:contact@jih4d.com" class="dev-link">Contact Developer (JIH4D)</a>
+            </div>
+
+            <div id="profile2FAResult"></div>
+
+            <div style="margin-top:20px;">
+                <button class="btn btn-primary" style="margin-bottom:12px; width:100%;" onclick="generateName('${g}')">🔄 RE-SYNTHESIZE PROTOCOL</button>
+                <div class="grid-2">
+                    <button class="btn" onclick="selectCountry(selCoun)">⚙ CLASS</button>
+                    <button class="btn" onclick="selectPlatform(selPlat)">⚙ LOCALE</button>
+                </div>
+            </div>
+
+            <button class="btn" style="margin-top: 35px; width: 100%; border:none; background:transparent; color:var(--text-muted); font-size:12px; font-weight:500;" onclick="showMainMenu()">← SYSTEM HUB // TERMINAL ROOT</button>
+        `);
+    }
+
+    function showComingSoon() {
+        renderView(`
+            <div style="text-align:center; padding-top: 30px;">
+                <div style="font-size:60px; animation: pulse 2.2s infinite; color: var(--primary);">🚀</div>
+                <h3>UNDER DEVELOPMENT PROTOCOL</h3>
+                <p class="desc">This script is being synthesized in the lab environment.</p>
+                <button class="btn btn-primary" style="margin-top: 20px; width:100%" onclick="showMainMenu()">← HUB ROOT</button>
+            </div>
+        `);
+    }
+
+    showMainMenu();
 </script>
 
 </body>
