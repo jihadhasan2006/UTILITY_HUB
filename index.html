@@ -49,7 +49,6 @@
             transition: background 0.3s ease;
         }
 
-        /* Height made dynamic so scrolling isn't needed */
         .app-container {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -161,12 +160,12 @@
         }
 
         .code-display { 
-            font-size: 24px; /* Reduced font size */
+            font-size: 24px; 
             font-weight: 600; 
             color: var(--primary); 
             text-align: center; 
-            letter-spacing: 3px; /* Reduced letter spacing */
-            margin: 4px 0; /* Reduced margin */
+            letter-spacing: 3px; 
+            margin: 4px 0; 
         }
 
         .clickable-data { 
@@ -252,9 +251,10 @@
     
     let vaultPassword = localStorage.getItem('jih4d_vault_pass') || '';
 
-    // ================== Name Generation Tracking Logic ==================
-    // Object to store used names for each country and gender combination
-    let usedNames = {};
+    // ================== Advanced Name Tracking Logic ==================
+    // This logic ensures FIRST names and LAST names do not repeat until all are used.
+    let usedFirstNames = {};
+    let usedLastNames = {};
 
     function saveVaultPassword(val) {
         vaultPassword = val;
@@ -347,11 +347,28 @@
         `;
     }
 
+    // Extended dataset for more variety to prevent running out of names quickly
     const accountData = {
-        bd: { male_first: ["Rahim", "Karim", "Arif", "Hasan", "Sajid", "Tarik", "Fahim"], female_first: ["Sadia", "Nusrat", "Ayesha", "Mariya", "Jannat", "Riya", "Suma"], last: ["Islam", "Uddin", "Akter", "Rahman", "Hossain", "Chowdhury", "Khan"] },
-        usa: { male_first: ["John", "Michael", "David", "James", "William", "Robert", "Joseph"], female_first: ["Emma", "Olivia", "Sophia", "Isabella", "Mia", "Charlotte", "Amelia"], last: ["Smith", "Johnson", "Williams", "Brown", "Jones", "Miller", "Davis"] },
-        uk: { male_first: ["George", "Harry", "Jack", "Oliver", "Charlie", "Thomas", "Arthur"], female_first: ["Amelia", "Margaret", "Lily", "Emily", "Jessica", "Isla", "Poppy"], last: ["Evans", "Davies", "Wilson", "Taylor", "Thomas", "Roberts", "Walker"] },
-        fr: { male_first: ["Lucas", "Hugo", "Arthur", "Louis", "Gabriel", "Jules", "Paul"], female_first: ["Jade", "Louise", "Alice", "Chloé", "Léa", "Manon", "Emma"], last: ["Martin", "Bernard", "Dubois", "Thomas", "Robert", "Richard", "Petit"] }
+        bd: { 
+            male_first: ["Rahim", "Karim", "Arif", "Hasan", "Sajid", "Tarik", "Fahim", "Rakib", "Imran", "Mehedi"], 
+            female_first: ["Sadia", "Nusrat", "Ayesha", "Mariya", "Jannat", "Riya", "Suma", "Tania", "Mim", "Farhana"], 
+            last: ["Islam", "Uddin", "Akter", "Rahman", "Hossain", "Chowdhury", "Khan", "Ahmed", "Sikder", "Miah"] 
+        },
+        usa: { 
+            male_first: ["John", "Michael", "David", "James", "William", "Robert", "Joseph", "Daniel", "Matthew", "Anthony"], 
+            female_first: ["Emma", "Olivia", "Sophia", "Isabella", "Mia", "Charlotte", "Amelia", "Ava", "Harper", "Evelyn"], 
+            last: ["Smith", "Johnson", "Williams", "Brown", "Jones", "Miller", "Davis", "Garcia", "Rodriguez", "Wilson"] 
+        },
+        uk: { 
+            male_first: ["George", "Harry", "Jack", "Oliver", "Charlie", "Thomas", "Arthur", "Noah", "Oscar", "James"], 
+            female_first: ["Amelia", "Margaret", "Lily", "Emily", "Jessica", "Isla", "Poppy", "Ava", "Isabella", "Sophie"], 
+            last: ["Evans", "Davies", "Wilson", "Taylor", "Thomas", "Roberts", "Walker", "Wright", "Robinson", "Thompson"] 
+        },
+        fr: { 
+            male_first: ["Lucas", "Hugo", "Arthur", "Louis", "Gabriel", "Jules", "Paul", "Leo", "Raphael", "Mathis"], 
+            female_first: ["Jade", "Louise", "Alice", "Chloé", "Léa", "Manon", "Emma", "Camille", "Sarah", "Juliette"], 
+            last: ["Martin", "Bernard", "Dubois", "Thomas", "Robert", "Richard", "Petit", "Durand", "Leroy", "Moreau"] 
+        }
     };
     const countryNames = {'bd': 'Bangladesh', 'usa': 'USA', 'uk': 'UK', 'fr': 'France'};
 
@@ -484,45 +501,40 @@
         `, 'Select Gender');
     }
 
-    function generateName(g) {
-        // Unique name generation logic
-        const key = `${selCoun}_${g}_${selPlat}`;
-        if (!usedNames[key]) {
-            usedNames[key] = [];
+    // Helper function to get a truly random un-used name
+    function getUniqueName(type, gender) {
+        let listKey = `${selCoun}_${type === 'first' ? gender : 'last'}`;
+        let fullList = type === 'first' ? accountData[selCoun][`${gender}_first`] : accountData[selCoun]["last"];
+        
+        let trackingList = type === 'first' ? usedFirstNames : usedLastNames;
+        
+        if (!trackingList[listKey]) {
+            trackingList[listKey] = [];
         }
 
-        let fn = accountData[selCoun][`${g}_first`];
-        let ln = accountData[selCoun]["last"];
-        let f, l, textToCopy;
+        // If all names used, reset the tracker to start fresh
+        if (trackingList[listKey].length >= fullList.length) {
+            trackingList[listKey] = [];
+        }
+
+        let availableNames = fullList.filter(name => !trackingList[listKey].includes(name));
+        let selectedName = availableNames[Math.floor(Math.random() * availableNames.length)];
         
-        let attempts = 0;
-        const maxAttempts = fn.length * ln.length; // Prevent infinite loops
+        trackingList[listKey].push(selectedName);
+        return selectedName;
+    }
 
-        do {
-            f = fn[Math.floor(Math.random()*fn.length)];
-            l = ln[Math.floor(Math.random()*ln.length)];
-            
-            if (selPlat === 'fb') {
-                textToCopy = `${f} ${l}`;
-            } else {
-                // For IG, append a random number, making it highly unique anyway, 
-                // but we still track it to ensure variety.
-                textToCopy = `${f.toLowerCase()}_${l.toLowerCase()}_${Math.floor(Math.random()*9000)+1000}`;
-            }
-            attempts++;
-            
-            // If we've exhausted all combinations, clear the history for this key to start over
-            if (attempts > maxAttempts) {
-                usedNames[key] = [];
-            }
-        } while (usedNames[key].includes(textToCopy) && attempts <= maxAttempts);
-
-        usedNames[key].push(textToCopy);
-
+    function generateName(g) {
+        
+        let f = getUniqueName('first', g);
+        let l = getUniqueName('last', g);
+        
+        let textToCopy = '';
         let resultTextHTML = '';
         let pageDynamicTitle = `${countryNames[selCoun]} - ${g.charAt(0).toUpperCase() + g.slice(1)}`;
 
         if (selPlat === 'fb') {
+            textToCopy = `${f} ${l}`;
             resultTextHTML = `
                 <div class="clickable-data" style="font-size: 15px; width:100%; text-align:center; margin-bottom:6px;" onclick="copyText('${textToCopy}', '👤 Name Copied!')">${textToCopy}</div>
                 <div style="display:flex; gap:6px;">
@@ -530,6 +542,7 @@
                     <div class="clickable-data" style="flex:1; text-align:center;" onclick="copyText('${l}', '👤 Last Name Copied!')">${l}</div>
                 </div>`;
         } else {
+            textToCopy = `${f.toLowerCase()}_${l.toLowerCase()}_${Math.floor(Math.random()*9000)+1000}`;
             resultTextHTML = `
                 <div class="clickable-data" style="font-size: 14px; width:100%; text-align:center;" onclick="copyText('${textToCopy}', '📸 Username Copied!')">${textToCopy}</div>
             `;
