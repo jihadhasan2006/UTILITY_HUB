@@ -252,7 +252,6 @@
     let vaultPassword = localStorage.getItem('jih4d_vault_pass') || '';
 
     // ================== Advanced Name Tracking Logic ==================
-    // This logic ensures FIRST names and LAST names do not repeat until all are used.
     let usedFirstNames = {};
     let usedLastNames = {};
 
@@ -287,13 +286,15 @@
     }
 
     function manualProcess2FA(inputId, targetId) {
-        let secret = document.getElementById(inputId).value.replace(/\\s+/g, '').toUpperCase();
+        // FIXED: Using correct regex /\s+/g to remove all spaces properly
+        let secret = document.getElementById(inputId).value.replace(/\s+/g, '').toUpperCase();
         execute2FACore(secret, targetId, false);
     }
 
     function autoPasteProcess2FA(targetId) {
         navigator.clipboard.readText().then(text => {
-            let secret = text.replace(/\\s+/g, '').toUpperCase();
+            // FIXED: Using correct regex /\s+/g to remove all spaces properly
+            let secret = text.replace(/\s+/g, '').toUpperCase();
             execute2FACore(secret, targetId, true);
         }).catch(err => {
             document.getElementById(targetId).innerHTML = `<div style="color:var(--danger); font-size:11px; text-align:center; padding:10px; border:1px solid var(--danger); border-radius:6px; margin-top:8px;">⚠️ Browser permission denied</div>`;
@@ -347,7 +348,6 @@
         `;
     }
 
-    // Extended dataset for more variety to prevent running out of names quickly
     const accountData = {
         bd: { 
             male_first: ["Rahim", "Karim", "Arif", "Hasan", "Sajid", "Tarik", "Fahim", "Rakib", "Imran", "Mehedi"], 
@@ -525,7 +525,6 @@
     }
 
     function generateName(g) {
-        
         let f = getUniqueName('first', g);
         let l = getUniqueName('last', g);
         
