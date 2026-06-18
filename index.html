@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JIH4D // PREMIUM UTIL V3.3</title>
+    <title>JIH4D // PREMIUM UTIL V3.9</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/otpauth/9.2.2/otpauth.umd.min.js"></script>
     <style>
@@ -133,17 +133,6 @@
         }
         .input-box:focus { border-color: var(--primary); }
 
-        .dev-link { 
-            display: block; 
-            text-align: right; 
-            font-size: 10px; 
-            color: var(--primary); 
-            text-decoration: none; 
-            font-weight: 500; 
-            margin-top: 4px; 
-        }
-        .dev-link:hover { text-decoration: underline; }
-
         .switch { position: relative; display: inline-block; width: 40px; height: 20px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--card-border); transition: .3s; border-radius: 20px; }
@@ -157,15 +146,6 @@
             padding: 12px; 
             border-radius: 8px; 
             margin-bottom: 12px; 
-        }
-
-        .code-display { 
-            font-size: 24px; 
-            font-weight: 600; 
-            color: var(--primary); 
-            text-align: center; 
-            letter-spacing: 3px; 
-            margin: 4px 0; 
         }
 
         .clickable-data { 
@@ -193,6 +173,16 @@
             border-top: 1px solid var(--card-border); 
         }
         .footer span { color: var(--primary); }
+        
+        .footer-link {
+            display: block;
+            margin-top: 6px;
+            font-size: 10px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .footer-link:hover { text-decoration: underline; }
 
         #toast { 
             visibility: hidden; 
@@ -216,16 +206,6 @@
 
         .fade-in { animation: fadeIn 0.3s ease forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-        
-        .spinner { 
-            display: inline-block; 
-            width: 20px; height: 20px; 
-            border: 2px solid var(--card-border); 
-            border-top-color: var(--primary); 
-            border-radius: 50%; 
-            animation: spin 0.8s linear infinite; 
-        }
     </style>
 </head>
 <body class="dark-theme">
@@ -239,7 +219,8 @@
     <div class="content fade-in" id="app-content"></div>
 
     <div class="footer">
-        V3.3 // <span>Secure Hub</span>
+        <div>V3.9 // <span>Secure Hub</span></div>
+        <a href="mailto:contact@jih4d.com" class="footer-link">Contact Developer (JIH4D)</a>
     </div>
 </div>
 
@@ -250,10 +231,7 @@
     let autoPasteEnabled = false;
     
     let vaultPassword = localStorage.getItem('jih4d_vault_pass') || '';
-
-    // ================== Advanced Name Tracking Logic ==================
-    let usedFirstNames = {};
-    let usedLastNames = {};
+    let usedNameCombinations = {};
 
     function saveVaultPassword(val) {
         vaultPassword = val;
@@ -285,19 +263,77 @@
         if(inp) inp.value = '';
     }
 
+    // =========================================
+    // UPDATED OTP EXTRACTOR ENGINE
+    // =========================================
+    function toggleOTPMode(checked, manualId, autoId, resultId) {
+        autoPasteEnabled = checked;
+        document.getElementById(manualId).style.display = checked ? 'none' : 'block';
+        document.getElementById(autoId).style.display = checked ? 'block' : 'none';
+        document.getElementById(resultId).innerHTML = ''; 
+        
+        let inp = document.getElementById(manualId).querySelector('input');
+        if(inp) inp.value = '';
+    }
+
+    function manualProcessOTP(inputId, targetId) {
+        let text = document.getElementById(inputId).value;
+        executeOTPCore(text, targetId, false);
+    }
+
+    function autoPasteProcessOTP(targetId) {
+        navigator.clipboard.readText().then(text => {
+            executeOTPCore(text, targetId, true);
+        }).catch(err => {
+            document.getElementById(targetId).innerHTML = `<div style="color:var(--danger); font-size:11px; text-align:center; padding:8px; border:1px solid var(--danger); border-radius:6px; margin-top:8px;">⚠️ Browser permission denied</div>`;
+        });
+    }
+
+    function executeOTPCore(text, targetId, isAuto) {
+        const resultDiv = document.getElementById(targetId);
+        if (!text.trim()) { resultDiv.innerHTML = ``; return; }
+
+        // Updated Regex: Matches 5 to 8 digits OR formats like "417 806" or "123-456"
+        let match = text.match(/\b\d{3}[\s-]?\d{3,5}\b|\b\d{5,8}\b/);
+        
+        if (match) {
+            // Remove spaces or hyphens to get purely numbers (e.g. 417 806 -> 417806)
+            let code = match[0].replace(/[\s-]/g, ''); 
+            
+            let pastedTextHTML = isAuto ? `<div style="font-size: 9px; color: var(--text-muted); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">SMS: ${text}</div>` : '';
+
+            resultDiv.innerHTML = `
+                <div class="clickable-data fade-in" style="width: 100%; text-align: center; border-color: var(--primary); padding: 8px; margin-top: 8px; margin-bottom: 0;" onclick="copyText('${code}', '💬 Code Copied: ${code}')">
+                    ${pastedTextHTML}
+                    <div style="font-size: 18px; font-weight: 600; color: var(--primary); letter-spacing: 2px;">${code}</div>
+                </div>
+            `;
+            if(isAuto) { copyText(code, `💬 Auto Copied: ${code}`); }
+        } else {
+            let displaySecret = text.length > 25 ? text.substring(0, 25) + '...' : text;
+            resultDiv.innerHTML = `
+                <div style="color:var(--danger); font-size:10px; text-align:center; margin-top:8px; padding: 6px; border: 1px dashed var(--danger); border-radius: 6px; background: rgba(239, 68, 68, 0.05);">
+                    <span style="font-weight: 600;">No Code Found:</span> ${displaySecret}
+                </div>
+            `; 
+        }
+    }
+
+
+    // =========================================
+    // 2FA DECRYPT ENGINE
+    // =========================================
     function manualProcess2FA(inputId, targetId) {
-        // FIXED: Using correct regex /\s+/g to remove all spaces properly
         let secret = document.getElementById(inputId).value.replace(/\s+/g, '').toUpperCase();
         execute2FACore(secret, targetId, false);
     }
 
     function autoPasteProcess2FA(targetId) {
         navigator.clipboard.readText().then(text => {
-            // FIXED: Using correct regex /\s+/g to remove all spaces properly
             let secret = text.replace(/\s+/g, '').toUpperCase();
             execute2FACore(secret, targetId, true);
         }).catch(err => {
-            document.getElementById(targetId).innerHTML = `<div style="color:var(--danger); font-size:11px; text-align:center; padding:10px; border:1px solid var(--danger); border-radius:6px; margin-top:8px;">⚠️ Browser permission denied</div>`;
+            document.getElementById(targetId).innerHTML = `<div style="color:var(--danger); font-size:11px; text-align:center; padding:8px; border:1px solid var(--danger); border-radius:6px; margin-top:8px;">⚠️ Browser permission denied</div>`;
         });
     }
 
@@ -311,63 +347,61 @@
             let totp = new OTPAuth.TOTP({ algorithm: 'SHA1', digits: 6, period: 30, secret: OTPAuth.Secret.fromBase32(secret) });
             let code = totp.generate();
             
-            let pastedKeyHTML = isAuto ? `<div style="font-size: 10px; color: var(--text-muted); text-align: center; margin-bottom: 4px; padding-bottom: 4px; border-bottom: 1px solid var(--card-border); word-break: break-all;">Key: ${secret}</div>` : '';
+            let pastedKeyHTML = isAuto ? `<div style="font-size: 9px; color: var(--text-muted); margin-bottom: 2px;">Key: ${secret}</div>` : '';
 
-            // Compacted Decrypted Token Box
+            // COMPACT RESULT BOX
             resultDiv.innerHTML = `
-                <div class="data-card fade-in" style="cursor: pointer; border-color: var(--primary); margin-top:8px; padding: 8px;" onclick="copyText('${code}', '🔑 Token Copied: ${code}')">
+                <div class="clickable-data fade-in" style="width: 100%; text-align: center; border-color: var(--primary); padding: 8px; margin-top: 8px; margin-bottom: 0;" onclick="copyText('${code}', '🔑 Token Copied: ${code}')">
                     ${pastedKeyHTML}
-                    <p style="text-align:center; font-size:10px; color:var(--success); margin-bottom: 2px;">Decrypted Token</p>
-                    <div class="code-display">${code}</div>
-                    <p style="text-align:center; font-size:9px; color:var(--text-muted);">Tap to copy</p>
+                    <div style="font-size: 18px; font-weight: 600; color: var(--primary); letter-spacing: 2px;">${code}</div>
                 </div>
             `;
             if(isAuto) { copyText(code, `🔑 Auto Copied: ${code}`); }
         } catch (e) { 
             resultDiv.innerHTML = `
-                <div style="color:var(--danger); font-size:11px; text-align:center; margin-top:8px; padding: 8px; border: 1px solid var(--danger); border-radius: 6px; background: rgba(239, 68, 68, 0.05);">
-                    <div style="font-weight: 600; margin-bottom: 2px;">Invalid Key</div>
-                    <div style="font-size: 10px; color: var(--text-muted); word-break: break-all;">Input: ${displaySecret}</div>
+                <div style="color:var(--danger); font-size:10px; text-align:center; margin-top:8px; padding: 6px; border: 1px dashed var(--danger); border-radius: 6px; background: rgba(239, 68, 68, 0.05);">
+                    <span style="font-weight: 600;">Invalid Key:</span> ${displaySecret}
                 </div>
             `; 
         }
     }
 
-    function getToggleUI(funcName, manualId, autoId, resultId) {
+    // CLEAN INTEGRATED TOGGLE UI
+    function getToggleUI(title, funcName, manualId, autoId, resultId) {
         return `
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; padding: 6px 10px; background: var(--input-bg); border-radius: 6px; border: 1px solid var(--card-border);">
-                <div>
-                    <div style="font-size: 11px; font-weight: 600;">Auto Paste Mode</div>
-                    <div style="font-size: 9px; color: var(--text-muted);">Requires clipboard access</div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <div style="font-size: 11px; font-weight: 600; color: var(--text-main); text-transform: uppercase;">${title}</div>
+                <div style="display: flex; align-items: center; gap: 4px;">
+                    <span style="font-size: 10px; color: var(--text-muted);">Auto Paste</span>
+                    <label class="switch" style="transform: scale(0.65); transform-origin: right center; margin: 0;">
+                        <input type="checkbox" onchange="${funcName}(this.checked, '${manualId}', '${autoId}', '${resultId}')" ${autoPasteEnabled ? 'checked' : ''}>
+                        <span class="slider"></span>
+                    </label>
                 </div>
-                <label class="switch" style="transform: scale(0.75); transform-origin: right center; margin: 0;">
-                    <input type="checkbox" onchange="${funcName}(this.checked, '${manualId}', '${autoId}', '${resultId}')" ${autoPasteEnabled ? 'checked' : ''}>
-                    <span class="slider"></span>
-                </label>
             </div>
         `;
     }
 
     const accountData = {
         bd: { 
-            male_first: ["Rahim", "Karim", "Arif", "Hasan", "Sajid", "Tarik", "Fahim", "Rakib", "Imran", "Mehedi"], 
-            female_first: ["Sadia", "Nusrat", "Ayesha", "Mariya", "Jannat", "Riya", "Suma", "Tania", "Mim", "Farhana"], 
-            last: ["Islam", "Uddin", "Akter", "Rahman", "Hossain", "Chowdhury", "Khan", "Ahmed", "Sikder", "Miah"] 
+            male_first: ["Rahim", "Karim", "Arif", "Hasan", "Sajid", "Tarik", "Fahim", "Rakib", "Imran", "Mehedi", "Sakib", "Tamim", "Sabbir", "Mahmud", "Rubel", "Raju", "Rifat", "Jony", "Sohel", "Nayeem", "Ashiq", "Shahin", "Tushar", "Alamin", "Faruk", "Rony", "Sujon", "Emon", "Babu", "Hridoy"], 
+            female_first: ["Sadia", "Nusrat", "Ayesha", "Mariya", "Jannat", "Riya", "Suma", "Tania", "Mim", "Farhana", "Mitu", "Khadija", "Fatema", "Sonia", "Nadia", "Isha", "Tisha", "Ruma", "Akhi", "Bristy", "Nipa", "Lima", "Munni", "Shilpi", "Asma", "Sima", "Rina", "Shampa"], 
+            last: ["Islam", "Uddin", "Akter", "Rahman", "Hossain", "Chowdhury", "Khan", "Ahmed", "Sikder", "Miah", "Haque", "Talukder", "Sarker", "Sheikh", "Mirza", "Biswas", "Ali", "Molla", "Khandaker", "Bhuiyan", "Kazi", "Hawlader", "Mahmud", "Hasan", "Saha"] 
         },
         usa: { 
-            male_first: ["John", "Michael", "David", "James", "William", "Robert", "Joseph", "Daniel", "Matthew", "Anthony"], 
-            female_first: ["Emma", "Olivia", "Sophia", "Isabella", "Mia", "Charlotte", "Amelia", "Ava", "Harper", "Evelyn"], 
-            last: ["Smith", "Johnson", "Williams", "Brown", "Jones", "Miller", "Davis", "Garcia", "Rodriguez", "Wilson"] 
+            male_first: ["John", "Michael", "David", "James", "William", "Robert", "Joseph", "Daniel", "Matthew", "Anthony", "Charles", "Thomas", "Christopher", "Brian", "Kevin", "Richard", "Steven", "Mark", "Jason", "Paul", "Ryan", "Gary", "Nicholas", "Eric", "Stephen", "Jacob", "Larry"], 
+            female_first: ["Emma", "Olivia", "Sophia", "Isabella", "Mia", "Charlotte", "Amelia", "Ava", "Harper", "Evelyn", "Abigail", "Emily", "Elizabeth", "Sofia", "Avery", "Chloe", "Ella", "Grace", "Victoria", "Riley", "Aria", "Lily", "Aubrey", "Zoey", "Penelope", "Lillian"], 
+            last: ["Smith", "Johnson", "Williams", "Brown", "Jones", "Miller", "Davis", "Garcia", "Rodriguez", "Wilson", "Martinez", "Anderson", "Taylor", "Thomas", "Moore", "Jackson", "Martin", "Lee", "Perez", "Thompson", "White", "Harris", "Sanchez", "Clark", "Ramirez", "Lewis"] 
         },
         uk: { 
-            male_first: ["George", "Harry", "Jack", "Oliver", "Charlie", "Thomas", "Arthur", "Noah", "Oscar", "James"], 
-            female_first: ["Amelia", "Margaret", "Lily", "Emily", "Jessica", "Isla", "Poppy", "Ava", "Isabella", "Sophie"], 
-            last: ["Evans", "Davies", "Wilson", "Taylor", "Thomas", "Roberts", "Walker", "Wright", "Robinson", "Thompson"] 
+            male_first: ["George", "Harry", "Jack", "Oliver", "Charlie", "Thomas", "Arthur", "Noah", "Oscar", "James", "William", "Henry", "Leo", "Alfie", "Freddie", "Archie", "Theo", "Edward", "Samuel", "Jacob", "Finley", "Lucas", "Isaac", "Ethan", "Harrison", "Mason", "Alexander"], 
+            female_first: ["Amelia", "Margaret", "Lily", "Emily", "Jessica", "Isla", "Poppy", "Ava", "Isabella", "Sophie", "Mia", "Ruby", "Grace", "Evie", "Chloe", "Florence", "Freya", "Alice", "Rosie", "Daisy", "Ella", "Sienna", "Matilda", "Evelyn", "Harper", "Willow"], 
+            last: ["Evans", "Davies", "Wilson", "Taylor", "Thomas", "Roberts", "Walker", "Wright", "Robinson", "Thompson", "White", "Hughes", "Edwards", "Green", "Hall", "Wood", "Jackson", "Clarke", "Turner", "Hill", "Martin", "Cooper", "Morris", "Ward", "Baker", "Harrison"] 
         },
         fr: { 
-            male_first: ["Lucas", "Hugo", "Arthur", "Louis", "Gabriel", "Jules", "Paul", "Leo", "Raphael", "Mathis"], 
-            female_first: ["Jade", "Louise", "Alice", "Chloé", "Léa", "Manon", "Emma", "Camille", "Sarah", "Juliette"], 
-            last: ["Martin", "Bernard", "Dubois", "Thomas", "Robert", "Richard", "Petit", "Durand", "Leroy", "Moreau"] 
+            male_first: ["Lucas", "Hugo", "Arthur", "Louis", "Gabriel", "Jules", "Paul", "Leo", "Raphael", "Mathis", "Ethan", "Nathan", "Tom", "Theo", "Adam", "Enzo", "Timeo", "Clement", "Maxime", "Antoine", "Victor", "Maël", "Noé", "Baptiste", "Axel", "Gabin", "Sacha"], 
+            female_first: ["Jade", "Louise", "Alice", "Chloé", "Léa", "Manon", "Emma", "Camille", "Sarah", "Juliette", "Lina", "Rose", "Mila", "Anna", "Ines", "Clara", "Lou", "Maëlys", "Julia", "Lola", "Zoé", "Margaux", "Romane", "Léna", "Lucie", "Agathe", "Nina"], 
+            last: ["Martin", "Bernard", "Dubois", "Thomas", "Robert", "Richard", "Petit", "Durand", "Leroy", "Moreau", "Simon", "Laurent", "Lefevre", "Michel", "Garcia", "David", "Bertrand", "Roux", "Vincent", "Fournier", "Morel", "Girard", "Andre", "Lefebvre", "Mercier", "Blanc"] 
         }
     };
     const countryNames = {'bd': 'Bangladesh', 'usa': 'USA', 'uk': 'UK', 'fr': 'France'};
@@ -386,74 +420,61 @@
         renderView(`
             <div class="data-card">
                 <h3 style="font-size: 14px; margin-bottom: 8px;">Vault Configuration</h3>
-                <div class="input-group">
-                    <input type="text" class="input-box" placeholder="Set global password here..." value="${vaultPassword}" oninput="saveVaultPassword(this.value)">
-                    <a href="mailto:contact@jih4d.com" class="dev-link">Contact Developer (JIH4D)</a>
-                </div>
+                <input type="text" class="input-box" placeholder="Set global password here..." value="${vaultPassword}" oninput="saveVaultPassword(this.value)">
             </div>
 
             <h3 style="margin-top: 16px;">Utility Modules</h3>
             <p class="desc">Select a tool to begin.</p>
             <div class="grid-2">
                 <button class="btn" onclick="showComingSoon()">Numbers</button>
-                <button class="btn" onclick="showIgChecker()">IG Intel</button>
+                <button class="btn" onclick="showSmsExtractor()">OTP Extract</button>
                 <button class="btn" onclick="show2FA()">2FA Core</button>
                 <button class="btn" onclick="showPlatformMenu()">Identity</button>
             </div>
         `, '');
     }
 
-    function showIgChecker() {
+    function showSmsExtractor() {
         renderView(`
-            <p class="desc">Check account availability.</p>
-            <div class="input-group">
-                <input type="text" id="igUsername" class="input-box" placeholder="@username" onkeypress="if(event.key === 'Enter') checkIgId()">
-                <a href="mailto:contact@jih4d.com" class="dev-link">Contact Developer (JIH4D)</a>
+            <p class="desc">Extract OTP codes from raw SMS text.</p>
+            
+            <div class="data-card">
+                ${getToggleUI('Extract Code', 'toggleOTPMode', 'manualMainOTP', 'autoMainOTP', 'otpResult')}
+
+                <div id="manualMainOTP" style="display: ${autoPasteEnabled ? 'none' : 'block'};">
+                    <input type="text" id="smsText" class="input-box" style="padding: 8px 10px;" placeholder="PASTE FULL SMS HERE" oninput="manualProcessOTP('smsText', 'otpResult')">
+                </div>
+
+                <div id="autoMainOTP" style="display: ${autoPasteEnabled ? 'block' : 'none'};">
+                    <button class="btn btn-primary" style="padding: 8px;" onclick="autoPasteProcessOTP('otpResult')">Auto Paste & Extract</button>
+                </div>
+
+                <div id="otpResult"></div>
             </div>
-            <button class="btn btn-primary" onclick="checkIgId()">Start Scan</button>
-            <div id="igResult" style="margin-top: 12px;"></div>
+
             <div class="divider"></div>
             <button class="btn" onclick="showMainMenu()">Back to Hub</button>
-        `, 'Instagram Intel');
-    }
-
-    function checkIgId() {
-        let username = document.getElementById('igUsername').value.trim().replace('@', '');
-        let resultDiv = document.getElementById('igResult');
-        if(!username) return;
-        resultDiv.innerHTML = `<div style="text-align:center; padding: 16px;"><div class="spinner"></div></div>`;
-        setTimeout(() => {
-            resultDiv.innerHTML = `
-                <div class="data-card fade-in" style="text-align:center; border-color: var(--success);">
-                    <h3 style="font-size:14px; color:var(--success); margin-bottom:6px;">Scan Complete</h3>
-                    <p style="margin-bottom: 12px; font-size:13px; font-weight:500;">User: @${username}</p>
-                    <a href="https://www.instagram.com/${username}/" target="_blank" class="btn btn-primary" style="text-decoration: none; display:block;">Open Profile</a>
-                </div>
-            `;
-        }, 1200);
+        `, 'OTP Extractor');
     }
 
     function show2FA() {
         renderView(`
             <p class="desc">Extract security tokens easily.</p>
             
-            ${getToggleUI('toggle2FAMode', 'manualMain2FA', 'autoMain2FA', 'totpResult')}
+            <div class="data-card">
+                ${getToggleUI('Decrypt Token', 'toggle2FAMode', 'manualMain2FA', 'autoMain2FA', 'totpResult')}
 
-            <div id="manualMain2FA" style="display: ${autoPasteEnabled ? 'none' : 'block'};">
-                <div class="input-group">
-                    <input type="text" id="secretKey" class="input-box" placeholder="PASTE SECRET KEY HERE" oninput="manualProcess2FA('secretKey', 'totpResult')">
-                    <a href="mailto:contact@jih4d.com" class="dev-link">Contact Developer (JIH4D)</a>
+                <div id="manualMain2FA" style="display: ${autoPasteEnabled ? 'none' : 'block'};">
+                    <input type="text" id="secretKey" class="input-box" style="padding: 8px 10px;" placeholder="PASTE SECRET KEY HERE" oninput="manualProcess2FA('secretKey', 'totpResult')">
                 </div>
+
+                <div id="autoMain2FA" style="display: ${autoPasteEnabled ? 'block' : 'none'};">
+                    <button class="btn btn-primary" style="padding: 8px;" onclick="autoPasteProcess2FA('totpResult')">Auto Paste & Decrypt</button>
+                </div>
+
+                <div id="totpResult"></div>
             </div>
 
-            <div id="autoMain2FA" style="display: ${autoPasteEnabled ? 'block' : 'none'};">
-                <div class="input-group">
-                    <button class="btn btn-primary" onclick="autoPasteProcess2FA('totpResult')">Auto Paste & Decrypt</button>
-                    <a href="mailto:contact@jih4d.com" class="dev-link">Contact Developer (JIH4D)</a>
-                </div>
-            </div>
-
-            <div id="totpResult"></div>
             <div class="divider"></div>
             <button class="btn" onclick="showMainMenu()">Back to Hub</button>
         `, '2FA Decryptor');
@@ -501,32 +522,39 @@
         `, 'Select Gender');
     }
 
-    // Helper function to get a truly random un-used name
-    function getUniqueName(type, gender) {
-        let listKey = `${selCoun}_${type === 'first' ? gender : 'last'}`;
-        let fullList = type === 'first' ? accountData[selCoun][`${gender}_first`] : accountData[selCoun]["last"];
+    function getUniqueFullName(gender) {
+        let listKey = `${selCoun}_${gender}`;
+        let firstList = accountData[selCoun][`${gender}_first`];
+        let lastList = accountData[selCoun]["last"];
         
-        let trackingList = type === 'first' ? usedFirstNames : usedLastNames;
-        
-        if (!trackingList[listKey]) {
-            trackingList[listKey] = [];
+        if (!usedNameCombinations[listKey]) {
+            usedNameCombinations[listKey] = [];
         }
 
-        // If all names used, reset the tracker to start fresh
-        if (trackingList[listKey].length >= fullList.length) {
-            trackingList[listKey] = [];
+        let maxCombos = firstList.length * lastList.length;
+
+        if (usedNameCombinations[listKey].length >= maxCombos) {
+            usedNameCombinations[listKey] = [];
         }
 
-        let availableNames = fullList.filter(name => !trackingList[listKey].includes(name));
-        let selectedName = availableNames[Math.floor(Math.random() * availableNames.length)];
+        let f, l, fullNameCombo;
+        let safety = 0;
         
-        trackingList[listKey].push(selectedName);
-        return selectedName;
+        do {
+            f = firstList[Math.floor(Math.random() * firstList.length)];
+            l = lastList[Math.floor(Math.random() * lastList.length)];
+            fullNameCombo = f + " " + l;
+            safety++;
+        } while (usedNameCombinations[listKey].includes(fullNameCombo) && safety < 2000);
+
+        usedNameCombinations[listKey].push(fullNameCombo);
+        return { f, l };
     }
 
     function generateName(g) {
-        let f = getUniqueName('first', g);
-        let l = getUniqueName('last', g);
+        let uniqueNameObj = getUniqueFullName(g);
+        let f = uniqueNameObj.f;
+        let l = uniqueNameObj.l;
         
         let textToCopy = '';
         let resultTextHTML = '';
@@ -555,36 +583,46 @@
             </div>
         ` : '';
 
+        // UI ASSEMBLE
         renderView(`
-            <div class="data-card" style="text-align:center; margin-bottom: 8px;">
+            <div class="data-card" style="text-align:center; margin-bottom: 12px;">
                 ${resultTextHTML}
                 ${passwordBlockHTML}
             </div>
 
-            <div style="font-size: 11px; font-weight: 600; color: var(--text-muted); margin-top: 12px; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Quick 2FA</div>
-            ${getToggleUI('toggle2FAMode', 'manualProfile2FA', 'autoProfile2FA', 'profile2FAResult')}
+            <!-- QUICK 2FA BOX -->
+            <div class="data-card" style="margin-bottom: 8px;">
+                ${getToggleUI('Quick 2FA', 'toggle2FAMode', 'manualProfile2FA', 'autoProfile2FA', 'profile2FAResult')}
 
-            <div id="manualProfile2FA" style="display: ${autoPasteEnabled ? 'none' : 'block'};">
-                <div class="input-group">
-                    <input type="text" id="secretKeyProfile" class="input-box" placeholder="PASTE SECRET KEY HERE" oninput="manualProcess2FA('secretKeyProfile', 'profile2FAResult')">
-                    <a href="mailto:contact@jih4d.com" class="dev-link">Contact Developer (JIH4D)</a>
+                <div id="manualProfile2FA" style="display: ${autoPasteEnabled ? 'none' : 'block'};">
+                    <input type="text" id="secretKeyProfile" class="input-box" style="padding: 8px 10px;" placeholder="PASTE SECRET KEY HERE" oninput="manualProcess2FA('secretKeyProfile', 'profile2FAResult')">
                 </div>
+
+                <div id="autoProfile2FA" style="display: ${autoPasteEnabled ? 'block' : 'none'};">
+                    <button class="btn btn-primary" style="padding: 8px;" onclick="autoPasteProcess2FA('profile2FAResult')">Auto Paste & Decrypt</button>
+                </div>
+
+                <div id="profile2FAResult"></div>
             </div>
 
-            <div id="autoProfile2FA" style="display: ${autoPasteEnabled ? 'block' : 'none'};">
-                <div class="input-group">
-                    <button class="btn btn-primary" onclick="autoPasteProcess2FA('profile2FAResult')">Auto Paste & Decrypt</button>
-                    <a href="mailto:contact@jih4d.com" class="dev-link">Contact Developer (JIH4D)</a>
-                </div>
-            </div>
+            <!-- QUICK OTP BOX -->
+            <div class="data-card" style="margin-bottom: 8px;">
+                ${getToggleUI('Quick OTP', 'toggleOTPMode', 'manualProfileOTP', 'autoProfileOTP', 'profileOTPResult')}
 
-            <div id="profile2FAResult"></div>
+                <div id="manualProfileOTP" style="display: ${autoPasteEnabled ? 'none' : 'block'};">
+                    <input type="text" id="smsTextProfile" class="input-box" style="padding: 8px 10px;" placeholder="PASTE FULL SMS HERE" oninput="manualProcessOTP('smsTextProfile', 'profileOTPResult')">
+                </div>
+
+                <div id="autoProfileOTP" style="display: ${autoPasteEnabled ? 'block' : 'none'};">
+                    <button class="btn btn-primary" style="padding: 8px;" onclick="autoPasteProcessOTP('profileOTPResult')">Auto Paste & Extract</button>
+                </div>
+
+                <div id="profileOTPResult"></div>
+            </div>
 
             <div class="grid-2" style="margin-top:12px;">
                 <button class="btn btn-primary" style="grid-column: span 2;" onclick="generateName('${g}')">Generate Again</button>
-                <button class="btn" onclick="selectCountry(selCoun)">Change Gender</button>
-                <button class="btn" onclick="selectPlatform(selPlat)">Change Locale</button>
-                <button class="btn" style="grid-column: span 2;" onclick="showMainMenu()">Back to Hub</button>
+                <button class="btn" style="grid-column: span 2;" onclick="selectCountry(selCoun)">Back</button>
             </div>
         `, pageDynamicTitle);
     }
