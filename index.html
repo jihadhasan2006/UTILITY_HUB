@@ -195,11 +195,10 @@
             border-top: 1px solid var(--card-border); 
             background: rgba(0,0,0,0.02);
         }
-        .footer span { color: var(--primary); font-weight: 600; }
         
         .footer-link {
             display: block;
-            margin-top: 6px;
+            margin-top: 0;
             font-size: 10px;
             color: var(--text-muted);
             text-decoration: none;
@@ -244,7 +243,6 @@
     <div class="content fade-in" id="app-content"></div>
 
     <div class="footer">
-        <div>V3.9 // <span>Secure Hub</span></div>
         <a href="mailto:contact@jih4d.com" class="footer-link">Contact Developer (JIH4D)</a>
     </div>
 </div>
@@ -434,9 +432,7 @@
                 <input type="text" class="input-box" placeholder="Set global password here..." value="${vaultPassword}" oninput="saveVaultPassword(this.value)">
             </div>
 
-            <h3 style="margin-top: 20px; letter-spacing: 0.5px;">Utility Modules</h3>
-            <p class="desc">Select a tool to begin.</p>
-            <div class="grid-2">
+            <div class="grid-2" style="margin-top: 16px;">
                 <button class="btn" onclick="showComingSoon()">Numbers</button>
                 <button class="btn" onclick="showSmsExtractor()">OTP Extract</button>
                 <button class="btn" onclick="show2FA()">2FA Core</button>
@@ -562,7 +558,6 @@
         return { f, l };
     }
 
-    // শুধুমাত্র ডাটা আপডেট করার ফাংশন, পেজ রিলোড হবে না
     function generateIdentityData(g) {
         let uniqueNameObj = getUniqueFullName(g);
         let f = uniqueNameObj.f;
@@ -598,11 +593,9 @@
             </div>
         ` : '';
 
-        // শুধুমাত্র আইডেন্টিটি বক্সের ভেতরের ডাটা আপডেট করা হবে
         document.getElementById('identity-data-box').innerHTML = resultTextHTML + passwordBlockHTML;
     }
 
-    // ২য় 2FA বক্স অন-অফ করার টগল ফাংশন
     function toggleExtra2FABox() {
         let container = document.getElementById('extra2FAContainer');
         let btn = document.getElementById('toggle2FABtn');
@@ -613,23 +606,35 @@
         } else {
             container.style.display = 'none';
             btn.innerText = "+ Add 2nd 2FA Box";
-            
-            // অপশনাল: বক্স হাইড করলে ইনপুট ক্লিয়ার করে দেওয়া
             let inp = document.getElementById('secretKeyProfile_2');
             if(inp) inp.value = '';
             document.getElementById('profile2FAResult_2').innerHTML = '';
         }
     }
 
-    // পেজের মূল স্ট্রাকচার তৈরি করার ফাংশন
+    // OTP বক্স টগল করার ফাংশন
+    function toggleOTPBox() {
+        let container = document.getElementById('otpContainer');
+        let btn = document.getElementById('toggleOTPBtn');
+        
+        if (container.style.display === 'none' || container.style.display === '') {
+            container.style.display = 'block';
+            btn.innerText = "- Remove Quick OTP Box";
+        } else {
+            container.style.display = 'none';
+            btn.innerText = "+ Add Quick OTP Box";
+            let inp = document.getElementById('smsTextProfile');
+            if(inp) inp.value = '';
+            document.getElementById('profileOTPResult').innerHTML = '';
+        }
+    }
+
     function initIdentityView(g) {
         let pageDynamicTitle = `${countryNames[selCoun]} - ${g.charAt(0).toUpperCase() + g.slice(1)}`;
 
         renderView(`
-            <!-- IDENTITY DATA BOX (WILL UPDATE DYNAMICALLY) -->
-            <div class="data-card" style="text-align:center; margin-bottom: 14px; min-height: 80px;" id="identity-data-box">
-                <!-- Data injected by generateIdentityData -->
-            </div>
+            <!-- IDENTITY DATA BOX -->
+            <div class="data-card" style="text-align:center; margin-bottom: 14px; min-height: 80px;" id="identity-data-box"></div>
 
             <!-- DEFAULT QUICK 2FA BOX 1 -->
             <div class="data-card" style="margin-bottom: 5px;">
@@ -655,13 +660,8 @@
                 <div id="profile2FAResult_2"></div>
             </div>
 
-            <!-- TOGGLE 2ND BOX BUTTON -->
-            <div style="text-align: right; margin-top: 2px; margin-bottom: 10px;">
-                <span id="toggle2FABtn" onclick="toggleExtra2FABox()" style="color: var(--primary); font-size: 11px; cursor: pointer; font-weight: 600; padding: 4px; display: inline-block;">+ Add 2nd 2FA Box</span>
-            </div>
-
-            <!-- QUICK OTP BOX -->
-            <div class="data-card" style="margin-bottom: 10px;">
+            <!-- QUICK OTP BOX (HIDDEN BY DEFAULT) -->
+            <div class="data-card fade-in" id="otpContainer" style="display: none; margin-bottom: 5px;">
                 ${getToggleUI('Quick OTP', 'toggleOTPMode', 'manualProfileOTP', 'autoProfileOTP', 'profileOTPResult')}
                 <div id="manualProfileOTP" style="display: ${autoPasteEnabled ? 'none' : 'block'};">
                     <input type="text" id="smsTextProfile" class="input-box" placeholder="PASTE FULL SMS HERE" oninput="manualProcessOTP('smsTextProfile', 'profileOTPResult')">
@@ -672,14 +672,18 @@
                 <div id="profileOTPResult"></div>
             </div>
 
+            <!-- TOGGLE BUTTONS FOR EXTRA BOXES -->
+            <div style="display: flex; justify-content: space-between; margin-top: 2px; margin-bottom: 10px; padding: 0 4px;">
+                <span id="toggle2FABtn" onclick="toggleExtra2FABox()" style="color: var(--primary); font-size: 11px; cursor: pointer; font-weight: 600;">+ Add 2nd 2FA Box</span>
+                <span id="toggleOTPBtn" onclick="toggleOTPBox()" style="color: var(--primary); font-size: 11px; cursor: pointer; font-weight: 600;">+ Add Quick OTP Box</span>
+            </div>
+
             <div class="grid-2" style="margin-top:16px;">
-                <!-- Generate বাটনে এখন শুধু ডাটা চেঞ্জ হবে, পুরো পেজ না -->
                 <button class="btn btn-primary" style="grid-column: span 2;" onclick="generateIdentityData('${g}')">Generate Again</button>
                 <button class="btn" style="grid-column: span 2;" onclick="selectCountry(selCoun)">Back</button>
             </div>
         `, pageDynamicTitle);
 
-        // পেজ তৈরি হওয়ার সাথে সাথে প্রথম ডাটাটি ঢুকিয়ে দেওয়া হচ্ছে
         generateIdentityData(g);
     }
 
