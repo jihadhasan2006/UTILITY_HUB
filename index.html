@@ -8,56 +8,66 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/otpauth/9.2.2/otpauth.umd.min.js"></script>
     <style>
         /* =========================================
-           CLEAN & COMPACT VARIABLE ENGINE
+           PREMIUM GLASSMORPHISM VARIABLE ENGINE
            ========================================= */
         :root {
-            --bg-base: #f3f4f6;
-            --card-bg: #ffffff;
-            --card-border: #e5e7eb;
+            --bg-base: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            --card-bg: rgba(255, 255, 255, 0.45);
+            --card-border: rgba(255, 255, 255, 0.6);
             --text-main: #1f2937;
-            --text-muted: #6b7280;
+            --text-muted: #4b5563;
             --primary: #3b82f6;
             --primary-hover: #2563eb;
-            --input-bg: #f9fafb;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --input-bg: rgba(255, 255, 255, 0.5);
+            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
             --danger: #ef4444;
             --success: #10b981;
         }
 
         .dark-theme {
-            --bg-base: #111827;
-            --card-bg: #1f2937;
-            --card-border: #374151;
+            --bg-base: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #111827 100%);
+            --card-bg: rgba(30, 41, 59, 0.4);
+            --card-border: rgba(255, 255, 255, 0.1);
             --text-main: #f9fafb;
             --text-muted: #9ca3af;
-            --primary: #3b82f6;
-            --primary-hover: #60a5fa;
-            --input-bg: #111827;
-            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+            --primary: #6366f1;
+            --primary-hover: #818cf8;
+            --input-bg: rgba(15, 23, 42, 0.5);
+            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.35);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            background-color: var(--bg-base);
+            background: var(--bg-base);
+            background-size: 200% 200%;
+            animation: gradientBG 15s ease infinite;
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            transition: background 0.3s ease;
+            transition: background 0.5s ease;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .app-container {
             background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--card-border);
             width: 90%;
             max-width: 400px;
             height: auto; 
             min-height: 500px;
             max-height: 96vh;
-            border-radius: 16px;
+            border-radius: 20px;
             box-shadow: var(--shadow);
             display: flex;
             flex-direction: column;
@@ -66,7 +76,7 @@
         }
 
         .header { 
-            padding: 14px 20px 0px; 
+            padding: 16px 20px 0px; 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
@@ -78,21 +88,23 @@
             font-weight: 600; 
             color: var(--text-main); 
             margin: 0;
+            letter-spacing: 0.5px;
         }
 
         .theme-btn { 
-            background: transparent; 
+            background: var(--input-bg); 
             border: 1px solid var(--card-border); 
-            width: 32px; height: 32px; 
-            border-radius: 8px; 
+            width: 36px; height: 36px; 
+            border-radius: 10px; 
             cursor: pointer; 
             color: var(--text-main);
-            transition: 0.2s;
+            transition: 0.3s;
             display: flex;
             justify-content: center;
             align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
-        .theme-btn:hover { background: var(--input-bg); }
+        .theme-btn:hover { background: var(--card-bg); transform: translateY(-2px); }
 
         .content { padding: 12px 20px 16px; flex-grow: 1; overflow-y: auto; scrollbar-width: none; }
         .content::-webkit-scrollbar { display: none; }
@@ -100,89 +112,101 @@
         h3 { font-size: 15px; margin-bottom: 4px; color: var(--text-main); font-weight: 600; }
         p.desc { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; line-height: 1.4; }
 
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
         .btn { 
-            background: var(--card-bg); 
+            background: var(--input-bg); 
             color: var(--text-main); 
             border: 1px solid var(--card-border); 
-            padding: 10px; 
-            border-radius: 8px; 
+            padding: 12px; 
+            border-radius: 10px; 
             font-size: 13px; 
-            font-weight: 500; 
+            font-weight: 600; 
             cursor: pointer; 
-            transition: 0.2s; 
+            transition: all 0.3s ease; 
             width: 100%;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
         }
-        .btn:hover { background: var(--input-bg); border-color: var(--text-muted); }
+        .btn:hover { background: var(--card-bg); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
 
-        .btn-primary { background: var(--primary); color: #fff; border: none; }
+        .btn-primary { 
+            background: var(--primary); 
+            color: #fff; 
+            border: none; 
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
         .btn-primary:hover { background: var(--primary-hover); }
 
         .input-group { margin-bottom: 12px; }
         .input-box { 
             width: 100%; 
-            padding: 10px 12px; 
+            padding: 12px 14px; 
             border: 1px solid var(--card-border); 
             background: var(--input-bg); 
             color: var(--text-main); 
-            border-radius: 8px; 
+            border-radius: 10px; 
             font-size: 13px; 
             outline: none; 
-            transition: 0.2s; 
+            transition: all 0.3s ease; 
         }
-        .input-box:focus { border-color: var(--primary); }
+        .input-box:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1); }
+        .input-box::placeholder { color: var(--text-muted); opacity: 0.7; }
 
         .switch { position: relative; display: inline-block; width: 40px; height: 20px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--card-border); transition: .3s; border-radius: 20px; }
-        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: #fff; transition: .3s; border-radius: 50%; }
-        input:checked + .slider { background-color: var(--primary); }
-        input:checked + .slider:before { transform: translateX(20px); }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255,255,255,0.2); border: 1px solid var(--card-border); transition: .3s; border-radius: 20px; }
+        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 2px; bottom: 2px; background-color: var(--text-main); transition: .3s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--primary); border-color: var(--primary); }
+        input:checked + .slider:before { transform: translateX(20px); background-color: #fff; }
 
         .data-card { 
             background: var(--input-bg); 
             border: 1px solid var(--card-border); 
-            padding: 12px; 
-            border-radius: 8px; 
-            margin-bottom: 12px; 
+            padding: 14px; 
+            border-radius: 12px; 
+            margin-bottom: 14px; 
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
 
         .clickable-data { 
             color: var(--primary); 
-            font-weight: 500; 
+            font-weight: 600; 
             cursor: pointer; 
-            padding: 8px; 
+            padding: 10px; 
             background: var(--card-bg); 
             border: 1px solid var(--card-border);
-            border-radius: 6px; 
-            transition: 0.2s; 
+            border-radius: 8px; 
+            transition: all 0.2s; 
             display: inline-block; 
             margin: 2px; 
             font-size: 13px;
         }
-        .clickable-data:hover { border-color: var(--primary); }
+        .clickable-data:hover { border-color: var(--primary); transform: scale(1.02); }
 
-        .divider { height: 1px; background: var(--card-border); margin: 12px 0; }
+        .divider { height: 1px; background: var(--card-border); margin: 14px 0; }
 
         .footer { 
             text-align: center; 
-            padding: 12px; 
+            padding: 14px; 
             font-size: 11px; 
             color: var(--text-muted); 
             border-top: 1px solid var(--card-border); 
+            background: rgba(0,0,0,0.02);
         }
-        .footer span { color: var(--primary); }
+        .footer span { color: var(--primary); font-weight: 600; }
         
         .footer-link {
             display: block;
             margin-top: 6px;
             font-size: 10px;
-            color: var(--primary);
+            color: var(--text-muted);
             text-decoration: none;
             font-weight: 500;
+            transition: 0.2s;
         }
-        .footer-link:hover { text-decoration: underline; }
+        .footer-link:hover { color: var(--primary); }
 
         #toast { 
             visibility: hidden; 
@@ -190,22 +214,23 @@
             background: var(--text-main); 
             color: var(--bg-base); 
             text-align: center; 
-            border-radius: 8px; 
-            padding: 10px; 
+            border-radius: 10px; 
+            padding: 12px; 
             position: fixed; 
             z-index: 100; 
             bottom: 30px; 
             left: 50%; 
             transform: translate(-50%, 20px); 
             font-size: 12px; 
-            font-weight: 500; 
+            font-weight: 600; 
             opacity: 0; 
-            transition: 0.3s ease; 
+            transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
         #toast.show { visibility: visible; opacity: 1; transform: translate(-50%, 0); }
 
-        .fade-in { animation: fadeIn 0.3s ease forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.4s ease forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="dark-theme">
@@ -232,6 +257,7 @@
     
     let vaultPassword = localStorage.getItem('jih4d_vault_pass') || '';
     let usedNameCombinations = {};
+    let igCounter = parseInt(localStorage.getItem('jih4d_ig_counter')) || 1;
 
     function saveVaultPassword(val) {
         vaultPassword = val;
@@ -254,24 +280,19 @@
     }
 
     function toggle2FAMode(checked, manualId, autoId, resultId) {
-        autoPasteEnabled = checked;
+        autoPasteEnabled = checked; 
         document.getElementById(manualId).style.display = checked ? 'none' : 'block';
         document.getElementById(autoId).style.display = checked ? 'block' : 'none';
         document.getElementById(resultId).innerHTML = ''; 
-        
         let inp = document.getElementById(manualId).querySelector('input');
         if(inp) inp.value = '';
     }
 
-    // =========================================
-    // UPDATED OTP EXTRACTOR ENGINE
-    // =========================================
     function toggleOTPMode(checked, manualId, autoId, resultId) {
         autoPasteEnabled = checked;
         document.getElementById(manualId).style.display = checked ? 'none' : 'block';
         document.getElementById(autoId).style.display = checked ? 'block' : 'none';
         document.getElementById(resultId).innerHTML = ''; 
-        
         let inp = document.getElementById(manualId).querySelector('input');
         if(inp) inp.value = '';
     }
@@ -293,36 +314,29 @@
         const resultDiv = document.getElementById(targetId);
         if (!text.trim()) { resultDiv.innerHTML = ``; return; }
 
-        // Updated Regex: Matches 5 to 8 digits OR formats like "417 806" or "123-456"
         let match = text.match(/\b\d{3}[\s-]?\d{3,5}\b|\b\d{5,8}\b/);
         
         if (match) {
-            // Remove spaces or hyphens to get purely numbers (e.g. 417 806 -> 417806)
             let code = match[0].replace(/[\s-]/g, ''); 
-            
             let pastedTextHTML = isAuto ? `<div style="font-size: 9px; color: var(--text-muted); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">SMS: ${text}</div>` : '';
 
             resultDiv.innerHTML = `
-                <div class="clickable-data fade-in" style="width: 100%; text-align: center; border-color: var(--primary); padding: 8px; margin-top: 8px; margin-bottom: 0;" onclick="copyText('${code}', '💬 Code Copied: ${code}')">
+                <div class="clickable-data fade-in" style="width: 100%; text-align: center; border-color: var(--primary); padding: 12px; margin-top: 8px; margin-bottom: 0;" onclick="copyText('${code}', '💬 Code Copied: ${code}')">
                     ${pastedTextHTML}
-                    <div style="font-size: 18px; font-weight: 600; color: var(--primary); letter-spacing: 2px;">${code}</div>
+                    <div style="font-size: 20px; font-weight: 700; color: var(--primary); letter-spacing: 3px;">${code}</div>
                 </div>
             `;
             if(isAuto) { copyText(code, `💬 Auto Copied: ${code}`); }
         } else {
             let displaySecret = text.length > 25 ? text.substring(0, 25) + '...' : text;
             resultDiv.innerHTML = `
-                <div style="color:var(--danger); font-size:10px; text-align:center; margin-top:8px; padding: 6px; border: 1px dashed var(--danger); border-radius: 6px; background: rgba(239, 68, 68, 0.05);">
+                <div style="color:var(--danger); font-size:10px; text-align:center; margin-top:8px; padding: 8px; border: 1px dashed var(--danger); border-radius: 8px; background: rgba(239, 68, 68, 0.05);">
                     <span style="font-weight: 600;">No Code Found:</span> ${displaySecret}
                 </div>
             `; 
         }
     }
 
-
-    // =========================================
-    // 2FA DECRYPT ENGINE
-    // =========================================
     function manualProcess2FA(inputId, targetId) {
         let secret = document.getElementById(inputId).value.replace(/\s+/g, '').toUpperCase();
         execute2FACore(secret, targetId, false);
@@ -346,34 +360,31 @@
         try {
             let totp = new OTPAuth.TOTP({ algorithm: 'SHA1', digits: 6, period: 30, secret: OTPAuth.Secret.fromBase32(secret) });
             let code = totp.generate();
-            
             let pastedKeyHTML = isAuto ? `<div style="font-size: 9px; color: var(--text-muted); margin-bottom: 2px;">Key: ${secret}</div>` : '';
 
-            // COMPACT RESULT BOX
             resultDiv.innerHTML = `
-                <div class="clickable-data fade-in" style="width: 100%; text-align: center; border-color: var(--primary); padding: 8px; margin-top: 8px; margin-bottom: 0;" onclick="copyText('${code}', '🔑 Token Copied: ${code}')">
+                <div class="clickable-data fade-in" style="width: 100%; text-align: center; border-color: var(--primary); padding: 12px; margin-top: 8px; margin-bottom: 0;" onclick="copyText('${code}', '🔑 Token Copied: ${code}')">
                     ${pastedKeyHTML}
-                    <div style="font-size: 18px; font-weight: 600; color: var(--primary); letter-spacing: 2px;">${code}</div>
+                    <div style="font-size: 20px; font-weight: 700; color: var(--primary); letter-spacing: 3px;">${code}</div>
                 </div>
             `;
             if(isAuto) { copyText(code, `🔑 Auto Copied: ${code}`); }
         } catch (e) { 
             resultDiv.innerHTML = `
-                <div style="color:var(--danger); font-size:10px; text-align:center; margin-top:8px; padding: 6px; border: 1px dashed var(--danger); border-radius: 6px; background: rgba(239, 68, 68, 0.05);">
+                <div style="color:var(--danger); font-size:10px; text-align:center; margin-top:8px; padding: 8px; border: 1px dashed var(--danger); border-radius: 8px; background: rgba(239, 68, 68, 0.05);">
                     <span style="font-weight: 600;">Invalid Key:</span> ${displaySecret}
                 </div>
             `; 
         }
     }
 
-    // CLEAN INTEGRATED TOGGLE UI
     function getToggleUI(title, funcName, manualId, autoId, resultId) {
         return `
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                <div style="font-size: 11px; font-weight: 600; color: var(--text-main); text-transform: uppercase;">${title}</div>
-                <div style="display: flex; align-items: center; gap: 4px;">
-                    <span style="font-size: 10px; color: var(--text-muted);">Auto Paste</span>
-                    <label class="switch" style="transform: scale(0.65); transform-origin: right center; margin: 0;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <div style="font-size: 11px; font-weight: 600; color: var(--text-main); text-transform: uppercase; letter-spacing: 0.5px;">${title}</div>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                    <span style="font-size: 10px; color: var(--text-muted); font-weight: 500;">Auto Paste</span>
+                    <label class="switch" style="transform: scale(0.7); transform-origin: right center; margin: 0;">
                         <input type="checkbox" onchange="${funcName}(this.checked, '${manualId}', '${autoId}', '${resultId}')" ${autoPasteEnabled ? 'checked' : ''}>
                         <span class="slider"></span>
                     </label>
@@ -419,11 +430,11 @@
     function showMainMenu() {
         renderView(`
             <div class="data-card">
-                <h3 style="font-size: 14px; margin-bottom: 8px;">Vault Configuration</h3>
+                <h3 style="font-size: 14px; margin-bottom: 10px;">Vault Configuration</h3>
                 <input type="text" class="input-box" placeholder="Set global password here..." value="${vaultPassword}" oninput="saveVaultPassword(this.value)">
             </div>
 
-            <h3 style="margin-top: 16px;">Utility Modules</h3>
+            <h3 style="margin-top: 20px; letter-spacing: 0.5px;">Utility Modules</h3>
             <p class="desc">Select a tool to begin.</p>
             <div class="grid-2">
                 <button class="btn" onclick="showComingSoon()">Numbers</button>
@@ -431,7 +442,7 @@
                 <button class="btn" onclick="show2FA()">2FA Core</button>
                 <button class="btn" onclick="showPlatformMenu()">Identity</button>
             </div>
-        `, '');
+        `, 'Dashboard');
     }
 
     function showSmsExtractor() {
@@ -442,11 +453,11 @@
                 ${getToggleUI('Extract Code', 'toggleOTPMode', 'manualMainOTP', 'autoMainOTP', 'otpResult')}
 
                 <div id="manualMainOTP" style="display: ${autoPasteEnabled ? 'none' : 'block'};">
-                    <input type="text" id="smsText" class="input-box" style="padding: 8px 10px;" placeholder="PASTE FULL SMS HERE" oninput="manualProcessOTP('smsText', 'otpResult')">
+                    <input type="text" id="smsText" class="input-box" placeholder="PASTE FULL SMS HERE" oninput="manualProcessOTP('smsText', 'otpResult')">
                 </div>
 
                 <div id="autoMainOTP" style="display: ${autoPasteEnabled ? 'block' : 'none'};">
-                    <button class="btn btn-primary" style="padding: 8px;" onclick="autoPasteProcessOTP('otpResult')">Auto Paste & Extract</button>
+                    <button class="btn btn-primary" onclick="autoPasteProcessOTP('otpResult')">Auto Paste & Extract</button>
                 </div>
 
                 <div id="otpResult"></div>
@@ -465,11 +476,11 @@
                 ${getToggleUI('Decrypt Token', 'toggle2FAMode', 'manualMain2FA', 'autoMain2FA', 'totpResult')}
 
                 <div id="manualMain2FA" style="display: ${autoPasteEnabled ? 'none' : 'block'};">
-                    <input type="text" id="secretKey" class="input-box" style="padding: 8px 10px;" placeholder="PASTE SECRET KEY HERE" oninput="manualProcess2FA('secretKey', 'totpResult')">
+                    <input type="text" id="secretKey" class="input-box" placeholder="PASTE SECRET KEY HERE" oninput="manualProcess2FA('secretKey', 'totpResult')">
                 </div>
 
                 <div id="autoMain2FA" style="display: ${autoPasteEnabled ? 'block' : 'none'};">
-                    <button class="btn btn-primary" style="padding: 8px;" onclick="autoPasteProcess2FA('totpResult')">Auto Paste & Decrypt</button>
+                    <button class="btn btn-primary" onclick="autoPasteProcess2FA('totpResult')">Auto Paste & Decrypt</button>
                 </div>
 
                 <div id="totpResult"></div>
@@ -514,8 +525,8 @@
         renderView(`
             <p class="desc">Choose identity type.</p>
             <div class="grid-2">
-                <button class="btn" onclick="generateName('male')">Male</button>
-                <button class="btn" onclick="generateName('female')">Female</button>
+                <button class="btn" onclick="initIdentityView('male')">Male</button>
+                <button class="btn" onclick="initIdentityView('female')">Female</button>
             </div>
             <div class="divider"></div>
             <button class="btn" onclick="selectPlatform(selPlat)">Back</button>
@@ -551,80 +562,125 @@
         return { f, l };
     }
 
-    function generateName(g) {
+    // শুধুমাত্র ডাটা আপডেট করার ফাংশন, পেজ রিলোড হবে না
+    function generateIdentityData(g) {
         let uniqueNameObj = getUniqueFullName(g);
         let f = uniqueNameObj.f;
         let l = uniqueNameObj.l;
         
         let textToCopy = '';
         let resultTextHTML = '';
-        let pageDynamicTitle = `${countryNames[selCoun]} - ${g.charAt(0).toUpperCase() + g.slice(1)}`;
 
         if (selPlat === 'fb') {
             textToCopy = `${f} ${l}`;
             resultTextHTML = `
-                <div class="clickable-data" style="font-size: 15px; width:100%; text-align:center; margin-bottom:6px;" onclick="copyText('${textToCopy}', '👤 Name Copied!')">${textToCopy}</div>
-                <div style="display:flex; gap:6px;">
+                <div class="clickable-data fade-in" style="font-size: 16px; width:100%; text-align:center; margin-bottom:8px;" onclick="copyText('${textToCopy}', '👤 Name Copied!')">${textToCopy}</div>
+                <div style="display:flex; gap:8px;" class="fade-in">
                     <div class="clickable-data" style="flex:1; text-align:center;" onclick="copyText('${f}', '👤 First Name Copied!')">${f}</div>
                     <div class="clickable-data" style="flex:1; text-align:center;" onclick="copyText('${l}', '👤 Last Name Copied!')">${l}</div>
                 </div>`;
         } else {
-            textToCopy = `${f.toLowerCase()}_${l.toLowerCase()}_${Math.floor(Math.random()*9000)+1000}`;
+            let formattedCounter = String(igCounter).padStart(2, '0');
+            textToCopy = `${f.toLowerCase()}_${l.toLowerCase()}_${formattedCounter}`;
+            igCounter++;
+            localStorage.setItem('jih4d_ig_counter', igCounter); 
+            
             resultTextHTML = `
-                <div class="clickable-data" style="font-size: 14px; width:100%; text-align:center;" onclick="copyText('${textToCopy}', '📸 Username Copied!')">${textToCopy}</div>
+                <div class="clickable-data fade-in" style="font-size: 15px; width:100%; text-align:center;" onclick="copyText('${textToCopy}', '📸 Username Copied!')">${textToCopy}</div>
             `;
         }
 
         let passwordBlockHTML = vaultPassword ? `
-            <div class="divider" style="margin: 8px 0;"></div>
-            <div style="font-size:11px; color:var(--text-muted); margin-bottom:6px;">Vault Password</div>
-            <div class="clickable-data" style="font-size: 13px; width:100%; text-align:center;" onclick="copyText('${vaultPassword.replace(/'/g, "\\'")}', '🔑 Password Copied!')">
+            <div class="divider fade-in" style="margin: 10px 0;"></div>
+            <div class="fade-in" style="font-size:11px; color:var(--text-muted); margin-bottom:6px; font-weight: 500;">Vault Password</div>
+            <div class="clickable-data fade-in" style="font-size: 13px; width:100%; text-align:center;" onclick="copyText('${vaultPassword.replace(/'/g, "\\'")}', '🔑 Password Copied!')">
                 ${vaultPassword}
             </div>
         ` : '';
 
-        // UI ASSEMBLE
+        // শুধুমাত্র আইডেন্টিটি বক্সের ভেতরের ডাটা আপডেট করা হবে
+        document.getElementById('identity-data-box').innerHTML = resultTextHTML + passwordBlockHTML;
+    }
+
+    // ২য় 2FA বক্স অন-অফ করার টগল ফাংশন
+    function toggleExtra2FABox() {
+        let container = document.getElementById('extra2FAContainer');
+        let btn = document.getElementById('toggle2FABtn');
+        
+        if (container.style.display === 'none' || container.style.display === '') {
+            container.style.display = 'block';
+            btn.innerText = "- Remove 2nd 2FA Box";
+        } else {
+            container.style.display = 'none';
+            btn.innerText = "+ Add 2nd 2FA Box";
+            
+            // অপশনাল: বক্স হাইড করলে ইনপুট ক্লিয়ার করে দেওয়া
+            let inp = document.getElementById('secretKeyProfile_2');
+            if(inp) inp.value = '';
+            document.getElementById('profile2FAResult_2').innerHTML = '';
+        }
+    }
+
+    // পেজের মূল স্ট্রাকচার তৈরি করার ফাংশন
+    function initIdentityView(g) {
+        let pageDynamicTitle = `${countryNames[selCoun]} - ${g.charAt(0).toUpperCase() + g.slice(1)}`;
+
         renderView(`
-            <div class="data-card" style="text-align:center; margin-bottom: 12px;">
-                ${resultTextHTML}
-                ${passwordBlockHTML}
+            <!-- IDENTITY DATA BOX (WILL UPDATE DYNAMICALLY) -->
+            <div class="data-card" style="text-align:center; margin-bottom: 14px; min-height: 80px;" id="identity-data-box">
+                <!-- Data injected by generateIdentityData -->
             </div>
 
-            <!-- QUICK 2FA BOX -->
-            <div class="data-card" style="margin-bottom: 8px;">
-                ${getToggleUI('Quick 2FA', 'toggle2FAMode', 'manualProfile2FA', 'autoProfile2FA', 'profile2FAResult')}
-
+            <!-- DEFAULT QUICK 2FA BOX 1 -->
+            <div class="data-card" style="margin-bottom: 5px;">
+                ${getToggleUI('Quick 2FA (1)', 'toggle2FAMode', 'manualProfile2FA', 'autoProfile2FA', 'profile2FAResult')}
                 <div id="manualProfile2FA" style="display: ${autoPasteEnabled ? 'none' : 'block'};">
-                    <input type="text" id="secretKeyProfile" class="input-box" style="padding: 8px 10px;" placeholder="PASTE SECRET KEY HERE" oninput="manualProcess2FA('secretKeyProfile', 'profile2FAResult')">
+                    <input type="text" id="secretKeyProfile" class="input-box" placeholder="PASTE SECRET KEY 1 HERE" oninput="manualProcess2FA('secretKeyProfile', 'profile2FAResult')">
                 </div>
-
                 <div id="autoProfile2FA" style="display: ${autoPasteEnabled ? 'block' : 'none'};">
-                    <button class="btn btn-primary" style="padding: 8px;" onclick="autoPasteProcess2FA('profile2FAResult')">Auto Paste & Decrypt</button>
+                    <button class="btn btn-primary" onclick="autoPasteProcess2FA('profile2FAResult')">Auto Paste & Decrypt 1</button>
                 </div>
-
                 <div id="profile2FAResult"></div>
             </div>
 
+            <!-- EXTRA 2FA BOX 2 (HIDDEN BY DEFAULT) -->
+            <div class="data-card fade-in" id="extra2FAContainer" style="display: none; margin-bottom: 5px;">
+                ${getToggleUI('Quick 2FA (2)', 'toggle2FAMode', 'manualProfile2FA_2', 'autoProfile2FA_2', 'profile2FAResult_2')}
+                <div id="manualProfile2FA_2" style="display: ${autoPasteEnabled ? 'none' : 'block'};">
+                    <input type="text" id="secretKeyProfile_2" class="input-box" placeholder="PASTE SECRET KEY 2 HERE" oninput="manualProcess2FA('secretKeyProfile_2', 'profile2FAResult_2')">
+                </div>
+                <div id="autoProfile2FA_2" style="display: ${autoPasteEnabled ? 'block' : 'none'};">
+                    <button class="btn btn-primary" onclick="autoPasteProcess2FA('profile2FAResult_2')">Auto Paste & Decrypt 2</button>
+                </div>
+                <div id="profile2FAResult_2"></div>
+            </div>
+
+            <!-- TOGGLE 2ND BOX BUTTON -->
+            <div style="text-align: right; margin-top: 2px; margin-bottom: 10px;">
+                <span id="toggle2FABtn" onclick="toggleExtra2FABox()" style="color: var(--primary); font-size: 11px; cursor: pointer; font-weight: 600; padding: 4px; display: inline-block;">+ Add 2nd 2FA Box</span>
+            </div>
+
             <!-- QUICK OTP BOX -->
-            <div class="data-card" style="margin-bottom: 8px;">
+            <div class="data-card" style="margin-bottom: 10px;">
                 ${getToggleUI('Quick OTP', 'toggleOTPMode', 'manualProfileOTP', 'autoProfileOTP', 'profileOTPResult')}
-
                 <div id="manualProfileOTP" style="display: ${autoPasteEnabled ? 'none' : 'block'};">
-                    <input type="text" id="smsTextProfile" class="input-box" style="padding: 8px 10px;" placeholder="PASTE FULL SMS HERE" oninput="manualProcessOTP('smsTextProfile', 'profileOTPResult')">
+                    <input type="text" id="smsTextProfile" class="input-box" placeholder="PASTE FULL SMS HERE" oninput="manualProcessOTP('smsTextProfile', 'profileOTPResult')">
                 </div>
-
                 <div id="autoProfileOTP" style="display: ${autoPasteEnabled ? 'block' : 'none'};">
-                    <button class="btn btn-primary" style="padding: 8px;" onclick="autoPasteProcessOTP('profileOTPResult')">Auto Paste & Extract</button>
+                    <button class="btn btn-primary" onclick="autoPasteProcessOTP('profileOTPResult')">Auto Paste & Extract</button>
                 </div>
-
                 <div id="profileOTPResult"></div>
             </div>
 
-            <div class="grid-2" style="margin-top:12px;">
-                <button class="btn btn-primary" style="grid-column: span 2;" onclick="generateName('${g}')">Generate Again</button>
+            <div class="grid-2" style="margin-top:16px;">
+                <!-- Generate বাটনে এখন শুধু ডাটা চেঞ্জ হবে, পুরো পেজ না -->
+                <button class="btn btn-primary" style="grid-column: span 2;" onclick="generateIdentityData('${g}')">Generate Again</button>
                 <button class="btn" style="grid-column: span 2;" onclick="selectCountry(selCoun)">Back</button>
             </div>
         `, pageDynamicTitle);
+
+        // পেজ তৈরি হওয়ার সাথে সাথে প্রথম ডাটাটি ঢুকিয়ে দেওয়া হচ্ছে
+        generateIdentityData(g);
     }
 
     function showComingSoon() {
