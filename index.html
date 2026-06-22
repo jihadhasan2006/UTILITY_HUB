@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JIH4D // PREMIUM UTIL V3.9</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>AuthGenix // Premium Tool</title>
+    <!-- Favicon (Browser Tab Icon) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233b82f6'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/otpauth/9.2.2/otpauth.umd.min.js"></script>
     <style>
         /* =========================================
@@ -105,17 +107,34 @@
             transition: all 0.3s ease;
         }
 
+        /* HEADER & LOGO STYLING */
         .header { 
             padding: 16px 20px 0px; 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
-            min-height: 48px;
+            min-height: 54px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            stroke: var(--primary);
+            stroke-width: 2.5;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
         
         .header h2 {
-            font-size: 15px; 
-            font-weight: 600; 
+            font-size: 16px; 
+            font-weight: 700; 
             color: var(--text-main); 
             margin: 0;
             letter-spacing: 0.5px;
@@ -272,7 +291,14 @@
 
 <div class="app-container">
     <div class="header">
-        <h2 id="page-title"></h2>
+        <div class="logo-container">
+            <svg class="logo-icon" viewBox="0 0 24 24">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <polyline points="9 12 11 14 15 10"></polyline>
+            </svg>
+            <h2 id="page-title"></h2>
+        </div>
+
         <div class="header-icons">
             <button class="theme-btn" onclick="showMainMenu()" title="Home">🏠</button>
             <button class="theme-btn" onclick="cycleTheme()" id="themeIcon" title="Change Theme">🌊</button>
@@ -282,6 +308,7 @@
     <div class="content fade-in" id="app-content"></div>
 
     <div class="footer">
+        <div style="font-weight: 600; margin-bottom: 6px; letter-spacing: 0.5px;">AuthGenix // Secure Hub</div>
         <a href="mailto:contact@jih4d.com" class="footer-link">Contact Developer (JIH4D)</a>
     </div>
 </div>
@@ -538,7 +565,7 @@
             </div>
 
             <div class="divider"></div>
-            <button class="btn" onclick="showMainMenu()">Back to Hub</button>
+            <button class="btn" style="grid-column: span 2;" onclick="showMainMenu()">Back to Hub</button>
         `, 'OTP Extractor');
     }
 
@@ -561,7 +588,7 @@
             </div>
 
             <div class="divider"></div>
-            <button class="btn" onclick="showMainMenu()">Back to Hub</button>
+            <button class="btn" style="grid-column: span 2;" onclick="showMainMenu()">Back to Hub</button>
         `, '2FA Decryptor');
     }
 
@@ -575,7 +602,7 @@
                 <button class="btn btn-primary" onclick="selectPlatform('ig')">Instagram</button>
             </div>
             <div class="divider"></div>
-            <button class="btn" onclick="showMainMenu()">Back to Hub</button>
+            <button class="btn" style="grid-column: span 2;" onclick="showMainMenu()">Back to Hub</button>
         `, 'Identity Generator');
     }
 
@@ -590,7 +617,7 @@
                 <button class="btn" onclick="selectCountry('fr')">FRA</button>
             </div>
             <div class="divider"></div>
-            <button class="btn" onclick="showPlatformMenu()">Back</button>
+            <button class="btn" style="grid-column: span 2;" onclick="showPlatformMenu()">Back</button>
         `, 'Select Locale');
     }
 
@@ -603,7 +630,7 @@
                 <button class="btn" onclick="initIdentityView('female')">Female</button>
             </div>
             <div class="divider"></div>
-            <button class="btn" onclick="selectPlatform(selPlat)">Back</button>
+            <button class="btn" style="grid-column: span 2;" onclick="selectPlatform(selPlat)">Back</button>
         `, 'Select Gender');
     }
 
@@ -756,8 +783,8 @@
             </div>
 
             <div class="grid-2" style="margin-top:16px;">
-                <button class="btn btn-primary" onclick="generateIdentityData('${g}')">Generate Again</button>
-                <button class="btn" onclick="selectCountry(selCoun)">Back</button>
+                <button class="btn btn-primary" style="grid-column: span 2;" onclick="generateIdentityData('${g}')">Generate Again</button>
+                <button class="btn" style="grid-column: span 2;" onclick="selectCountry(selCoun)">Back</button>
             </div>
         `, pageDynamicTitle);
 
@@ -769,7 +796,7 @@
             <div style="text-align:center; padding-top: 30px;">
                 <div style="font-size:40px; margin-bottom: 12px;">🚀</div>
                 <p class="desc">This feature will be available soon.</p>
-                <button class="btn" style="margin-top: 20px;" onclick="showMainMenu()">Back to Hub</button>
+                <button class="btn" style="margin-top: 20px;" style="grid-column: span 2;" onclick="showMainMenu()">Back to Hub</button>
             </div>
         `, 'Under Development');
     }
