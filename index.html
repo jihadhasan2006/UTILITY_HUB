@@ -121,6 +121,11 @@
             letter-spacing: 0.5px;
         }
 
+        .header-icons {
+            display: flex;
+            gap: 8px;
+        }
+
         .theme-btn { 
             background: var(--input-bg); 
             border: 1px solid var(--card-border); 
@@ -133,6 +138,7 @@
             justify-content: center;
             align-items: center;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            font-size: 16px;
         }
         .theme-btn:hover { background: var(--card-bg); transform: translateY(-2px); }
 
@@ -267,7 +273,10 @@
 <div class="app-container">
     <div class="header">
         <h2 id="page-title"></h2>
-        <button class="theme-btn" onclick="quickToggleTheme()" id="themeIcon">🌙</button>
+        <div class="header-icons">
+            <button class="theme-btn" onclick="showMainMenu()" title="Home">🏠</button>
+            <button class="theme-btn" onclick="cycleTheme()" id="themeIcon" title="Change Theme">🌊</button>
+        </div>
     </div>
     
     <div class="content fade-in" id="app-content"></div>
@@ -280,41 +289,47 @@
 <div id="toast">✅ Copied</div>
 
 <script>
-    // Theme Engine Logic
+    // =========================================
+    // THEME CYCLING LOGIC
+    // =========================================
+    const themeSequence = ['theme-light', 'theme-ocean', 'theme-cyber', 'theme-ios'];
+    const themeData = {
+        'theme-light': { emoji: '☀️', name: 'Light Theme' },
+        'theme-ocean': { emoji: '🌊', name: 'Ocean Aqua' },
+        'theme-cyber': { emoji: '🚀', name: 'Cyber Neon' },
+        'theme-ios': { emoji: '🍏', name: 'iOS Dark' }
+    };
+
     let currentTheme = localStorage.getItem('jih4d_theme') || 'theme-ocean';
+    if (!themeSequence.includes(currentTheme)) currentTheme = 'theme-ocean';
+    
     document.body.className = currentTheme;
     updateThemeIcon(currentTheme);
 
-    function setTheme(themeName) {
-        document.body.className = themeName;
-        localStorage.setItem('jih4d_theme', themeName);
-        currentTheme = themeName;
-        updateThemeIcon(themeName);
+    function cycleTheme() {
+        let currentIndex = themeSequence.indexOf(currentTheme);
+        let nextIndex = (currentIndex + 1) % themeSequence.length;
+        let newTheme = themeSequence[nextIndex];
         
-        // Save the last selected dark theme for quick toggle
-        if(themeName !== 'theme-light') {
-            localStorage.setItem('jih4d_last_dark', themeName);
-        }
+        document.body.className = newTheme;
+        localStorage.setItem('jih4d_theme', newTheme);
+        currentTheme = newTheme;
+        
+        updateThemeIcon(newTheme);
+        showToastMessage(themeData[newTheme].emoji + " " + themeData[newTheme].name + " Applied!");
     }
 
     function updateThemeIcon(themeName) {
         let themeIcon = document.getElementById('themeIcon');
-        if(themeName === 'theme-light') {
-            themeIcon.innerText = "☀️";
-        } else {
-            themeIcon.innerText = "🌙";
+        if(themeIcon) {
+            themeIcon.innerText = themeData[themeName].emoji;
         }
     }
 
-    function quickToggleTheme() {
-        if(currentTheme === 'theme-light') {
-            let lastDark = localStorage.getItem('jih4d_last_dark') || 'theme-ocean';
-            setTheme(lastDark);
-        } else {
-            setTheme('theme-light');
-        }
-    }
 
+    // =========================================
+    // CORE APP LOGIC
+    // =========================================
     let autoPasteEnabled = false;
     let vaultPassword = localStorage.getItem('jih4d_vault_pass') || '';
     let usedNameCombinations = {};
@@ -326,12 +341,18 @@
     }
 
     function copyText(text, message) {
-        navigator.clipboard.writeText(text).then(() => {
-            let toast = document.getElementById("toast");
-            toast.innerText = message || "✅ Copied!";
-            toast.className = "show";
-            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2000);
-        });
+        if(text) {
+            navigator.clipboard.writeText(text).then(() => showToastMessage(message || "✅ Copied!"));
+        } else {
+            showToastMessage(message);
+        }
+    }
+
+    function showToastMessage(message) {
+        let toast = document.getElementById("toast");
+        toast.innerText = message;
+        toast.className = "show";
+        setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2000);
     }
 
     function toggle2FAMode(checked, manualId, autoId, resultId) {
@@ -489,16 +510,7 @@
                 <input type="text" class="input-box" placeholder="Set global password here..." value="${vaultPassword}" oninput="saveVaultPassword(this.value)">
             </div>
 
-            <!-- THEME SELECTOR BUTTONS -->
-            <h3 style="margin-top: 16px; margin-bottom: 10px; font-size: 13px;">Theme Selection</h3>
-            <div class="grid-2" style="margin-bottom: 20px;">
-                <button class="btn" style="background: rgba(255,255,255,0.8); color: #3b82f6; border-color: #3b82f6;" onclick="setTheme('theme-light')">Light</button>
-                <button class="btn" style="background: rgba(10, 25, 47, 0.9); color: #64ffda; border-color: #64ffda;" onclick="setTheme('theme-ocean')">Ocean Aqua</button>
-                <button class="btn" style="background: rgba(26, 11, 46, 0.9); color: #ff3366; border-color: #ff3366;" onclick="setTheme('theme-cyber')">Cyber Neon</button>
-                <button class="btn" style="background: rgba(28, 28, 30, 0.9); color: #0a84ff; border-color: #0a84ff;" onclick="setTheme('theme-ios')">iOS Dark</button>
-            </div>
-
-            <div class="grid-2">
+            <div class="grid-2" style="margin-top: 16px;">
                 <button class="btn" onclick="showComingSoon()">Numbers</button>
                 <button class="btn" onclick="showSmsExtractor()">OTP Extract</button>
                 <button class="btn" onclick="show2FA()">2FA Core</button>
@@ -744,8 +756,8 @@
             </div>
 
             <div class="grid-2" style="margin-top:16px;">
-                <button class="btn btn-primary" style="grid-column: span 2;" onclick="generateIdentityData('${g}')">Generate Again</button>
-                <button class="btn" style="grid-column: span 2;" onclick="selectCountry(selCoun)">Back</button>
+                <button class="btn btn-primary" onclick="generateIdentityData('${g}')">Generate Again</button>
+                <button class="btn" onclick="selectCountry(selCoun)">Back</button>
             </div>
         `, pageDynamicTitle);
 
