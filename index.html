@@ -167,6 +167,8 @@
         p.desc { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; line-height: 1.4; }
 
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        /* For 3 column grids */
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
 
         .btn { 
             background: var(--input-bg); 
@@ -542,162 +544,132 @@
     }
 
     // =========================================
-    // EXPANDED NAME DATABASE (ANTI-REPETITION)
+    // EXPANDED NAME DATABASE (FRESH NAMES & NEW COUNTRIES)
     // =========================================
     const accountData = {
         bd: { 
             male_first: [
-                "Rahim", "Karim", "Arif", "Hasan", "Sajid", "Tarik", "Fahim", "Rakib", "Imran", "Mehedi", 
-                "Sakib", "Tamim", "Sabbir", "Mahmud", "Rubel", "Raju", "Rifat", "Jony", "Sohel", "Nayeem", 
-                "Ashiq", "Shahin", "Tushar", "Alamin", "Faruk", "Rony", "Sujon", "Emon", "Babu", "Hridoy", 
-                "Tariqul", "Jubayer", "Saiful", "Habib", "Kawsar", "Mahfuz", "Faisal", "Shafiq", "Momin", "Rashed", 
-                "Zahid", "Anwar", "Mizan", "Kamrul", "Shahjalal", "Taufiq", "Asif", "Rizvi", "Arafat", "Yousuf", 
-                "Omer", "Siam", "Shakil", "Sohag", "Zubair", "Nazmul", "Arman", "Jamal", "Kamal", "Iqbal",
-                "Jalal", "Monir", "Nasir", "Kader", "Aziz", "Rafiq", "Mustafa", "Mukul", "Bappy", "Parvez",
-                "Shihab", "Touhid", "Noman", "Jahid", "Riyad", "Miraz", "Taskin", "Liton", "Soumya", "Afif",
-                "Mustafiz", "Shoaib", "Nizam", "Hasib", "Sadeq", "Musa", "Isa", "Ibrahim", "Ismail", "Ilyas",
-                "Yahya", "Yunus", "Lutfor", "Motin", "Gias", "Ruhul", "Aminul", "Ashraful", "Ariful", "Shariful",
-                "Abdur", "Abdul", "Ahsan", "Akash", "Anik", "Apurba", "Ayan", "Bishal", "Chayan", "Dipu",
-                "Ehtesham", "Elias", "Feroz", "Gazi", "Golam", "Hafiz", "Harun", "Imtiaz", "Jamil", "Jewel",
-                "Kabir", "Kaiser", "Limon", "Mamun", "Masud", "Nadim", "Nahid", "Obaidul", "Osman", "Pavel",
-                "Qasem", "Rafi", "Rahat", "Reza", "Sagor", "Sarwar", "Tareq", "Ujjal", "Wahid", "Zaman",
-                "Abeer", "Badrul", "Dalim", "Emran", "Fazlul", "Gafur", "Hannan", "Iqram", "Jashim", "Khorshed",
-                "Luqman", "Mahbub", "Naeem", "Oli", "Palash", "Quader", "Rasel", "Shaheen", "Tapan", "Utpal"
+                "Abrar", "Fahad", "Nafis", "Mushfiq", "Sadat", "Tanvir", "Sajeev", "Nabil", "Raihan", "Wasi",
+                "Mahir", "Shahriar", "Zulkarnain", "Rezaul", "Masrur", "Iftekhar", "Hasanuzzaman", "Ahnaf", "Sajid", "Muzahid",
+                "Muntasir", "Intisar", "Rayhan", "Tasin", "Zayed", "Ehsan", "Farhan", "Mahfuzur", "Sifat", "Mubashir",
+                "Tahmid", "Waliur", "Ishtiaq", "Safwan", "Niyaz", "Mashrafe", "Zubayer", "Nawshad", "Ovi", "Faiyaz"
             ], 
             female_first: [
-                "Sadia", "Nusrat", "Ayesha", "Mariya", "Jannat", "Riya", "Suma", "Tania", "Mim", "Farhana", 
-                "Mitu", "Khadija", "Fatema", "Sonia", "Nadia", "Isha", "Tisha", "Ruma", "Akhi", "Bristy", 
-                "Nipa", "Lima", "Munni", "Shilpi", "Asma", "Sima", "Rina", "Shampa", "Sharmin", "Salma", 
-                "Khatun", "Maksuda", "Parvin", "Rozina", "Sanjida", "Tahmina", "Rubina", "Shirin", "Nazma", "Afsana", 
-                "Tasnim", "Lamia", "Nabila", "Sumaiya", "Mahbuba", "Farzana", "Irin", "Rupali", "Mukta", "Sabina", 
-                "Bithi", "Koly", "Dalia", "Jui", "Mimi", "Priya", "Keya", "Rimi", "Srabanti", "Moumita",
-                "Fariha", "Anika", "Maliha", "Raisa", "Humaira", "Tahrima", "Zareen", "Mehzabin", "Nusrat", "Suhana",
-                "Safa", "Marwa", "Jannatul", "Ferdous", "Nila", "Suborna", "Tumpa", "Jharna", "Purnima", "Kajol",
-                "Shabnam", "Roshni", "Dipa", "Mala", "Jesmin", "Liza", "Roksana", "Shaila", "Tuli", "Tania",
-                "Afifa", "Borsha", "Champa", "Dina", "Eshita", "Gita", "Hafiza", "Iffat", "Juthi", "Kakoli",
-                "Laila", "Nupur", "Oishee", "Popy", "Qanita", "Ritu", "Tonni", "Urmi", "Vabna", "Wafia",
-                "Yasmin", "Zakia", "Afroza", "Beli", "Chaina", "Dola", "Eva", "Ferdousi", "Ghenu", "Habiba",
-                "Ishita", "Jamila", "Khadiza", "Lucky", "Momena", "Nazira", "Ovi", "Poly", "Qudsia", "Rahima",
-                "Sultana", "Tahara", "Umme", "Vicky", "Wahida", "Xenia", "Yesmin", "Zohra", "Anindita", "Bipasha"
+                "Fariha", "Tabassum", "Maisha", "Zareen", "Subah", "Nabila", "Samira", "Tanisha", "Ramisa", "Tasnia",
+                "Nishat", "Raiyana", "Ishrat", "Atia", "Tahsin", "Rubaiya", "Sadia", "Zunaira", "Afia", "Sabiha",
+                "Mehjabin", "Nayma", "Tanha", "Nusrat", "Faiza", "Madiha", "Anjum", "Rumana", "Sharmila", "Afra",
+                "Humaira", "Tazkia", "Mahzabeen", "Shafita", "Jarin", "Raisa", "Sanjida", "Nawal", "Lubna", "Salma"
             ], 
             last: [
-                "Islam", "Uddin", "Akter", "Rahman", "Hossain", "Chowdhury", "Khan", "Ahmed", "Sikder", "Miah", 
-                "Haque", "Talukder", "Sarker", "Sheikh", "Mirza", "Biswas", "Ali", "Molla", "Khandaker", "Bhuiyan", 
-                "Kazi", "Hawlader", "Mahmud", "Hasan", "Saha", "Mandal", "Bapari", "Pramanik", "Mir", "Sayed", 
-                "Dewan", "Mozumder", "Tarafdar", "Bose", "Das", "Dutta", "Shikder", "Sardar", "Khandokar", "Mia", 
-                "Akon", "Howladar", "Majumder", "Bhattacharya", "Roy", "Banerjee", "Chatterjee", "Mukherjee", "Sen", "Deb",
-                "Gazi", "Khondoker", "Patwary", "Munshi", "Fakir", "Bhuia", "Bepari", "Mollik", "Baidya", "Bishwas",
-                "Mahalder", "Joarder", "Khaleque", "Sana", "Bairagi", "Golder", "Halder", "Shil", "Karmakar", "Kamal",
-                "Khanam", "Begum", "Bibi", "Nessa", "Parveen", "Khatoon", "Ara", "Banu", "Afroz", "Yasmin",
-                "Tarafder", "Mazumdar", "Bhoumik", "Basu", "Guha", "Nandi", "Pal", "Dhar", "Barua", "Chakma"
+                "Bhuyan", "Pramanik", "Mazumder", "Talukdar", "Sikdar", "Mallick", "Khandakar", "Bepari", "Howlader", "Tarafdar",
+                "Bhuiyan", "Mozumdar", "Joarder", "Khondoker", "Munshi", "Dewan", "Akon", "Hawlader", "Majumder", "Molla",
+                "Patwary", "Fakir", "Sayed", "Mir", "Bose", "Dutta", "Saha", "Sen", "Bhattacharya", "Chakma",
+                "Barua", "Haque", "Chowdhury", "Rahman", "Islam", "Uddin", "Hossain", "Sheikh", "Ahmed", "Khan"
             ] 
         },
         usa: { 
             male_first: [
-                "John", "Michael", "David", "James", "William", "Robert", "Joseph", "Daniel", "Matthew", "Anthony", 
-                "Charles", "Thomas", "Christopher", "Brian", "Kevin", "Richard", "Steven", "Mark", "Jason", "Paul", 
-                "Ryan", "Gary", "Nicholas", "Eric", "Stephen", "Jacob", "Larry", "Justin", "Scott", "Brandon", 
-                "Benjamin", "Samuel", "Gregory", "Alexander", "Frank", "Patrick", "Raymond", "Jack", "Dennis", "Jerry", 
-                "Tyler", "Aaron", "Jose", "Adam", "Nathan", "Henry", "Douglas", "Zachary", "Peter", "Kyle",
-                "Walter", "Ethan", "Jeremy", "Christian", "Keith", "Roger", "Terry", "Sean", "Gerald", "Carl",
-                "Arthur", "Lawrence", "Dylan", "Jesse", "Jordan", "Bryan", "Billy", "Bruce", "Gabriel", "Logan",
-                "Albert", "Willie", "Alan", "Juan", "Wayne", "Elijah", "Randy", "Mason", "Vincent", "Liam",
-                "Roy", "Ralph", "Eugene", "Russell", "Louis", "Philip", "Bradley", "Leonard", "Isaac", "Martin",
-                "Evan", "Caleb", "Isaiah", "Gavin", "Owen", "Jackson", "Lucas", "Landon", "Julian", "Levi",
-                "Aaron", "Charles", "Ezekiel", "Lincoln", "Mateo", "Ryan", "Jaxon", "Nathaniel", "Harrison", "Oliver"
+                "Liam", "Noah", "Oliver", "Elijah", "James", "William", "Benjamin", "Lucas", "Henry", "Theodore",
+                "Jack", "Levi", "Alexander", "Jackson", "Mateo", "Daniel", "Michael", "Mason", "Sebastian", "Ethan",
+                "Logan", "Owen", "Samuel", "Jacob", "Asher", "Aiden", "John", "Joseph", "Wyatt", "David",
+                "Leo", "Luke", "Julian", "Hudson", "Grayson", "Matthew", "Ezra", "Gabriel", "Carter", "Isaac"
             ], 
             female_first: [
-                "Emma", "Olivia", "Sophia", "Isabella", "Mia", "Charlotte", "Amelia", "Ava", "Harper", "Evelyn", 
-                "Abigail", "Emily", "Elizabeth", "Sofia", "Avery", "Chloe", "Ella", "Grace", "Victoria", "Riley", 
-                "Aria", "Lily", "Aubrey", "Zoey", "Penelope", "Lillian", "Addison", "Layla", "Natalie", "Camila", 
-                "Hannah", "Brooklyn", "Zoe", "Nora", "Leah", "Savannah", "Audrey", "Claire", "Eleanor", "Skylar", 
-                "Ellie", "Samantha", "Stella", "Paisley", "Violet", "Mila", "Mary", "Patricia", "Jennifer", "Linda",
-                "Barbara", "Susan", "Jessica", "Sarah", "Karen", "Nancy", "Lisa", "Betty", "Margaret", "Sandra",
-                "Ashley", "Kimberly", "Donna", "Carol", "Michelle", "Amanda", "Melissa", "Deborah", "Stephanie", "Rebecca",
-                "Sharon", "Laura", "Cynthia", "Kathleen", "Amy", "Shirley", "Angela", "Helen", "Anna", "Brenda",
-                "Pamela", "Nicole", "Ruth", "Katherine", "Virginia", "Catherine", "Christine", "Debra", "Rachel", "Janet",
-                "Emma", "Carolyn", "Maria", "Heather", "Diane", "Julie", "Joyce", "Evelyn", "Joan", "Victoria"
+                "Olivia", "Emma", "Charlotte", "Amelia", "Ava", "Sophia", "Isabella", "Mia", "Evelyn", "Harper",
+                "Luna", "Camila", "Gianna", "Elizabeth", "Eleanor", "Ella", "Abigail", "Sofia", "Avery", "Scarlett",
+                "Emily", "Aria", "Penelope", "Chloe", "Layla", "Mila", "Nora", "Hazel", "Madison", "Ellie",
+                "Lily", "Nova", "Isla", "Grace", "Violet", "Aurora", "Riley", "Zoey", "Willow", "Emilia"
             ], 
             last: [
-                "Smith", "Johnson", "Williams", "Brown", "Jones", "Miller", "Davis", "Garcia", "Rodriguez", "Wilson", 
-                "Martinez", "Anderson", "Taylor", "Thomas", "Moore", "Jackson", "Martin", "Lee", "Perez", "Thompson", 
-                "White", "Harris", "Sanchez", "Clark", "Ramirez", "Lewis", "Robinson", "Walker", "Young", "Allen", 
-                "King", "Wright", "Scott", "Torres", "Nguyen", "Hill", "Flores", "Green", "Adams", "Nelson", 
-                "Baker", "Hall", "Rivera", "Campbell", "Mitchell", "Carter", "Roberts", "Gomez", "Phillips", "Evans",
-                "Turner", "Diaz", "Parker", "Cruz", "Edwards", "Collins", "Reyes", "Stewart", "Morris", "Morales",
-                "Murphy", "Cook", "Rogers", "Gutierrez", "Ortiz", "Morgan", "Cooper", "Peterson", "Bailey", "Reed",
-                "Kelly", "Howard", "Ramos", "Kim", "Cox", "Ward", "Richardson", "Watson", "Brooks", "Chavez",
-                "Wood", "James", "Bennett", "Gray", "Mendoza", "Ruiz", "Hughes", "Price", "Alvarez", "Castillo"
+                "Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez",
+                "Hernandez", "Lopez", "Gonzalez", "Wilson", "Anderson", "Thomas", "Taylor", "Moore", "Jackson", "Martin",
+                "Lee", "Perez", "Thompson", "White", "Harris", "Sanchez", "Clark", "Ramirez", "Lewis", "Robinson",
+                "Walker", "Young", "Allen", "King", "Wright", "Scott", "Torres", "Nguyen", "Hill", "Flores"
             ] 
         },
         uk: { 
             male_first: [
-                "George", "Harry", "Jack", "Oliver", "Charlie", "Thomas", "Arthur", "Noah", "Oscar", "James", 
-                "William", "Henry", "Leo", "Alfie", "Freddie", "Archie", "Theo", "Edward", "Samuel", "Jacob", 
-                "Finley", "Lucas", "Isaac", "Ethan", "Harrison", "Mason", "Alexander", "Logan", "Joshua", "Max", 
-                "Mohammed", "Daniel", "Dylan", "Luke", "Elijah", "Joseph", "Riley", "Liam", "Hugo", "Charles", 
-                "Jude", "Teddy", "David", "Rowan", "Toby", "Albert", "Reggie", "Hunter", "Ezra", "Tommy",
-                "Sebastian", "Arlo", "Louis", "Harvey", "Jaxon", "Carter", "Jayden", "Bobby", "Michael", "Callum",
-                "Matthew", "Dexter", "Blake", "Reuben", "Jackson", "Elliot", "Roman", "Leon", "Stanley", "Louie",
-                "Frankie", "Gabriel", "Aaron", "Ralph", "Seth", "Felix", "Finn", "Rory", "Sonny", "Chester",
-                "Spencer", "Ellis", "Harley", "Zack", "Kian", "Ollie", "Bradley", "Cameron", "Declan", "Evan"
+                "Muhammad", "George", "Arthur", "Leo", "Harry", "Oscar", "Archie", "Henry", "Tommy", "Jude",
+                "Roman", "Oliver", "Freddie", "Alfie", "Jack", "Charlie", "Theo", "William", "Thomas", "Jacob",
+                "Lucas", "Finley", "Isaac", "Teddy", "Alexander", "Reuben", "Rowan", "Harrison", "Mason", "Luca",
+                "Elijah", "Rory", "Hunter", "Max", "Daniel", "Dylan", "Adam", "Elliot", "Frankie", "Caleb"
             ], 
             female_first: [
-                "Amelia", "Margaret", "Lily", "Emily", "Jessica", "Isla", "Poppy", "Ava", "Isabella", "Sophie", 
-                "Mia", "Ruby", "Grace", "Evie", "Chloe", "Florence", "Freya", "Alice", "Rosie", "Daisy", 
-                "Ella", "Sienna", "Matilda", "Evelyn", "Harper", "Willow", "Phoebe", "Ivy", "Holly", "Sofia", 
-                "Millie", "Imogen", "Eliza", "Lucy", "Erin", "Emma", "Maya", "Lola", "Aria", "Megan", 
-                "Hannah", "Layla", "Molly", "Eva", "Eleanor", "Rose", "Penelope", "Bella", "Aurora", "Mila",
-                "Arabella", "Robyn", "Heidi", "Luna", "Zara", "Harriet", "Amber", "Gracie", "Darcy", "Amelie",
-                "Orla", "Hallie", "Lexi", "Lottie", "Nancy", "Georgia", "Iris", "Clara", "Eden", "Elsie",
-                "Aisha", "Maryam", "Martha", "Lilly", "Annabelle", "Violet", "Summer", "Beatrice", "Brooke", "Esme"
+                "Olivia", "Amelia", "Isla", "Ava", "Ivy", "Freya", "Lily", "Florence", "Mia", "Willow",
+                "Rosie", "Sophia", "Isabella", "Grace", "Daisy", "Sienna", "Poppy", "Elsie", "Emily", "Ella",
+                "Evelyn", "Alice", "Sofia", "Rubie", "Evie", "Charlotte", "Matilda", "Harper", "Millie", "Aria",
+                "Maya", "Lucy", "Phoebe", "Penelope", "Luna", "Hallie", "Zara", "Mila", "Amber", "Darcy"
             ], 
             last: [
-                "Evans", "Davies", "Wilson", "Taylor", "Thomas", "Roberts", "Walker", "Wright", "Robinson", "Thompson", 
-                "White", "Hughes", "Edwards", "Green", "Hall", "Wood", "Jackson", "Clarke", "Turner", "Hill", 
-                "Martin", "Cooper", "Morris", "Ward", "Baker", "Harrison", "Morgan", "Allen", "King", "Moore", 
-                "Lee", "Scott", "Watson", "Kelly", "Price", "Griffiths", "Shaw", "Bennett", "Carter", "Cook", 
-                "Bailey", "Richardson", "Cox", "Gray", "Jones", "Smith", "Williams", "Brown", "Johnson", "Patel",
-                "Simpson", "Marshall", "Collins", "Murray", "Palmer", "Powell", "Holmes", "Rogers", "Stevens", "Webb",
-                "Fisher", "Tucker", "Stewart", "Wright", "Mitchell", "Payne", "Russell", "Hunt", "Dixon", "Mason",
-                "Rose", "Fletcher", "Page", "Gibson", "Ford", "Kemp", "Wells", "Lloyd", "Fox", "Barker"
+                "Smith", "Jones", "Taylor", "Williams", "Brown", "Davies", "Evans", "Wilson", "Thomas", "Roberts",
+                "Johnson", "Lewis", "Walker", "Robinson", "Wood", "Thompson", "White", "Watson", "Jackson", "Wright",
+                "Green", "Harris", "Cooper", "King", "Lee", "Martin", "Clarke", "James", "Morgan", "Hughes",
+                "Edwards", "Hill", "Moore", "Clark", "Harrison", "Scott", "Price", "Riley", "Ward", "Baker"
             ] 
         },
         fr: { 
             male_first: [
-                "Lucas", "Hugo", "Arthur", "Louis", "Gabriel", "Jules", "Paul", "Leo", "Raphael", "Mathis", 
-                "Ethan", "Nathan", "Tom", "Theo", "Adam", "Enzo", "Timeo", "Clement", "Maxime", "Antoine", 
-                "Victor", "Maël", "Noé", "Baptiste", "Axel", "Gabin", "Sacha", "Malo", "Nael", "Liam", 
-                "Eden", "Aaron", "Leon", "Martin", "Gaspard", "Tiago", "Evan", "Marceau", "Simon", "Marius", 
-                "Isaac", "Ayden", "Robin", "Valentin", "Camille", "Auguste", "Oscar", "Maceo", "Lino", "Eliott",
-                "Milan", "Gauthier", "Nino", "Alessio", "Charly", "Diego", "Bastien", "Côme", "Gael", "Julian",
-                "Matheo", "Amir", "Ismael", "Ibrahim", "Yanis", "Antonin", "Maxence", "Naël", "Thibault", "Youssef",
-                "Kylian", "Corentin", "Pierre", "Jean", "Nicolas", "Julien", "Kevin", "Guillaume", "Romain", "Florian",
-                "Jeremy", "Anthony", "Vincent", "Sebastien", "Damien", "Alexandre", "David", "Christophe", "Laurent", "Michel"
+                "Gabriel", "Léo", "Raphaël", "Maël", "Louis", "Noah", "Jules", "Arthur", "Adam", "Lucas",
+                "Liam", "Sacha", "Isaac", "Gabin", "Aaron", "Hugo", "Eden", "Paul", "Naël", "Malo",
+                "Tiago", "Elio", "Léon", "Martin", "Mathis", "Marius", "Nino", "Ayden", "Gaspard", "Tom",
+                "Victor", "Marceau", "Noé", "Evan", "Ibrahim", "Malo", "Timéo", "Enzo", "Clément", "Axel"
             ], 
             female_first: [
-                "Jade", "Louise", "Alice", "Chloé", "Léa", "Manon", "Emma", "Camille", "Sarah", "Juliette", 
-                "Lina", "Rose", "Mila", "Anna", "Ines", "Clara", "Lou", "Maëlys", "Julia", "Lola", 
-                "Zoé", "Margaux", "Romane", "Léna", "Lucie", "Agathe", "Nina", "Ambre", "Mia", "Alba", 
-                "Romy", "Iris", "Eva", "Jeanne", "Olivia", "Charlie", "Adèle", "Victoire", "Léonie", "Margot", 
-                "Eden", "Giulia", "Capucine", "Valentine", "Mathilde", "Apolline", "Salome", "Joy", "Lise", "Elina",
-                "Lilou", "Alya", "Lana", "Lya", "Candice", "Celia", "Elena", "Alicia", "Diane", "Melissa",
-                "Roxane", "Amandine", "Marine", "Noemie", "Emeline", "Elodie", "Marion", "Justine", "Charlotte", "Anais",
-                "Sophie", "Marie", "Nathalie", "Isabelle", "Sylvie", "Valerie", "Sandrine", "Corinne", "Catherine", "Monique"
+                "Jade", "Louise", "Ambre", "Alba", "Emma", "Rose", "Alice", "Romy", "Anna", "Lina",
+                "Léna", "Mia", "Lou", "Julia", "Chloé", "Léa", "Joy", "Inès", "Mila", "Agathe",
+                "Iris", "Lola", "Juliette", "Zoé", "Charlie", "Victoire", "Jeanne", "Léonie", "Margaux", "Olivia",
+                "Eva", "Camille", "Adèle", "Nina", "Alix", "Sarah", "Lya", "Giulia", "Eden", "Romane"
             ], 
             last: [
-                "Martin", "Bernard", "Dubois", "Thomas", "Robert", "Richard", "Petit", "Durand", "Leroy", "Moreau", 
-                "Simon", "Laurent", "Lefevre", "Michel", "Garcia", "David", "Bertrand", "Roux", "Vincent", "Fournier", 
-                "Morel", "Girard", "Andre", "Lefebvre", "Mercier", "Blanc", "Guerin", "Boyer", "Garnier", "Chevalier", 
-                "Francois", "Legrand", "Gauthier", "Perrin", "Robin", "Clement", "Morin", "Nicolas", "Henry", "Roussel", 
-                "Mathieu", "Gautier", "Masson", "Marchand", "Duval", "Denis", "Dumont", "Marie", "Lemaire", "Noel",
-                "Meyer", "Dufour", "Meunier", "Brun", "Blanchard", "Giraud", "Joly", "Riviere", "Lucas", "Brunet",
-                "Gaillard", "Barbier", "Arnaud", "Martinez", "Gerard", "Roche", "Renard", "Schmitt", "Roy", "Leroux",
-                "Colin", "Vidal", "Caron", "Picard", "Roger", "Fabre", "Aubert", "Lemoine", "Renaud", "Dumas"
+                "Martin", "Bernard", "Thomas", "Petit", "Robert", "Richard", "Durand", "Dubois", "Moreau", "Laurent",
+                "Simon", "Michel", "Lefebvre", "Leroy", "Roux", "David", "Bertrand", "Morel", "Fournier", "Girard",
+                "Bonnet", "Dupont", "Lambert", "Fontaine", "Rousseau", "Vincent", "Muller", "Lefevre", "Faure", "Andre",
+                "Mercier", "Blanc", "Guerin", "Boyer", "Garnier", "Chevalier", "Francois", "Legrand", "Gauthier", "Perrin"
+            ] 
+        },
+        in: { 
+            male_first: [
+                "Aarav", "Vihaan", "Aditya", "Sai", "Arjun", "Reyansh", "Ayaan", "Krishna", "Ishaan", "Shaurya",
+                "Rohan", "Rahul", "Dev", "Karan", "Vivaan", "Dhruv", "Rudra", "Kabir", "Atharv", "Ansh",
+                "Aarush", "Aryan", "Siddharth", "Pranav", "Vedant", "Agastya", "Darsh", "Ivaan", "Laksh", "Ranveer",
+                "Nishant", "Raj", "Samar", "Shivansh", "Tanish", "Vikram", "Yash", "Zayn", "Rishabh", "Parth"
+            ], 
+            female_first: [
+                "Saanvi", "Aanya", "Aadhya", "Diya", "Ananya", "Kiara", "Isha", "Riya", "Kavya", "Myra",
+                "Sneha", "Pooja", "Neha", "Aditi", "Mira", "Aarohi", "Anika", "Avni", "Fatima", "Gauri",
+                "Ishita", "Meher", "Navya", "Nandini", "Prisha", "Radhika", "Raina", "Shanaya", "Tara", "Vanya",
+                "Zara", "Khushi", "Shruti", "Swati", "Tanya", "Priyanka", "Deepika", "Jhanvi", "Simran", "Tanvi"
+            ], 
+            last: [
+                "Sharma", "Singh", "Patel", "Kumar", "Gupta", "Desai", "Jain", "Reddy", "Verma", "Rao",
+                "Das", "Mukherjee", "Bhatt", "Chauhan", "Yadav", "Iyer", "Nair", "Pillai", "Mishra", "Pandey",
+                "Bose", "Chatterjee", "Banerjee", "Sengupta", "Tiwari", "Kapoor", "Mehta", "Malhotra", "Ahuja", "Joshi",
+                "Bhardwaj", "Aggarwal", "Naidu", "Menon", "Sen", "Bhatia", "Gowda", "Kulkarni", "Patil", "Chopra"
+            ] 
+        },
+        cn: { 
+            male_first: [
+                "Wei", "Hao", "Jian", "Jun", "Cheng", "Qiang", "Lei", "Zhi", "Tao", "Peng",
+                "Chao", "Ming", "Yi", "Bin", "Yu", "Jing", "Bo", "Wen", "Feng", "Jie",
+                "Xin", "Yong", "Hua", "Dong", "Hai", "Long", "Shan", "Ping", "Gang", "Rui",
+                "Hong", "Lin", "Guo", "Yang", "Xuan", "Shi", "Chen", "Zhen", "Jin", "Xiang"
+            ], 
+            female_first: [
+                "Min", "Jing", "Yan", "Fang", "Li", "Ting", "Na", "Hua", "Xia", "Lan",
+                "Hong", "Ying", "Mei", "Ping", "Qing", "Juan", "Ling", "Wei", "Dan", "Lu",
+                "Hui", "Jie", "Rong", "Xin", "Wen", "Yun", "Fei", "Shu", "Chun", "Yue",
+                "Xue", "Lin", "Yu", "Xiang", "Rui", "Zhen", "Jiao", "Ning", "Fan", "Yuan"
+            ], 
+            last: [
+                "Wang", "Li", "Zhang", "Liu", "Chen", "Yang", "Huang", "Zhao", "Wu", "Zhou",
+                "Xu", "Sun", "Ma", "Zhu", "Hu", "Guo", "He", "Gao", "Lin", "Luo",
+                "Zheng", "Liang", "Xie", "Song", "Tang", "Xu", "Han", "Feng", "Dong", "Cheng",
+                "Cao", "Yuan", "Tian", "Pan", "Jiang", "Cai", "Ye", "Peng", "Du", "Su"
             ] 
         }
     };
-    const countryNames = {'bd': 'Bangladesh', 'usa': 'USA', 'uk': 'UK', 'fr': 'France'};
+    
+    const countryNames = {'bd': 'Bangladesh', 'usa': 'USA', 'uk': 'UK', 'fr': 'France', 'in': 'India', 'cn': 'China'};
 
     const contentDiv = document.getElementById('app-content');
     
@@ -789,8 +761,10 @@
         selPlat = p;
         renderView(`
             <p class="desc">Choose geographic region.</p>
-            <div class="grid-2">
+            <div class="grid-3">
                 <button class="btn" onclick="selectCountry('bd')">BGD</button>
+                <button class="btn" onclick="selectCountry('in')">IND</button>
+                <button class="btn" onclick="selectCountry('cn')">CHN</button>
                 <button class="btn" onclick="selectCountry('usa')">USA</button>
                 <button class="btn" onclick="selectCountry('uk')">GBR</button>
                 <button class="btn" onclick="selectCountry('fr')">FRA</button>
@@ -865,7 +839,6 @@
             igCounter++;
             localStorage.setItem('jih4d_ig_counter', igCounter); 
             
-            // Updated IG HTML to show both Full Name and Username
             resultTextHTML = `
                 <div class="clickable-data fade-in" style="font-size: 16px; width:100%; text-align:center; margin-bottom:8px;" onclick="copyText('${fullName}', '👤 Name Copied!')">${fullName}</div>
                 <div class="clickable-data fade-in" style="font-size: 15px; width:100%; text-align:center;" onclick="copyText('${textToCopy}', '📸 Username Copied!')">${textToCopy}</div>
