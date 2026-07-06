@@ -856,6 +856,22 @@
         document.getElementById('identity-data-box').innerHTML = resultTextHTML + passwordBlockHTML;
     }
 
+    function toggleFirst2FABox() {
+        let container = document.getElementById('first2FAContainer');
+        let btn = document.getElementById('toggle1st2FABtn');
+        
+        if (container.style.display === 'none' || container.style.display === '') {
+            container.style.display = 'block';
+            btn.innerText = "- Remove Quick 2FA (1)";
+        } else {
+            container.style.display = 'none';
+            btn.innerText = "+ Add Quick 2FA (1) Box";
+            let inp = document.getElementById('secretKeyProfile');
+            if(inp) inp.value = '';
+            document.getElementById('profile2FAResult').innerHTML = '';
+        }
+    }
+
     function toggleExtra2FABox() {
         let container = document.getElementById('extra2FAContainer');
         let btn = document.getElementById('toggle2FABtn');
@@ -910,7 +926,7 @@
         renderView(`
             <div class="data-card" style="text-align:center; margin-bottom: 14px; min-height: 80px;" id="identity-data-box"></div>
 
-            <div class="data-card" style="margin-bottom: 5px;">
+            <div class="data-card fade-in" id="first2FAContainer" style="display: none; margin-bottom: 5px;">
                 ${getToggleUI('Quick 2FA (1)', 'toggle2FAMode', 'manualProfile2FA', 'autoProfile2FA', 'profile2FAResult')}
                 <div id="manualProfile2FA" style="display: ${autoPasteEnabled ? 'none' : 'block'};">
                     <input type="text" id="secretKeyProfile" class="input-box" placeholder="PASTE SECRET KEY 1 HERE" oninput="manualProcess2FA('secretKeyProfile', 'profile2FAResult')">
@@ -955,6 +971,7 @@
             </div>
 
             <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 4px; margin-bottom: 10px; padding: 0 4px;">
+                <span id="toggle1st2FABtn" onclick="toggleFirst2FABox()" style="color: var(--primary); font-size: 11px; cursor: pointer; font-weight: 600; padding: 4px;">+ Add Quick 2FA (1) Box</span>
                 <span id="toggle2FABtn" onclick="toggleExtra2FABox()" style="color: var(--primary); font-size: 11px; cursor: pointer; font-weight: 600; padding: 4px;">+ Add 2nd 2FA Box</span>
                 <span id="toggleOTPBtn" onclick="toggleOTPBox()" style="color: var(--primary); font-size: 11px; cursor: pointer; font-weight: 600; padding: 4px;">+ Add Quick OTP Box</span>
                 <span id="toggleMailBtn" onclick="toggleMailBox()" style="color: var(--primary); font-size: 11px; cursor: pointer; font-weight: 600; padding: 4px;">+ Add Mail Box</span>
