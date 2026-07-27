@@ -787,32 +787,41 @@
         `, 'Select Gender');
     }
 
+    // Updated First/Last Name tracking system
     function getUniqueFullName(gender) {
         let listKey = `${selCoun}_${gender}`;
         let firstList = accountData[selCoun][`${gender}_first`];
         let lastList = accountData[selCoun]["last"];
         
-        if (!usedNameCombinations[listKey]) {
-            usedNameCombinations[listKey] = [];
+        // Initialize tracking if not exist or if it was the old array format
+        if (!usedNameCombinations[listKey] || Array.isArray(usedNameCombinations[listKey])) {
+            usedNameCombinations[listKey] = { firsts: [], lasts: [] };
         }
 
-        let maxCombos = firstList.length * lastList.length;
-
-        if (usedNameCombinations[listKey].length >= maxCombos) {
-            usedNameCombinations[listKey] = [];
+        // Reset if all items in the list have been used
+        if (usedNameCombinations[listKey].firsts.length >= firstList.length) {
+            usedNameCombinations[listKey].firsts = [];
+        }
+        if (usedNameCombinations[listKey].lasts.length >= lastList.length) {
+            usedNameCombinations[listKey].lasts = [];
         }
 
-        let f, l, fullNameCombo;
-        let safety = 0;
+        let f, l;
         
+        // Get a completely unused first name
         do {
             f = firstList[Math.floor(Math.random() * firstList.length)];
+        } while (usedNameCombinations[listKey].firsts.includes(f));
+        
+        // Get a completely unused last name
+        do {
             l = lastList[Math.floor(Math.random() * lastList.length)];
-            fullNameCombo = f + " " + l;
-            safety++;
-        } while (usedNameCombinations[listKey].includes(fullNameCombo) && safety < 5000);
+        } while (usedNameCombinations[listKey].lasts.includes(l));
 
-        usedNameCombinations[listKey].push(fullNameCombo);
+        // Save to tracked lists
+        usedNameCombinations[listKey].firsts.push(f);
+        usedNameCombinations[listKey].lasts.push(l);
+
         return { f, l };
     }
 
