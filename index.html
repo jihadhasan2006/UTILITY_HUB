@@ -748,12 +748,13 @@
     function showPlatformMenu() {
         renderView(`
             <p class="desc">Select target platform.</p>
-            <div class="grid-2">
+            <div class="grid-3">
                 <button class="btn btn-primary" onclick="selectPlatform('fb')">Facebook</button>
                 <button class="btn btn-primary" onclick="selectPlatform('ig')">Instagram</button>
+                <button class="btn btn-primary" onclick="selectPlatform('tt')">TikTok</button>
             </div>
             <div class="divider"></div>
-            <button class="btn" style="grid-column: span 2;" onclick="showMainMenu()">Back to Hub</button>
+            <button class="btn" style="grid-column: span 3;" onclick="showMainMenu()">Back to Hub</button>
         `, 'Identity Generator');
     }
 
@@ -825,6 +826,15 @@
         return { f, l };
     }
 
+    function generateRandomString(length) {
+        const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        let result = '';
+        for (let i = 0; i < length; i++) {
+            result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return result;
+    }
+
     function generateIdentityData(g) {
         let uniqueNameObj = getUniqueFullName(g);
         let f = uniqueNameObj.f;
@@ -841,7 +851,7 @@
                     <div class="clickable-data" style="flex:1; text-align:center;" onclick="copyText('${f}', '👤 First Name Copied!')">${f}</div>
                     <div class="clickable-data" style="flex:1; text-align:center;" onclick="copyText('${l}', '👤 Last Name Copied!')">${l}</div>
                 </div>`;
-        } else {
+        } else if (selPlat === 'ig') {
             let formattedCounter = String(igCounter).padStart(2, '0');
             textToCopy = `${f.toLowerCase()}_${l.toLowerCase()}_${formattedCounter}`;
             let fullName = `${f} ${l}`;
@@ -851,6 +861,15 @@
             resultTextHTML = `
                 <div class="clickable-data fade-in" style="font-size: 16px; width:100%; text-align:center; margin-bottom:8px;" onclick="copyText('${fullName}', '👤 Name Copied!')">${fullName}</div>
                 <div class="clickable-data fade-in" style="font-size: 15px; width:100%; text-align:center;" onclick="copyText('${textToCopy}', '📸 Username Copied!')">${textToCopy}</div>
+            `;
+        } else if (selPlat === 'tt') {
+            let fullName = `${f} ${l}`;
+            let ttName = generateRandomString(15);
+            
+            resultTextHTML = `
+                <div class="clickable-data fade-in" style="font-size: 16px; width:100%; text-align:center; margin-bottom:8px;" onclick="copyText('${fullName}', '👤 Name Copied!')">${fullName}</div>
+                <div class="fade-in" style="font-size:11px; color:var(--text-muted); margin-bottom:4px; font-weight: 500;">Tiktok Name</div>
+                <div class="clickable-data fade-in" style="font-size: 15px; width:100%; text-align:center;" onclick="copyText('${ttName}', '🎵 Tiktok Name Copied!')">${ttName}</div>
             `;
         }
 
