@@ -788,40 +788,40 @@
         `, 'Select Gender');
     }
 
-    // Updated First/Last Name tracking system
+    // =========================================
+    // UPDATED FIRST/LAST NAME TRACKING SYSTEM (NO REPETITION)
+    // =========================================
+    
+    function shuffleArray(array) {
+        let shuffled = [...array];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+    }
+
     function getUniqueFullName(gender) {
         let listKey = `${selCoun}_${gender}`;
         let firstList = accountData[selCoun][`${gender}_first`];
         let lastList = accountData[selCoun]["last"];
         
-        // Initialize tracking if not exist or if it was the old array format
-        if (!usedNameCombinations[listKey] || Array.isArray(usedNameCombinations[listKey])) {
-            usedNameCombinations[listKey] = { firsts: [], lasts: [] };
+        if (!usedNameCombinations[listKey] || !usedNameCombinations[listKey].firstsQueue) {
+            usedNameCombinations[listKey] = {
+                firstsQueue: shuffleArray(firstList),
+                lastsQueue: shuffleArray(lastList)
+            };
         }
 
-        // Reset if all items in the list have been used
-        if (usedNameCombinations[listKey].firsts.length >= firstList.length) {
-            usedNameCombinations[listKey].firsts = [];
+        if (usedNameCombinations[listKey].firstsQueue.length === 0) {
+            usedNameCombinations[listKey].firstsQueue = shuffleArray(firstList);
         }
-        if (usedNameCombinations[listKey].lasts.length >= lastList.length) {
-            usedNameCombinations[listKey].lasts = [];
+        if (usedNameCombinations[listKey].lastsQueue.length === 0) {
+            usedNameCombinations[listKey].lastsQueue = shuffleArray(lastList);
         }
 
-        let f, l;
-        
-        // Get a completely unused first name
-        do {
-            f = firstList[Math.floor(Math.random() * firstList.length)];
-        } while (usedNameCombinations[listKey].firsts.includes(f));
-        
-        // Get a completely unused last name
-        do {
-            l = lastList[Math.floor(Math.random() * lastList.length)];
-        } while (usedNameCombinations[listKey].lasts.includes(l));
-
-        // Save to tracked lists
-        usedNameCombinations[listKey].firsts.push(f);
-        usedNameCombinations[listKey].lasts.push(l);
+        let f = usedNameCombinations[listKey].firstsQueue.pop();
+        let l = usedNameCombinations[listKey].lastsQueue.pop();
 
         return { f, l };
     }
