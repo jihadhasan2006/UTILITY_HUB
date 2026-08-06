@@ -87,6 +87,71 @@
             100% { background-position: 0% 50%; }
         }
 
+        /* =========================================
+           NEW PRELOADER STYLES 
+           ========================================= */
+        #preloader {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-base);
+            background-size: 200% 200%;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.6s cubic-bezier(0.8, 0, 0.2, 1), visibility 0.6s;
+            backdrop-filter: blur(10px);
+        }
+        
+        .loader-ring {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loader-ring::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 3px solid transparent;
+            border-top-color: var(--primary);
+            border-bottom-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1.2s linear infinite;
+        }
+
+        .loader-logo {
+            width: 32px;
+            height: 32px;
+            stroke: var(--primary);
+            stroke-width: 2.5;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            animation: pulse-glow 2s infinite alternate;
+        }
+
+        .loader-text {
+            margin-top: 24px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            animation: fade-blink 1.5s infinite;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes pulse-glow { 0% { filter: drop-shadow(0 0 5px var(--primary)); transform: scale(0.9); } 100% { filter: drop-shadow(0 0 15px var(--primary)); transform: scale(1.1); } }
+        @keyframes fade-blink { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+        
+        /* ========================================= */
+
         .app-container {
             background: var(--card-bg);
             backdrop-filter: blur(16px);
@@ -290,6 +355,20 @@
 </head>
 <body class="theme-ocean">
 
+<!-- =========================================
+     NEW PRELOADER ANIMATION
+     ========================================= -->
+<div id="preloader">
+    <div class="loader-ring">
+        <svg class="loader-logo" viewBox="0 0 24 24">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            <polyline points="9 12 11 14 15 10"></polyline>
+        </svg>
+    </div>
+    <div class="loader-text">AuthGenix</div>
+</div>
+<!-- ========================================= -->
+
 <div class="app-container">
     <div class="header">
         <div class="logo-container">
@@ -317,6 +396,20 @@
 <div id="toast">✅ Copied</div>
 
 <script>
+    // =========================================
+    // PRELOADER LOGIC
+    // =========================================
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            const preloader = document.getElementById('preloader');
+            preloader.style.opacity = '0';
+            preloader.style.visibility = 'hidden';
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 600);
+        }, 1500); // 1.5 seconds loading simulation
+    });
+
     // =========================================
     // THEME CYCLING LOGIC
     // =========================================
