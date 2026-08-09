@@ -457,6 +457,7 @@
     let vaultPassword = localStorage.getItem('jih4d_vault_pass') || '';
     let usedNameCombinations = {};
     let igCounter = parseInt(localStorage.getItem('jih4d_ig_counter')) || 1;
+    let customCounter = parseInt(localStorage.getItem('jih4d_custom_counter')) || 1;
 
     function saveVaultPassword(val) {
         vaultPassword = val;
@@ -784,13 +785,118 @@
             </div>
 
             <div class="grid-2" style="margin-top: 16px;">
-                <button class="btn" onclick="showComingSoon()">Numbers</button>
+                <button class="btn" onclick="showCustomNameView()">Custom Name</button>
                 <button class="btn" onclick="showSmsExtractor()">OTP Extract</button>
                 <button class="btn" onclick="show2FA()">2FA Core</button>
                 <button class="btn" onclick="showPlatformMenu()">Identity</button>
             </div>
         `, 'Dashboard');
     }
+
+    // =========================================
+    // CUSTOM NAME GENERATOR (NEW FEATURE)
+    // =========================================
+    function showCustomNameView() {
+        renderView(`
+            <p class="desc">Enter a custom name to generate sequential usernames.</p>
+            
+            <div class="data-card">
+                <input type="text" id="customNameInput" class="input-box" placeholder="Enter Custom Name (e.g., John Doe)">
+                <button class="btn btn-primary" style="margin-top: 10px;" onclick="generateCustomIdentity()">Generate Username</button>
+            </div>
+
+            <div class="data-card fade-in" style="text-align:center; margin-bottom: 14px; min-height: 40px; display: none;" id="custom-identity-result"></div>
+
+            <div class="data-card fade-in" id="first2FAContainer" style="display: none; margin-bottom: 5px;">
+                ${getToggleUI('Quick 2FA (1)', 'toggle2FAMode', 'manualProfile2FA', 'autoProfile2FA', 'profile2FAResult')}
+                <div id="manualProfile2FA" style="display: ${autoPasteEnabled ? 'none' : 'block'};">
+                    <input type="text" id="secretKeyProfile" class="input-box" placeholder="PASTE SECRET KEY 1 HERE" oninput="manualProcess2FA('secretKeyProfile', 'profile2FAResult')">
+                </div>
+                <div id="autoProfile2FA" style="display: ${autoPasteEnabled ? 'block' : 'none'};">
+                    <button class="btn btn-primary" onclick="autoPasteProcess2FA('profile2FAResult')">Auto Paste & Decrypt 1</button>
+                </div>
+                <div id="profile2FAResult"></div>
+            </div>
+
+            <div class="data-card fade-in" id="extra2FAContainer" style="display: none; margin-bottom: 5px;">
+                ${getToggleUI('Quick 2FA (2)', 'toggle2FAMode', 'manualProfile2FA_2', 'autoProfile2FA_2', 'profile2FAResult_2')}
+                <div id="manualProfile2FA_2" style="display: ${autoPasteEnabled ? 'none' : 'block'};">
+                    <input type="text" id="secretKeyProfile_2" class="input-box" placeholder="PASTE SECRET KEY 2 HERE" oninput="manualProcess2FA('secretKeyProfile_2', 'profile2FAResult_2')">
+                </div>
+                <div id="autoProfile2FA_2" style="display: ${autoPasteEnabled ? 'block' : 'none'};">
+                    <button class="btn btn-primary" onclick="autoPasteProcess2FA('profile2FAResult_2')">Auto Paste & Decrypt 2</button>
+                </div>
+                <div id="profile2FAResult_2"></div>
+            </div>
+
+            <div class="data-card fade-in" id="otpContainer" style="display: none; margin-bottom: 5px;">
+                ${getToggleUI('Quick OTP', 'toggleOTPMode', 'manualProfileOTP', 'autoProfileOTP', 'profileOTPResult')}
+                <div id="manualProfileOTP" style="display: ${autoPasteEnabled ? 'none' : 'block'};">
+                    <input type="text" id="smsTextProfile" class="input-box" placeholder="PASTE FULL SMS HERE" oninput="manualProcessOTP('smsTextProfile', 'profileOTPResult')">
+                </div>
+                <div id="autoProfileOTP" style="display: ${autoPasteEnabled ? 'block' : 'none'};">
+                    <button class="btn btn-primary" onclick="autoPasteProcessOTP('profileOTPResult')">Auto Paste & Extract</button>
+                </div>
+                <div id="profileOTPResult"></div>
+            </div>
+
+            <div class="data-card fade-in" id="mailContainer" style="display: none; margin-bottom: 5px;">
+                ${getToggleUI('Extract Mail', 'toggleOTPMode', 'manualProfileMail', 'autoProfileMail', 'profileMailResult')}
+                <div id="manualProfileMail" style="display: ${autoPasteEnabled ? 'none' : 'block'};">
+                    <input type="text" id="mailTextProfile" class="input-box" placeholder="PASTE TEXT TO EXTRACT MAIL" oninput="manualProcessMail('mailTextProfile', 'profileMailResult')">
+                </div>
+                <div id="autoProfileMail" style="display: ${autoPasteEnabled ? 'block' : 'none'};">
+                    <button class="btn btn-primary" onclick="autoPasteProcessMail('profileMailResult')">Auto Paste & Extract Mail</button>
+                </div>
+                <div id="profileMailResult"></div>
+            </div>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 4px; margin-bottom: 10px; padding: 0 4px;">
+                <span id="toggle1st2FABtn" onclick="toggleFirst2FABox()" style="color: var(--primary); font-size: 11px; cursor: pointer; font-weight: 600; padding: 4px;">+ Add Quick 2FA (1) Box</span>
+                <span id="toggle2FABtn" onclick="toggleExtra2FABox()" style="color: var(--primary); font-size: 11px; cursor: pointer; font-weight: 600; padding: 4px;">+ Add 2nd 2FA Box</span>
+                <span id="toggleOTPBtn" onclick="toggleOTPBox()" style="color: var(--primary); font-size: 11px; cursor: pointer; font-weight: 600; padding: 4px;">+ Add Quick OTP Box</span>
+                <span id="toggleMailBtn" onclick="toggleMailBox()" style="color: var(--primary); font-size: 11px; cursor: pointer; font-weight: 600; padding: 4px;">+ Add Mail Box</span>
+            </div>
+
+            <div class="divider"></div>
+            <button class="btn" style="grid-column: span 2;" onclick="showMainMenu()">Back to Hub</button>
+        `, 'Custom Name');
+    }
+
+    function generateCustomIdentity() {
+        let inputVal = document.getElementById('customNameInput').value.trim();
+        let resultDiv = document.getElementById('custom-identity-result');
+        
+        if (!inputVal) {
+            showToastMessage("⚠️ Please enter a name first");
+            return;
+        }
+
+        let formattedCounter = String(customCounter).padStart(2, '0');
+        let baseUsername = inputVal.toLowerCase().replace(/\s+/g, '_');
+        let generatedUsername = `${baseUsername}_${formattedCounter}`;
+        
+        customCounter++;
+        localStorage.setItem('jih4d_custom_counter', customCounter);
+        
+        let resultTextHTML = `
+            <div class="clickable-data fade-in" style="font-size: 16px; width:100%; text-align:center; margin-bottom:8px;" onclick="copyText('${inputVal}', '👤 Name Copied!')">${inputVal}</div>
+            <div class="clickable-data fade-in" style="font-size: 15px; width:100%; text-align:center;" onclick="copyText('${generatedUsername}', '📸 Username Copied!')">${generatedUsername}</div>
+        `;
+        
+        let passwordBlockHTML = vaultPassword ? `
+            <div class="divider fade-in" style="margin: 10px 0;"></div>
+            <div class="fade-in" style="font-size:11px; color:var(--text-muted); margin-bottom:6px; font-weight: 500;">Vault Password</div>
+            <div class="clickable-data fade-in" style="font-size: 13px; width:100%; text-align:center;" onclick="copyText('${vaultPassword.replace(/'/g, "\\'")}', '🔑 Password Copied!')">
+                ${vaultPassword}
+            </div>
+        ` : '';
+
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = resultTextHTML + passwordBlockHTML;
+    }
+
+    // =========================================
 
     function showSmsExtractor() {
         renderView(`
@@ -1107,16 +1213,6 @@
         `, pageDynamicTitle);
 
         generateIdentityData(g);
-    }
-
-    function showComingSoon() {
-        renderView(`
-            <div style="text-align:center; padding-top: 30px;">
-                <div style="font-size:40px; margin-bottom: 12px;">🚀</div>
-                <p class="desc">This feature will be available soon.</p>
-                <button class="btn" style="margin-top: 20px;" style="grid-column: span 2;" onclick="showMainMenu()">Back to Hub</button>
-            </div>
-        `, 'Under Development');
     }
 
     showMainMenu();
