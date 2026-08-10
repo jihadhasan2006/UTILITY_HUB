@@ -232,7 +232,6 @@
         p.desc { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; line-height: 1.4; }
 
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        /* For 3 column grids */
         .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
 
         .btn { 
@@ -317,16 +316,16 @@
             background: rgba(0,0,0,0.02);
         }
         
-        .footer-link {
-            display: block;
-            margin-top: 0;
-            font-size: 10px;
-            color: var(--text-muted);
+        .dev-link {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 11px;
+            color: var(--primary);
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
             transition: 0.2s;
         }
-        .footer-link:hover { color: var(--primary); }
+        .dev-link:hover { opacity: 0.8; }
 
         #toast { 
             visibility: hidden; 
@@ -355,9 +354,6 @@
 </head>
 <body class="theme-ocean">
 
-<!-- =========================================
-     NEW PRELOADER ANIMATION
-     ========================================= -->
 <div id="preloader">
     <div class="loader-ring">
         <svg class="loader-logo" viewBox="0 0 24 24">
@@ -367,7 +363,6 @@
     </div>
     <div class="loader-text">AuthGenix</div>
 </div>
-<!-- ========================================= -->
 
 <div class="app-container">
     <div class="header">
@@ -388,19 +383,13 @@
     <div class="content fade-in" id="app-content"></div>
 
     <div class="footer">
-        <div style="font-weight: 600; margin-bottom: 6px; letter-spacing: 0.5px;">AuthGenix // Secure Hub</div>
-        <!-- Update starts here -->
-        <a href="https://wa.me/8801613894599" target="_blank" class="footer-link">Contact Developer (J1H4D)</a>
-        <!-- Update ends here -->
+        <div style="font-weight: 600; margin-bottom: 4px; letter-spacing: 0.5px;">AuthGenix // Secure Hub</div>
     </div>
 </div>
 
 <div id="toast">✅ Copied</div>
 
 <script>
-    // =========================================
-    // PRELOADER LOGIC
-    // =========================================
     window.addEventListener('load', () => {
         setTimeout(() => {
             const preloader = document.getElementById('preloader');
@@ -409,12 +398,9 @@
             setTimeout(() => {
                 preloader.style.display = 'none';
             }, 600);
-        }, 1500); // 1.5 seconds loading simulation
+        }, 1500); 
     });
 
-    // =========================================
-    // THEME CYCLING LOGIC
-    // =========================================
     const themeSequence = ['theme-light', 'theme-ocean', 'theme-cyber', 'theme-ios'];
     const themeData = {
         'theme-light': { emoji: '☀️', name: 'Light Theme' },
@@ -450,9 +436,6 @@
     }
 
 
-    // =========================================
-    // CORE APP LOGIC
-    // =========================================
     let autoPasteEnabled = false;
     let vaultPassword = localStorage.getItem('jih4d_vault_pass') || '';
     let usedNameCombinations = {};
@@ -497,9 +480,6 @@
         if(inp) inp.value = '';
     }
 
-    // =========================================
-    // EXTRACTION LOGIC (OTP & MAIL & 2FA)
-    // =========================================
     function manualProcessOTP(inputId, targetId) {
         let text = document.getElementById(inputId).value;
         executeOTPCore(text, targetId, false);
@@ -540,7 +520,6 @@
         }
     }
 
-    // Mail Extractor Logic
     function manualProcessMail(inputId, targetId) {
         let text = document.getElementById(inputId).value;
         executeMailCore(text, targetId, false);
@@ -640,128 +619,38 @@
     }
 
     // =========================================
-    // EXPANDED NAME DATABASE (FRESH NAMES & NEW COUNTRIES)
+    // NEW UNIQUE NAME DATABASE
     // =========================================
     const accountData = {
-        bd: { 
-            male_first: [
-                "Abrar", "Fahad", "Nafis", "Mushfiq", "Sadat", "Tanvir", "Sajeev", "Nabil", "Raihan", "Wasi",
-                "Mahir", "Shahriar", "Zulkarnain", "Rezaul", "Masrur", "Iftekhar", "Hasanuzzaman", "Ahnaf", "Sajid", "Muzahid",
-                "Muntasir", "Intisar", "Rayhan", "Tasin", "Zayed", "Ehsan", "Farhan", "Mahfuzur", "Sifat", "Mubashir",
-                "Tahmid", "Waliur", "Ishtiaq", "Safwan", "Niyaz", "Mashrafe", "Zubayer", "Nawshad", "Ovi", "Faiyaz"
-            ], 
-            female_first: [
-                "Fariha", "Tabassum", "Maisha", "Zareen", "Subah", "Nabila", "Samira", "Tanisha", "Ramisa", "Tasnia",
-                "Nishat", "Raiyana", "Ishrat", "Atia", "Tahsin", "Rubaiya", "Sadia", "Zunaira", "Afia", "Sabiha",
-                "Mehjabin", "Nayma", "Tanha", "Nusrat", "Faiza", "Madiha", "Anjum", "Rumana", "Sharmila", "Afra",
-                "Humaira", "Tazkia", "Mahzabeen", "Shafita", "Jarin", "Raisa", "Sanjida", "Nawal", "Lubna", "Salma"
-            ], 
-            last: [
-                "Bhuyan", "Pramanik", "Mazumder", "Talukdar", "Sikdar", "Mallick", "Khandakar", "Bepari", "Howlader", "Tarafdar",
-                "Bhuiyan", "Mozumdar", "Joarder", "Khondoker", "Munshi", "Dewan", "Akon", "Hawlader", "Majumder", "Molla",
-                "Patwary", "Fakir", "Sayed", "Mir", "Bose", "Dutta", "Saha", "Sen", "Bhattacharya", "Chakma",
-                "Barua", "Haque", "Chowdhury", "Rahman", "Islam", "Uddin", "Hossain", "Sheikh", "Ahmed", "Khan"
-            ] 
+        bd: {
+            male_first: ["Tariq", "Imran", "Mahbub", "Kamrul", "Jalal", "Selim", "Anwar", "Faruk", "Rubel", "Kawsar", "Rassel", "Sohel", "Mamun", "Suman", "Shakil", "Tushar", "Arif", "Asif", "Mehedi", "Rakib", "Sabbir", "Shohag", "Limon", "Nayan", "Palash", "Tuhin", "Shafiq", "Jamal", "Iqbal", "Habib", "Nizam", "Kazi", "Saiful", "Mostafa", "Monir", "Milon", "Biplob", "Pavel", "Ashiq", "Rahat"],
+            female_first: ["Brishti", "Srabanti", "Mitu", "Ritu", "Tithi", "Toma", "Ripa", "Ruma", "Bithi", "Nipa", "Shimu", "Shila", "Munmun", "Sonia", "Tania", "Moni", "Mukta", "Ratna", "Parveen", "Nasrin", "Shirin", "Jesmin", "Lipi", "Shampa", "Dalia", "Jui", "Maliha", "Farzana", "Roksana", "Shahnaz", "Kohinoor", "Asma", "Rina", "Sharmin", "Lima", "Moushumi", "Tumpa", "Sathi", "Koly", "Priya"],
+            last: ["Sarkar", "Biswas", "Haldar", "Roy", "Barmon", "Karmakar", "Paul", "Das", "Debnath", "Shill", "Siddiqui", "Pasha", "Mirza", "Baqi", "Kibria", "Tarafder", "Gazi", "Mridha", "Khondaker", "Maji", "Khandaker", "Bhuia", "Mia", "Chowdhari", "Uddin", "Mandal", "Gosh", "Baidya", "Sana", "Razzak", "Kadir", "Bari", "Kabir", "Alam", "Ahamed", "Khanam", "Khatun", "Shaha", "Molla", "Akon"]
         },
-        usa: { 
-            male_first: [
-                "Liam", "Noah", "Oliver", "Elijah", "James", "William", "Benjamin", "Lucas", "Henry", "Theodore",
-                "Jack", "Levi", "Alexander", "Jackson", "Mateo", "Daniel", "Michael", "Mason", "Sebastian", "Ethan",
-                "Logan", "Owen", "Samuel", "Jacob", "Asher", "Aiden", "John", "Joseph", "Wyatt", "David",
-                "Leo", "Luke", "Julian", "Hudson", "Grayson", "Matthew", "Ezra", "Gabriel", "Carter", "Isaac"
-            ], 
-            female_first: [
-                "Olivia", "Emma", "Charlotte", "Amelia", "Ava", "Sophia", "Isabella", "Mia", "Evelyn", "Harper",
-                "Luna", "Camila", "Gianna", "Elizabeth", "Eleanor", "Ella", "Abigail", "Sofia", "Avery", "Scarlett",
-                "Emily", "Aria", "Penelope", "Chloe", "Layla", "Mila", "Nora", "Hazel", "Madison", "Ellie",
-                "Lily", "Nova", "Isla", "Grace", "Violet", "Aurora", "Riley", "Zoey", "Willow", "Emilia"
-            ], 
-            last: [
-                "Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez",
-                "Hernandez", "Lopez", "Gonzalez", "Wilson", "Anderson", "Thomas", "Taylor", "Moore", "Jackson", "Martin",
-                "Lee", "Perez", "Thompson", "White", "Harris", "Sanchez", "Clark", "Ramirez", "Lewis", "Robinson",
-                "Walker", "Young", "Allen", "King", "Wright", "Scott", "Torres", "Nguyen", "Hill", "Flores"
-            ] 
+        usa: {
+            male_first: ["Declan", "Waylon", "Harrison", "Weston", "Silas", "Rowan", "Gael", "Ryder", "Zion", "Braxton", "Enzo", "Milo", "Amir", "Thiago", "Arthur", "Leon", "Felix", "Atticus", "Finley", "Rhett", "Colton", "Brody", "Jasper", "Emmett", "Micah", "Malachi", "Caleb", "Ezekiel", "Lincoln", "Hunter", "Connor", "Landon", "Eli", "Aaron", "Charles", "Christian", "Adrian", "Cameron", "Jordan"],
+            female_first: ["Adalyn", "Madeline", "Eliana", "Melody", "Ariel", "Ruby", "Serenity", "Autumn", "Nevaeh", "Quinn", "Josephine", "Cora", "Valentina", "Sadie", "Delilah", "Samantha", "Sarah", "Leilani", "Eva", "Gemma", "Peyton", "Melanie", "Mackenzie", "Reagan", "Jocelyn", "Clara", "Faith", "Julia", "Sophie", "Sydney", "Liliana", "Aliyah", "Annabelle", "Maria", "Alexandra", "Lucia", "Elena", "Aaliyah", "Gabriella"],
+            last: ["Mitchell", "Carter", "Roberts", "Gomez", "Phillips", "Evans", "Turner", "Diaz", "Parker", "Cruz", "Edwards", "Collins", "Reyes", "Stewart", "Morris", "Morales", "Murphy", "Cook", "Rogers", "Gutierrez", "Ortiz", "Morgan", "Cooper", "Peterson", "Bailey", "Reed", "Kelly", "Howard", "Ramos", "Kim", "Cox", "Ward", "Richardson", "Watson", "Brooks", "Chavez", "Wood", "James", "Bennett", "Gray"]
         },
-        uk: { 
-            male_first: [
-                "Muhammad", "George", "Arthur", "Leo", "Harry", "Oscar", "Archie", "Henry", "Tommy", "Jude",
-                "Roman", "Oliver", "Freddie", "Alfie", "Jack", "Charlie", "Theo", "William", "Thomas", "Jacob",
-                "Lucas", "Finley", "Isaac", "Teddy", "Alexander", "Reuben", "Rowan", "Harrison", "Mason", "Luca",
-                "Elijah", "Rory", "Hunter", "Max", "Daniel", "Dylan", "Adam", "Elliot", "Frankie", "Caleb"
-            ], 
-            female_first: [
-                "Olivia", "Amelia", "Isla", "Ava", "Ivy", "Freya", "Lily", "Florence", "Mia", "Willow",
-                "Rosie", "Sophia", "Isabella", "Grace", "Daisy", "Sienna", "Poppy", "Elsie", "Emily", "Ella",
-                "Evelyn", "Alice", "Sofia", "Rubie", "Evie", "Charlotte", "Matilda", "Harper", "Millie", "Aria",
-                "Maya", "Lucy", "Phoebe", "Penelope", "Luna", "Hallie", "Zara", "Mila", "Amber", "Darcy"
-            ], 
-            last: [
-                "Smith", "Jones", "Taylor", "Williams", "Brown", "Davies", "Evans", "Wilson", "Thomas", "Roberts",
-                "Johnson", "Lewis", "Walker", "Robinson", "Wood", "Thompson", "White", "Watson", "Jackson", "Wright",
-                "Green", "Harris", "Cooper", "King", "Lee", "Martin", "Clarke", "James", "Morgan", "Hughes",
-                "Edwards", "Hill", "Moore", "Clark", "Harrison", "Scott", "Price", "Riley", "Ward", "Baker"
-            ] 
+        uk: {
+            male_first: ["Jaxon", "Roman", "Albert", "Stanley", "Louis", "Bobby", "Hudson", "Oakley", "Matthew", "David", "Reggie", "Jenson", "Carter", "Grayson", "Felix", "Gabriel", "Ralph", "Seth", "Riley", "Sonny", "Myles", "Tobias", "Jasper", "Hugo", "Ronnie", "Elliott", "Harvey", "Nathan", "Aidan", "Ryan", "Ellis", "Finn", "Leon", "Milo", "Spencer", "Brody", "Ewan", "Evan", "Bradley", "Declan"],
+            female_first: ["Heidi", "Bonnie", "Lottie", "Nancy", "Clara", "Arabella", "Robyn", "Matilda", "Eleanor", "Orla", "Molly", "Rose", "Layla", "Maisie", "Imogen", "Harriet", "Erin", "Eliza", "Gracie", "Bella", "Megan", "Martha", "Lola", "Lexi", "Lilly", "Chloe", "Darcie", "Hollie", "Hannah", "Amelie", "Abigail", "Evelyn", "Summer", "Eden", "Elsie", "Mabel", "Beatrice", "Ada", "Violet", "Ivy"],
+            last: ["Wood", "Hall", "Macdonald", "Murray", "Kelly", "Clark", "Cooper", "Harrison", "Ward", "Foster", "Chapman", "Richardson", "Pearson", "Webb", "Fisher", "Fletcher", "Gibson", "Ford", "Reynolds", "Hamilton", "Graham", "Shaw", "Simmons", "Hayes", "Dixon", "Hunt", "Palmer", "Holmes", "Mills", "Barnes", "Knight", "Matthews", "Barker", "Stevens", "Jenkins", "Dunn", "Perry", "Butler", "Russell"]
         },
-        fr: { 
-            male_first: [
-                "Gabriel", "Léo", "Raphaël", "Maël", "Louis", "Noah", "Jules", "Arthur", "Adam", "Lucas",
-                "Liam", "Sacha", "Isaac", "Gabin", "Aaron", "Hugo", "Eden", "Paul", "Naël", "Malo",
-                "Tiago", "Elio", "Léon", "Martin", "Mathis", "Marius", "Nino", "Ayden", "Gaspard", "Tom",
-                "Victor", "Marceau", "Noé", "Evan", "Ibrahim", "Malo", "Timéo", "Enzo", "Clément", "Axel"
-            ], 
-            female_first: [
-                "Jade", "Louise", "Ambre", "Alba", "Emma", "Rose", "Alice", "Romy", "Anna", "Lina",
-                "Léna", "Mia", "Lou", "Julia", "Chloé", "Léa", "Joy", "Inès", "Mila", "Agathe",
-                "Iris", "Lola", "Juliette", "Zoé", "Charlie", "Victoire", "Jeanne", "Léonie", "Margaux", "Olivia",
-                "Eva", "Camille", "Adèle", "Nina", "Alix", "Sarah", "Lya", "Giulia", "Eden", "Romane"
-            ], 
-            last: [
-                "Martin", "Bernard", "Thomas", "Petit", "Robert", "Richard", "Durand", "Dubois", "Moreau", "Laurent",
-                "Simon", "Michel", "Lefebvre", "Leroy", "Roux", "David", "Bertrand", "Morel", "Fournier", "Girard",
-                "Bonnet", "Dupont", "Lambert", "Fontaine", "Rousseau", "Vincent", "Muller", "Lefevre", "Faure", "Andre",
-                "Mercier", "Blanc", "Guerin", "Boyer", "Garnier", "Chevalier", "Francois", "Legrand", "Gauthier", "Perrin"
-            ] 
+        fr: {
+            male_first: ["Gaspard", "Côme", "Léandre", "Auguste", "Oscar", "Joseph", "Simon", "Antoine", "Bastien", "Gauthier", "Théodore", "Célestin", "Maxence", "Charles", "Achille", "Ambroise", "Cyprien", "Edgar", "Gustave", "Emile", "Hector", "Marin", "Paul", "Basile", "Gabin", "Robin", "Mael", "Eloi", "Camille", "Valentin", "Corentin", "Benoit", "Romain", "Damien", "Florian", "Guillaume", "Mathieu", "Nicolas", "Alexandre", "Julien"],
+            female_first: ["Apolline", "Capucine", "Marguerite", "Joséphine", "Héloïse", "Garance", "Constance", "Clémence", "Mathilde", "Adélaïde", "Aglaé", "Blanche", "Céleste", "Zélie", "Pénélope", "Suzanne", "Castille", "Philomène", "Bérénice", "Olympe", "Isaure", "Victoire", "Coline", "Solène", "Justine", "Claire", "Marion", "Céline", "Audrey", "Elodie", "Amélie", "Coralie", "Aurore", "Mélanie", "Lucie", "Sophie", "Marie", "Léa", "Anaïs", "Manon"],
+            last: ["Caron", "Fontaine", "Rousseau", "Vincent", "Muller", "Lefevre", "Faure", "Andre", "Mercier", "Blanc", "Guerin", "Boyer", "Garnier", "Chevalier", "Francois", "Legrand", "Gauthier", "Perrin", "Robin", "Clement", "Morin", "Nicolas", "Henry", "Roussel", "Mathieu", "Gautier", "Masson", "Marchand", "Duval", "Denis", "Dumont", "Marie", "Lemaire", "Noel", "Meyer", "Dufour", "Meunier", "Brun", "Blanchard", "Giraud"]
         },
-        in: { 
-            male_first: [
-                "Aarav", "Vihaan", "Aditya", "Sai", "Arjun", "Reyansh", "Ayaan", "Krishna", "Ishaan", "Shaurya",
-                "Rohan", "Rahul", "Dev", "Karan", "Vivaan", "Dhruv", "Rudra", "Kabir", "Atharv", "Ansh",
-                "Aarush", "Aryan", "Siddharth", "Pranav", "Vedant", "Agastya", "Darsh", "Ivaan", "Laksh", "Ranveer",
-                "Nishant", "Raj", "Samar", "Shivansh", "Tanish", "Vikram", "Yash", "Zayn", "Rishabh", "Parth"
-            ], 
-            female_first: [
-                "Saanvi", "Aanya", "Aadhya", "Diya", "Ananya", "Kiara", "Isha", "Riya", "Kavya", "Myra",
-                "Sneha", "Pooja", "Neha", "Aditi", "Mira", "Aarohi", "Anika", "Avni", "Fatima", "Gauri",
-                "Ishita", "Meher", "Navya", "Nandini", "Prisha", "Radhika", "Raina", "Shanaya", "Tara", "Vanya",
-                "Zara", "Khushi", "Shruti", "Swati", "Tanya", "Priyanka", "Deepika", "Jhanvi", "Simran", "Tanvi"
-            ], 
-            last: [
-                "Sharma", "Singh", "Patel", "Kumar", "Gupta", "Desai", "Jain", "Reddy", "Verma", "Rao",
-                "Das", "Mukherjee", "Bhatt", "Chauhan", "Yadav", "Iyer", "Nair", "Pillai", "Mishra", "Pandey",
-                "Bose", "Chatterjee", "Banerjee", "Sengupta", "Tiwari", "Kapoor", "Mehta", "Malhotra", "Ahuja", "Joshi",
-                "Bhardwaj", "Aggarwal", "Naidu", "Menon", "Sen", "Bhatia", "Gowda", "Kulkarni", "Patil", "Chopra"
-            ] 
+        in: {
+            male_first: ["Ved", "Rishaan", "Kiaan", "Pratyush", "Daksh", "Yuvan", "Advik", "Ahan", "Ishaan", "Ayush", "Tejas", "Gautam", "Ritesh", "Anurag", "Harsh", "Pulkit", "Mayank", "Nitin", "Tarun", "Piyush", "Mohit", "Kapil", "Saurabh", "Ashish", "Amit", "Manish", "Sunil", "Anil", "Deepak", "Ravi", "Sanjay", "Suresh", "Ramesh", "Mukesh", "Rajesh", "Prakash", "Ganesh", "Mahesh", "Vijay", "Ajay"],
+            female_first: ["Amaira", "Pari", "Kyra", "Miraya", "Ira", "Nyra", "Prisha", "Aisha", "Kajal", "Shikha", "Jyoti", "Kiran", "Nisha", "Rekha", "Seema", "Sushma", "Geeta", "Sunita", "Anita", "Kavita", "Sarita", "Renu", "Anu", "Preeti", "Mamta", "Reena", "Meena", "Shilpa", "Vandana", "Rachna", "Sonam", "Shweta", "Anjali", "Bhavna", "Divya", "Poonam", "Shalini", "Alka", "Radha", "Meera"],
+            last: ["Kaur", "Iyer", "Chauhan", "Bhat", "Rao", "Nair", "Saxena", "Deshmukh", "Chakraborty", "Sengupta", "Pillai", "Shukla", "Pandey", "Ghosh", "Jha", "Mishra", "Naidu", "Bose", "Menon", "Mathur", "Trivedi", "Upadhyay", "Dixit", "Bhagwat", "Dubey", "Yadav", "Rajput", "Thakur", "Singh", "Sharma", "Varma", "Reddy", "Patel", "Das", "Jain", "Agrawal", "Garg", "Bansal", "Khatri", "Soni"]
         },
-        cn: { 
-            male_first: [
-                "Wei", "Hao", "Jian", "Jun", "Cheng", "Qiang", "Lei", "Zhi", "Tao", "Peng",
-                "Chao", "Ming", "Yi", "Bin", "Yu", "Jing", "Bo", "Wen", "Feng", "Jie",
-                "Xin", "Yong", "Hua", "Dong", "Hai", "Long", "Shan", "Ping", "Gang", "Rui",
-                "Hong", "Lin", "Guo", "Yang", "Xuan", "Shi", "Chen", "Zhen", "Jin", "Xiang"
-            ], 
-            female_first: [
-                "Min", "Jing", "Yan", "Fang", "Li", "Ting", "Na", "Hua", "Xia", "Lan",
-                "Hong", "Ying", "Mei", "Ping", "Qing", "Juan", "Ling", "Wei", "Dan", "Lu",
-                "Hui", "Jie", "Rong", "Xin", "Wen", "Yun", "Fei", "Shu", "Chun", "Yue",
-                "Xue", "Lin", "Yu", "Xiang", "Rui", "Zhen", "Jiao", "Ning", "Fan", "Yuan"
-            ], 
-            last: [
-                "Wang", "Li", "Zhang", "Liu", "Chen", "Yang", "Huang", "Zhao", "Wu", "Zhou",
-                "Xu", "Sun", "Ma", "Zhu", "Hu", "Guo", "He", "Gao", "Lin", "Luo",
-                "Zheng", "Liang", "Xie", "Song", "Tang", "Xu", "Han", "Feng", "Dong", "Cheng",
-                "Cao", "Yuan", "Tian", "Pan", "Jiang", "Cai", "Ye", "Peng", "Du", "Su"
-            ] 
+        cn: {
+            male_first: ["Kun", "Bolin", "Zhihao", "Mingyu", "Yuchen", "Zixuan", "Haoran", "Yuxuan", "Zitao", "Yihang", "Jinhai", "Guanyu", "Tianyi", "Haoyu", "Shize", "Zihan", "Yuting", "Bojing", "Chuanli", "Deshi", "Enlai", "Fuhua", "Guangli", "Huan", "Jianyu", "Kang", "Liling", "Ping", "Qian", "Ru", "Shen", "Ting", "Wu", "Xiang", "Yan", "Zheng", "Minghua", "Jianguo", "Weimin", "Guoqiang"],
+            female_first: ["Ying", "Ling", "Hui", "Rong", "Fei", "Shu", "Chun", "Yue", "Xue", "Yuan", "Zhi", "Ming", "Yi", "Bin", "Yu", "Jing", "Bo", "Wen", "Feng", "Jie", "Xin", "Yong", "Hua", "Dong", "Hai", "Long", "Shan", "Ping", "Gang", "Rui", "Hong", "Lin", "Guo", "Yang", "Xuan", "Shi", "Chen", "Zhen", "Jin", "Xiang"],
+            last: ["Liao", "Chou", "Chu", "Gao", "Zheng", "He", "Guo", "Lin", "Luo", "Liang", "Xie", "Song", "Tang", "Han", "Feng", "Dong", "Cheng", "Cao", "Yuan", "Cui", "Jia", "Pan", "Du", "Ding", "Ren", "Lu", "Yao", "Shen", "Zhong", "Jiang", "Qiu", "Shi", "Xue", "Hou", "Luan", "Duan", "Gong", "Hao", "Lei", "Fang"]
         }
     };
     
@@ -782,6 +671,7 @@
             <div class="data-card">
                 <h3 style="font-size: 14px; margin-bottom: 10px;">Vault Configuration</h3>
                 <input type="text" class="input-box" placeholder="Set global password here..." value="${vaultPassword}" oninput="saveVaultPassword(this.value)">
+                <a href="https://wa.me/8801613894599" target="_blank" class="dev-link">Contact Developer (JIH4D)</a>
             </div>
 
             <div class="grid-2" style="margin-top: 16px;">
@@ -793,15 +683,13 @@
         `, 'Dashboard');
     }
 
-    // =========================================
-    // CUSTOM NAME GENERATOR (NEW FEATURE)
-    // =========================================
     function showCustomNameView() {
         renderView(`
             <p class="desc">Enter a custom name to generate sequential usernames.</p>
             
             <div class="data-card">
                 <input type="text" id="customNameInput" class="input-box" placeholder="Enter Custom Name (e.g., John Doe)">
+                <a href="https://wa.me/8801613894599" target="_blank" class="dev-link">Contact Developer (JIH4D)</a>
                 <button class="btn btn-primary" style="margin-top: 10px;" onclick="generateCustomIdentity()">Generate Username</button>
             </div>
 
@@ -896,8 +784,6 @@
         resultDiv.innerHTML = resultTextHTML + passwordBlockHTML;
     }
 
-    // =========================================
-
     function showSmsExtractor() {
         renderView(`
             <p class="desc">Extract OTP codes from raw SMS text.</p>
@@ -989,10 +875,6 @@
         `, 'Select Gender');
     }
 
-    // =========================================
-    // UPDATED FIRST/LAST NAME TRACKING SYSTEM (NO REPETITION)
-    // =========================================
-    
     function shuffleArray(array) {
         let shuffled = [...array];
         for (let i = shuffled.length - 1; i > 0; i--) {
