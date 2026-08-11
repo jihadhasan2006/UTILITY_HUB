@@ -95,7 +95,7 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--bg-base); background-size: 200% 200%; z-index: 9999;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: opacity 0.6s cubic-bezier(0.8, 0, 0.2, 1), visibility 0.6s; backdrop-filter: blur(10px);
+            transition: opacity 0.5s ease, visibility 0.5s; backdrop-filter: blur(10px);
         }
         
         .loader-ring { width: 80px; height: 80px; position: relative; display: flex; justify-content: center; align-items: center; }
@@ -268,10 +268,7 @@
 
 <div id="preloader">
     <div class="loader-ring">
-        <svg class="loader-logo" viewBox="0 0 24 24">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-            <polyline points="9 12 11 14 15 10"></polyline>
-        </svg>
+        <svg class="loader-logo" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
     </div>
     <div class="loader-text">AuthGenix</div>
 </div>
@@ -283,10 +280,7 @@
     <div class="app-container">
         <div class="header">
             <div class="logo-container">
-                <svg class="logo-icon" viewBox="0 0 24 24">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                    <polyline points="9 12 11 14 15 10"></polyline>
-                </svg>
+                <svg class="logo-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
                 <h2 id="page-title"></h2>
             </div>
             <div class="header-icons">
@@ -390,42 +384,10 @@
 <div id="toast">✅ Copied</div>
 
 <!-- =========================================
-     FIREBASE & ADMIN LOGIC
+     MAIN APP JS LOGIC (NO MODULE)
      ========================================= -->
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, collection, getDocs, deleteDoc, doc, writeBatch } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyB50Puqo5nr7-1aoT-znhHyBkvD9ui0XhU",
-        authDomain: "authgenix.firebaseapp.com",
-        projectId: "authgenix",
-        storageBucket: "authgenix.firebasestorage.app",
-        messagingSenderId: "959487638243",
-        appId: "1:959487638243:web:72d57f128835f354b763d6"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-    
-    // Auto-delete support variables
-    window.firebaseDB = db;
-    window.firebaseDeleteDoc = deleteDoc;
-    window.firebaseDoc = doc;
-
-    // --- Main App Data Fetching ---
-    window.accountData = {
-        bd: { male_first: [], female_first: [], last: [], username: [] },
-        usa: { male_first: [], female_first: [], last: [], username: [] },
-        uk: { male_first: [], female_first: [], last: [], username: [] },
-        fr: { male_first: [], female_first: [], last: [], username: [] },
-        in: { male_first: [], female_first: [], last: [], username: [] },
-        cn: { male_first: [], female_first: [], last: [], username: [] }
-    };
-
-    // Load Offline Data (FULL ARRAY)
+<script>
+    // 1. Move the giant offline data here so the app NEVER hangs, even if Firebase fails.
     const offlineData = {
         bd: {
             male_first: ["Tariq", "Imran", "Mahbub", "Kamrul", "Jalal", "Selim", "Anwar", "Faruk", "Rubel", "Kawsar", "Rassel", "Sohel", "Mamun", "Suman", "Shakil", "Tushar", "Arif", "Asif", "Mehedi", "Rakib", "Sabbir", "Shohag", "Limon", "Nayan", "Palash", "Tuhin", "Shafiq", "Jamal", "Iqbal", "Habib", "Nizam", "Kazi", "Saiful", "Mostafa", "Monir", "Milon", "Biplob", "Pavel", "Ashiq", "Rahat"],
@@ -464,210 +426,20 @@
             username: ["china_dragon", "beijing_star", "shanghai_vibe", "cn_king", "asian_pro"]
         }
     };
-    
-    // Copy offline data so we don't mess up original references
     window.accountData = JSON.parse(JSON.stringify(offlineData));
 
-    async function fetchNamesFromFirebase() {
-        try {
-            const querySnapshot = await getDocs(collection(db, "names"));
-            let allDocs = [];
-            
-            querySnapshot.forEach((docSnap) => {
-                allDocs.push({ id: docSnap.id, ...docSnap.data() });
-            });
-
-            allDocs.sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
-
-            allDocs.forEach((data) => {
-                if(window.accountData[data.country] && window.accountData[data.country][data.category]) {
-                    window.accountData[data.country][data.category].push({ id: data.id, name: data.name });
-                }
-            });
-        } catch (error) {
-            console.error("Error fetching names: ", error);
-        }
-    }
-    fetchNamesFromFirebase();
-
-    // --- Admin Panel Logic ---
-    const loginSection = document.getElementById('loginSection');
-    const dashboardSection = document.getElementById('dashboardSection');
-    const adminDataList = document.getElementById('adminDataList');
-    const recordCountText = document.getElementById('recordCountText');
-    const addDataBtn = document.getElementById('addDataBtn');
-    const filterPlatform = document.getElementById('filterPlatform');
-
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            loginSection.classList.add('hidden');
-            dashboardSection.classList.remove('hidden');
-            loadAdminData();
-        } else {
-            loginSection.classList.remove('hidden');
-            dashboardSection.classList.add('hidden');
-        }
-    });
-
-    filterPlatform.addEventListener('change', () => loadAdminData());
-
-    document.getElementById('loginBtn').addEventListener('click', () => {
-        const email = document.getElementById('emailInput').value;
-        const pass = document.getElementById('passwordInput').value;
-        signInWithEmailAndPassword(auth, email, pass).catch(err => {
-            document.getElementById('errorMsg').innerText = "❌ " + err.message;
-        });
-    });
-
-    document.getElementById('logoutBtn').addEventListener('click', () => signOut(auth));
-
-    addDataBtn.addEventListener('click', async () => {
-        const platform = document.getElementById('platformSelect').value;
-        const country = document.getElementById('countrySelect').value;
-        const category = document.getElementById('categorySelect').value;
-        const fileInput = document.getElementById('fileInput').files[0];
-
-        if(!fileInput) {
-            return alert("⚠️ Please select a .txt file first!");
-        }
-
-        addDataBtn.innerText = "Processing Data...";
-        addDataBtn.disabled = true;
-
-        try {
-            const reader = new FileReader();
-            reader.onload = async function(e) {
-                const fileContent = e.target.result;
-                const lines = fileContent.split(/\r?\n/).filter(line => line.trim() !== '');
-                await processBulkData(lines, platform, country, category);
-            };
-            reader.readAsText(fileInput);
-        } catch (e) {
-            alert("Error: " + e.message);
-            resetButton();
-        }
-    });
-
-    async function processBulkData(namesArray, platform, country, category) {
-        try {
-            let batch = writeBatch(db);
-            let operationsCounter = 0;
-            let addedCount = 0;
-
-            for (let i = 0; i < namesArray.length; i++) {
-                const fullName = namesArray[i].trim();
-                if (!fullName) continue;
-
-                const timestamp = Date.now() + i;
-
-                if (category === 'male_full' || category === 'female_full') {
-                    const parts = fullName.split(/\s+/);
-                    if (parts.length >= 2) {
-                        const firstName = parts[0];
-                        const lastName = parts.slice(1).join(' '); 
-                        const firstCategory = category === 'male_full' ? 'male_first' : 'female_first';
-
-                        batch.set(doc(collection(db, "names")), { platform, country, category: firstCategory, name: firstName, timestamp });
-                        operationsCounter++;
-
-                        batch.set(doc(collection(db, "names")), { platform, country, category: 'last', name: lastName, timestamp });
-                        operationsCounter++;
-                        addedCount++;
-                    } else {
-                        const firstCategory = category === 'male_full' ? 'male_first' : 'female_first';
-                        batch.set(doc(collection(db, "names")), { platform, country, category: firstCategory, name: fullName, timestamp });
-                        operationsCounter++;
-                        addedCount++;
-                    }
-                } else {
-                    batch.set(doc(collection(db, "names")), { platform, country, category, name: fullName, timestamp });
-                    operationsCounter++;
-                    addedCount++;
-                }
-
-                if (operationsCounter >= 400) {
-                    await batch.commit();
-                    batch = writeBatch(db);
-                    operationsCounter = 0;
-                }
+    // 2. Hide Preloader immediately when DOM is ready (Fixes the infinite loading issue)
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            const preloader = document.getElementById('preloader');
+            if(preloader) {
+                preloader.style.opacity = '0';
+                preloader.style.visibility = 'hidden';
+                setTimeout(() => { preloader.style.display = 'none'; }, 500);
             }
+        }, 1000); 
+    });
 
-            if (operationsCounter > 0) {
-                await batch.commit();
-            }
-
-            alert(`✅ Successfully added ${addedCount} records to the database!`);
-            document.getElementById('fileInput').value = '';
-            loadAdminData(); 
-            fetchNamesFromFirebase(); // Reload logic for app
-        } catch (error) {
-            alert("Upload Error: " + error.message);
-        }
-        resetButton();
-    }
-
-    function resetButton() {
-        addDataBtn.innerText = "Upload Database";
-        addDataBtn.disabled = false;
-    }
-
-    async function loadAdminData() {
-        adminDataList.innerHTML = '<p style="font-size: 12px; color: var(--text-muted); margin-top: 20px;">Fetching records...</p>';
-        try {
-            const selectedFilter = filterPlatform.value;
-            const querySnapshot = await getDocs(collection(db, "names"));
-            
-            let html = "";
-            let count = 0;
-
-            querySnapshot.forEach((docSnap) => {
-                const data = docSnap.data();
-                const itemPlatform = data.platform || 'all'; 
-
-                if (selectedFilter !== 'all_view' && itemPlatform !== selectedFilter) return;
-
-                count++;
-                let platLabel = 'GLOBAL';
-                let platColor = '#a59fb3';
-                
-                if(itemPlatform === 'fb') { platLabel = 'FB'; platColor = '#3b82f6'; }
-                else if(itemPlatform === 'ig') { platLabel = 'IG'; platColor = '#e62e5c'; }
-                else if(itemPlatform === 'tt') { platLabel = 'TT'; platColor = '#10b981'; }
-
-                html += `
-                    <div class="admin-data-card">
-                        <div class="admin-data-info">
-                            <span class="admin-data-name">${data.name}</span>
-                            <span class="admin-data-meta">
-                                <span style="color: ${platColor}; border: 1px solid ${platColor}; padding: 1px 4px; border-radius: 4px; font-size: 9px;">${platLabel}</span> 
-                                ${data.country.toUpperCase()} • ${data.category.replace('_', ' ').toUpperCase()}
-                            </span>
-                        </div>
-                        <button class="admin-delete-btn" onclick="deleteAdminData('${docSnap.id}')">Delete</button>
-                    </div>
-                `;
-            });
-
-            recordCountText.innerText = count;
-            adminDataList.innerHTML = html || "<p style='font-size: 12px; color: var(--text-muted); margin-top: 20px; text-align: center;'>No records found.</p>";
-        } catch (e) {
-            adminDataList.innerHTML = `<p style="color:var(--danger); font-size: 12px;">Error: ${e.message}</p>`;
-        }
-    }
-
-    window.deleteAdminData = async function(docId) {
-        if(confirm("Are you sure you want to delete this record?")) {
-            await deleteDoc(doc(db, "names", docId));
-            loadAdminData(); 
-            fetchNamesFromFirebase();
-        }
-    }
-</script>
-
-<!-- =========================================
-     MAIN APP JS LOGIC
-     ========================================= -->
-<script>
     // Navigation for Admin and App
     function openAdminPanel() {
         document.getElementById('mainAppWrapper').classList.add('hidden');
@@ -775,10 +547,7 @@
 
     function executeOTPCore(text, targetId, isAuto) {
         const resultDiv = document.getElementById(targetId);
-        if (!text.trim()) { 
-            resultDiv.innerHTML = ``; 
-            return; 
-        }
+        if (!text.trim()) { resultDiv.innerHTML = ``; return; }
 
         let match = text.match(/\b\d{3}[\s-]?\d{3,5}\b|\b\d{5,8}\b/);
         
@@ -792,9 +561,7 @@
                     <div style="font-size: 20px; font-weight: 700; color: var(--primary); letter-spacing: 3px;">${code}</div>
                 </div>
             `;
-            if(isAuto) { 
-                copyText(code, `💬 Auto Copied: ${code}`); 
-            }
+            if(isAuto) { copyText(code, `💬 Auto Copied: ${code}`); }
         } else {
             let displaySecret = text.length > 25 ? text.substring(0, 25) + '...' : text;
             resultDiv.innerHTML = `
@@ -820,10 +587,7 @@
 
     function executeMailCore(text, targetId, isAuto) {
         const resultDiv = document.getElementById(targetId);
-        if (!text.trim()) { 
-            resultDiv.innerHTML = ``; 
-            return; 
-        }
+        if (!text.trim()) { resultDiv.innerHTML = ``; return; }
 
         let emails = text.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g);
         
@@ -839,9 +603,7 @@
                 `;
             });
             resultDiv.innerHTML = html;
-            if(isAuto) { 
-                copyText(uniqueEmails[0], `📧 Auto Copied: ${uniqueEmails[0]}`); 
-            }
+            if(isAuto) { copyText(uniqueEmails[0], `📧 Auto Copied: ${uniqueEmails[0]}`); }
         } else {
             let displaySecret = text.length > 25 ? text.substring(0, 25) + '...' : text;
             resultDiv.innerHTML = `
@@ -868,10 +630,7 @@
 
     function execute2FACore(secret, targetId, isAuto) {
         const resultDiv = document.getElementById(targetId);
-        if (!secret) { 
-            resultDiv.innerHTML = ``; 
-            return; 
-        }
+        if (!secret) { resultDiv.innerHTML = ``; return; }
 
         let displaySecret = secret.length > 25 ? secret.substring(0, 25) + '...' : secret;
 
@@ -891,9 +650,7 @@
                     <div style="font-size: 20px; font-weight: 700; color: var(--primary); letter-spacing: 3px;">${code}</div>
                 </div>
             `;
-            if(isAuto) { 
-                copyText(code, `🔑 Auto Copied: ${code}`); 
-            }
+            if(isAuto) { copyText(code, `🔑 Auto Copied: ${code}`); }
         } catch (e) { 
             resultDiv.innerHTML = `
                 <div style="color:var(--danger); font-size:10px; text-align:center; margin-top:8px; padding: 8px; border: 1px dashed var(--danger); border-radius: 8px; background: rgba(239, 68, 68, 0.05);">
@@ -1125,6 +882,9 @@
 
     let selPlat = '', selCoun = '';
 
+    // =========================================
+    // MODIFIED: TIKTOK RESTRICTION LOGIC
+    // =========================================
     function showPlatformMenu() {
         renderView(`
             <p class="desc">Select target platform.</p>
@@ -1142,8 +902,14 @@
 
     function selectPlatform(p) {
         selPlat = p;
-        renderView(`
-            <p class="desc">Choose geographic region.</p>
+        
+        let regionHTML = "";
+        if (p === 'tt') {
+            // TikTok selected: Only show BGD
+            regionHTML = `<div class="grid-3"><button class="btn" onclick="selectCountry('bd')">BGD</button></div>`;
+        } else {
+            // Facebook/Instagram selected: Show all countries
+            regionHTML = `
             <div class="grid-3">
                 <button class="btn" onclick="selectCountry('bd')">BGD</button>
                 <button class="btn" onclick="selectCountry('in')">IND</button>
@@ -1151,8 +917,12 @@
                 <button class="btn" onclick="selectCountry('usa')">USA</button>
                 <button class="btn" onclick="selectCountry('uk')">GBR</button>
                 <button class="btn" onclick="selectCountry('fr')">FRA</button>
-            </div>
-            
+            </div>`;
+        }
+
+        renderView(`
+            <p class="desc">Choose geographic region.</p>
+            ${regionHTML}
             <div style="margin-top: 14px; width: 100%;">
                 <button class="btn" style="width: 100%;" onclick="showPlatformMenu()">Back</button>
             </div>
@@ -1161,13 +931,23 @@
 
     function selectCountry(c) {
         selCoun = c;
-        renderView(`
-            <p class="desc">Choose identity type.</p>
+        
+        let genderHTML = "";
+        if (selPlat === 'tt') {
+            // TikTok selected: Only show Male
+            genderHTML = `<div class="grid-2"><button class="btn" onclick="initIdentityView('male')">Male</button></div>`;
+        } else {
+            // Facebook/Instagram selected: Show both Male and Female
+            genderHTML = `
             <div class="grid-2">
                 <button class="btn" onclick="initIdentityView('male')">Male</button>
                 <button class="btn" onclick="initIdentityView('female')">Female</button>
-            </div>
-            
+            </div>`;
+        }
+
+        renderView(`
+            <p class="desc">Choose identity type.</p>
+            ${genderHTML}
             <div style="margin-top: 14px; width: 100%;">
                 <button class="btn" style="width: 100%;" onclick="selectPlatform(selPlat)">Back</button>
             </div>
@@ -1313,6 +1093,228 @@
     }
 
     showMainMenu();
+</script>
+
+<!-- =========================================
+     FIREBASE & ADMIN LOGIC (MODULE)
+     ========================================= -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, collection, getDocs, deleteDoc, doc, writeBatch } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyB50Puqo5nr7-1aoT-znhHyBkvD9ui0XhU",
+        authDomain: "authgenix.firebaseapp.com",
+        projectId: "authgenix",
+        storageBucket: "authgenix.firebasestorage.app",
+        messagingSenderId: "959487638243",
+        appId: "1:959487638243:web:72d57f128835f354b763d6"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    
+    // Auto-delete support variables mapped to window
+    window.firebaseDB = db;
+    window.firebaseDeleteDoc = deleteDoc;
+    window.firebaseDoc = doc;
+
+    async function fetchNamesFromFirebase() {
+        try {
+            const querySnapshot = await getDocs(collection(db, "names"));
+            let allDocs = [];
+            
+            querySnapshot.forEach((docSnap) => {
+                allDocs.push({ id: docSnap.id, ...docSnap.data() });
+            });
+
+            allDocs.sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
+
+            allDocs.forEach((data) => {
+                if(window.accountData[data.country] && window.accountData[data.country][data.category]) {
+                    window.accountData[data.country][data.category].push({ id: data.id, name: data.name });
+                }
+            });
+        } catch (error) {
+            console.error("Error fetching names from Firebase: ", error);
+        }
+    }
+    fetchNamesFromFirebase();
+
+    // --- Admin Panel Listeners ---
+    const loginSection = document.getElementById('loginSection');
+    const dashboardSection = document.getElementById('dashboardSection');
+    const adminDataList = document.getElementById('adminDataList');
+    const recordCountText = document.getElementById('recordCountText');
+    const addDataBtn = document.getElementById('addDataBtn');
+    const filterPlatform = document.getElementById('filterPlatform');
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            loginSection.classList.add('hidden');
+            dashboardSection.classList.remove('hidden');
+            loadAdminData();
+        } else {
+            loginSection.classList.remove('hidden');
+            dashboardSection.classList.add('hidden');
+        }
+    });
+
+    filterPlatform.addEventListener('change', () => loadAdminData());
+
+    document.getElementById('loginBtn').addEventListener('click', () => {
+        const email = document.getElementById('emailInput').value;
+        const pass = document.getElementById('passwordInput').value;
+        signInWithEmailAndPassword(auth, email, pass).catch(err => {
+            document.getElementById('errorMsg').innerText = "❌ " + err.message;
+        });
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', () => signOut(auth));
+
+    addDataBtn.addEventListener('click', async () => {
+        const platform = document.getElementById('platformSelect').value;
+        const country = document.getElementById('countrySelect').value;
+        const category = document.getElementById('categorySelect').value;
+        const fileInput = document.getElementById('fileInput').files[0];
+
+        if(!fileInput) {
+            return alert("⚠️ Please select a .txt file first!");
+        }
+
+        addDataBtn.innerText = "Processing Data...";
+        addDataBtn.disabled = true;
+
+        try {
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                const fileContent = e.target.result;
+                const lines = fileContent.split(/\r?\n/).filter(line => line.trim() !== '');
+                await processBulkData(lines, platform, country, category);
+            };
+            reader.readAsText(fileInput);
+        } catch (e) {
+            alert("Error: " + e.message);
+            resetButton();
+        }
+    });
+
+    async function processBulkData(namesArray, platform, country, category) {
+        try {
+            let batch = writeBatch(db);
+            let operationsCounter = 0;
+            let addedCount = 0;
+
+            for (let i = 0; i < namesArray.length; i++) {
+                const fullName = namesArray[i].trim();
+                if (!fullName) continue;
+
+                const timestamp = Date.now() + i;
+
+                if (category === 'male_full' || category === 'female_full') {
+                    const parts = fullName.split(/\s+/);
+                    if (parts.length >= 2) {
+                        const firstName = parts[0];
+                        const lastName = parts.slice(1).join(' '); 
+                        const firstCategory = category === 'male_full' ? 'male_first' : 'female_first';
+
+                        batch.set(doc(collection(db, "names")), { platform, country, category: firstCategory, name: firstName, timestamp });
+                        operationsCounter++;
+
+                        batch.set(doc(collection(db, "names")), { platform, country, category: 'last', name: lastName, timestamp });
+                        operationsCounter++;
+                        addedCount++;
+                    } else {
+                        const firstCategory = category === 'male_full' ? 'male_first' : 'female_first';
+                        batch.set(doc(collection(db, "names")), { platform, country, category: firstCategory, name: fullName, timestamp });
+                        operationsCounter++;
+                        addedCount++;
+                    }
+                } else {
+                    batch.set(doc(collection(db, "names")), { platform, country, category, name: fullName, timestamp });
+                    operationsCounter++;
+                    addedCount++;
+                }
+
+                if (operationsCounter >= 400) {
+                    await batch.commit();
+                    batch = writeBatch(db);
+                    operationsCounter = 0;
+                }
+            }
+
+            if (operationsCounter > 0) {
+                await batch.commit();
+            }
+
+            alert(`✅ Successfully added ${addedCount} records to the database!`);
+            document.getElementById('fileInput').value = '';
+            loadAdminData(); 
+            fetchNamesFromFirebase(); 
+        } catch (error) {
+            alert("Upload Error: " + error.message);
+        }
+        resetButton();
+    }
+
+    function resetButton() {
+        addDataBtn.innerText = "Upload Database";
+        addDataBtn.disabled = false;
+    }
+
+    async function loadAdminData() {
+        adminDataList.innerHTML = '<p style="font-size: 12px; color: var(--text-muted); margin-top: 20px;">Fetching records...</p>';
+        try {
+            const selectedFilter = filterPlatform.value;
+            const querySnapshot = await getDocs(collection(db, "names"));
+            
+            let html = "";
+            let count = 0;
+
+            querySnapshot.forEach((docSnap) => {
+                const data = docSnap.data();
+                const itemPlatform = data.platform || 'all'; 
+
+                if (selectedFilter !== 'all_view' && itemPlatform !== selectedFilter) return;
+
+                count++;
+                let platLabel = 'GLOBAL';
+                let platColor = '#a59fb3';
+                
+                if(itemPlatform === 'fb') { platLabel = 'FB'; platColor = '#3b82f6'; }
+                else if(itemPlatform === 'ig') { platLabel = 'IG'; platColor = '#e62e5c'; }
+                else if(itemPlatform === 'tt') { platLabel = 'TT'; platColor = '#10b981'; }
+
+                html += `
+                    <div class="admin-data-card">
+                        <div class="admin-data-info">
+                            <span class="admin-data-name">${data.name}</span>
+                            <span class="admin-data-meta">
+                                <span style="color: ${platColor}; border: 1px solid ${platColor}; padding: 1px 4px; border-radius: 4px; font-size: 9px;">${platLabel}</span> 
+                                ${data.country.toUpperCase()} • ${data.category.replace('_', ' ').toUpperCase()}
+                            </span>
+                        </div>
+                        <button class="admin-delete-btn" onclick="deleteAdminData('${docSnap.id}')">Delete</button>
+                    </div>
+                `;
+            });
+
+            recordCountText.innerText = count;
+            adminDataList.innerHTML = html || "<p style='font-size: 12px; color: var(--text-muted); margin-top: 20px; text-align: center;'>No records found.</p>";
+        } catch (e) {
+            adminDataList.innerHTML = `<p style="color:var(--danger); font-size: 12px;">Error: ${e.message}</p>`;
+        }
+    }
+
+    window.deleteAdminData = async function(docId) {
+        if(confirm("Are you sure you want to delete this record?")) {
+            await deleteDoc(doc(db, "names", docId));
+            loadAdminData(); 
+            fetchNamesFromFirebase();
+        }
+    }
 </script>
 
 </body>
