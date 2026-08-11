@@ -3,70 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AuthGenix // Premium Tool</title>
+    <title>AuthGenix // Premium Tool Engine</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233b82f6'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/otpauth/9.2.2/otpauth.umd.min.js"></script>
     <style>
-        /* =========================================
-           PREMIUM MULTI-THEME GLASSMORPHISM ENGINE
-           ========================================= */
-        
         :root, .theme-light {
             --bg-base: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
-            --card-bg: rgba(255, 255, 255, 0.45);
-            --card-border: rgba(255, 255, 255, 0.6);
+            --card-bg: rgba(255, 255, 255, 0.55);
+            --card-border: rgba(255, 255, 255, 0.7);
             --text-main: #1f2937;
             --text-muted: #4b5563;
             --primary: #3b82f6;
             --primary-hover: #2563eb;
-            --input-bg: rgba(255, 255, 255, 0.5);
-            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            --input-bg: rgba(255, 255, 255, 0.65);
+            --shadow: 0 10px 35px 0 rgba(31, 38, 135, 0.18);
             --danger: #ef4444;
             --success: #10b981;
-            
-            /* Admin Specific Colors */
-            --admin-bg: rgba(10, 25, 47, 0.55);
-            --admin-border: rgba(100, 255, 218, 0.2);
+            --admin-bg: rgba(10, 25, 47, 0.65);
+            --admin-border: rgba(100, 255, 218, 0.25);
             --admin-primary: #64ffda;
             --admin-text: #e6f1ff;
-            --admin-input: rgba(2, 12, 27, 0.7);
+            --admin-input: rgba(2, 12, 27, 0.8);
         }
 
         .theme-ocean {
             --bg-base: linear-gradient(135deg, #020c1b 0%, #0a192f 50%, #020c1b 100%);
-            --card-bg: rgba(10, 25, 47, 0.45);
-            --card-border: rgba(100, 255, 218, 0.15);
+            --card-bg: rgba(10, 25, 47, 0.55);
+            --card-border: rgba(100, 255, 218, 0.2);
             --text-main: #e6f1ff;
             --text-muted: #8892b0;
             --primary: #64ffda;
             --primary-hover: #52e0c4;
-            --input-bg: rgba(2, 12, 27, 0.6);
-            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            --input-bg: rgba(2, 12, 27, 0.7);
+            --shadow: 0 10px 35px 0 rgba(0, 0, 0, 0.55);
         }
 
         .theme-cyber {
             --bg-base: linear-gradient(135deg, #09090e 0%, #1a0b2e 50%, #05131f 100%);
-            --card-bg: rgba(26, 11, 46, 0.4);
-            --card-border: rgba(255, 51, 102, 0.2);
+            --card-bg: rgba(26, 11, 46, 0.5);
+            --card-border: rgba(255, 51, 102, 0.25);
             --text-main: #f8f8f2;
             --text-muted: #a59fb3;
             --primary: #ff3366;
             --primary-hover: #e62e5c;
-            --input-bg: rgba(9, 9, 14, 0.6);
-            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
+            --input-bg: rgba(9, 9, 14, 0.7);
+            --shadow: 0 10px 35px 0 rgba(0, 0, 0, 0.65);
         }
 
         .theme-ios {
             --bg-base: linear-gradient(135deg, #000000 0%, #1c1c1e 50%, #000000 100%);
-            --card-bg: rgba(28, 28, 30, 0.5);
-            --card-border: rgba(255, 255, 255, 0.1);
+            --card-bg: rgba(28, 28, 30, 0.6);
+            --card-border: rgba(255, 255, 255, 0.12);
             --text-main: #ffffff;
             --text-muted: #ebebf599;
             --primary: #0a84ff;
             --primary-hover: #007aff;
-            --input-bg: rgba(0, 0, 0, 0.4);
-            --shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+            --input-bg: rgba(0, 0, 0, 0.5);
+            --shadow: 0 12px 45px rgba(0, 0, 0, 0.85);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -90,26 +84,22 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* PRELOADER STYLES */
         #preloader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--bg-base); background-size: 200% 200%; z-index: 9999;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: opacity 0.5s ease, visibility 0.5s; backdrop-filter: blur(10px);
+            transition: opacity 0.5s ease, visibility 0.5s; backdrop-filter: blur(12px);
         }
         
-        .loader-ring { width: 80px; height: 80px; position: relative; display: flex; justify-content: center; align-items: center; }
+        .loader-ring { width: 85px; height: 85px; position: relative; display: flex; justify-content: center; align-items: center; }
         .loader-ring::after { content: ""; position: absolute; width: 100%; height: 100%; border: 3px solid transparent; border-top-color: var(--primary); border-bottom-color: var(--primary); border-radius: 50%; animation: spin 1.2s linear infinite; }
-        .loader-logo { width: 32px; height: 32px; stroke: var(--primary); stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; animation: pulse-glow 2s infinite alternate; }
+        .loader-logo { width: 34px; height: 34px; stroke: var(--primary); stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; animation: pulse-glow 2s infinite alternate; }
         .loader-text { margin-top: 24px; font-size: 13px; font-weight: 700; color: var(--text-main); letter-spacing: 3px; text-transform: uppercase; animation: fade-blink 1.5s infinite; }
 
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes pulse-glow { 0% { filter: drop-shadow(0 0 5px var(--primary)); transform: scale(0.9); } 100% { filter: drop-shadow(0 0 15px var(--primary)); transform: scale(1.1); } }
+        @keyframes pulse-glow { 0% { filter: drop-shadow(0 0 5px var(--primary)); transform: scale(0.9); } 100% { filter: drop-shadow(0 0 16px var(--primary)); transform: scale(1.1); } }
         @keyframes fade-blink { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
         
-        /* =========================================
-           MAIN APP STYLES
-           ========================================= */
         .app-wrapper, .admin-wrapper {
             width: 100%;
             display: flex;
@@ -118,81 +108,76 @@
         }
 
         .app-container {
-            background: var(--card-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--card-border); width: 90%; max-width: 400px; height: auto; 
-            min-height: 500px; max-height: 96vh; border-radius: 20px; box-shadow: var(--shadow);
+            background: var(--card-bg); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+            border: 1px solid var(--card-border); width: 92%; max-width: 410px; height: auto; 
+            min-height: 520px; max-height: 96vh; border-radius: 22px; box-shadow: var(--shadow);
             display: flex; flex-direction: column; overflow: hidden; position: relative; transition: all 0.3s ease;
         }
 
-        .header { padding: 16px 20px 0px; display: flex; justify-content: space-between; align-items: center; min-height: 54px; }
-        .logo-container { display: flex; align-items: center; gap: 8px; }
-        .logo-icon { width: 24px; height: 24px; stroke: var(--primary); stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+        .header { padding: 18px 22px 0px; display: flex; justify-content: space-between; align-items: center; min-height: 56px; }
+        .logo-container { display: flex; align-items: center; gap: 10px; }
+        .logo-icon { width: 25px; height: 25px; stroke: var(--primary); stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
         .header h2 { font-size: 16px; font-weight: 700; color: var(--text-main); margin: 0; letter-spacing: 0.5px; }
-        .header-icons { display: flex; gap: 8px; }
+        .header-icons { display: flex; gap: 9px; }
 
         .theme-btn { 
-            background: var(--input-bg); border: 1px solid var(--card-border); width: 36px; height: 36px; 
-            border-radius: 10px; cursor: pointer; color: var(--text-main); transition: 0.3s; 
-            display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); font-size: 16px;
+            background: var(--input-bg); border: 1px solid var(--card-border); width: 38px; height: 38px; 
+            border-radius: 11px; cursor: pointer; color: var(--text-main); transition: 0.3s; 
+            display: flex; justify-content: center; align-items: center; box-shadow: 0 3px 10px rgba(0,0,0,0.06); font-size: 16px;
         }
         .theme-btn:hover { background: var(--card-bg); transform: translateY(-2px); }
 
-        .content { padding: 12px 20px 16px; flex-grow: 1; overflow-y: auto; scrollbar-width: none; }
+        .content { padding: 14px 22px 18px; flex-grow: 1; overflow-y: auto; scrollbar-width: none; }
         .content::-webkit-scrollbar { display: none; }
 
-        h3 { font-size: 15px; margin-bottom: 4px; color: var(--text-main); font-weight: 600; }
-        p.desc { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; line-height: 1.4; }
+        h3 { font-size: 15px; margin-bottom: 5px; color: var(--text-main); font-weight: 600; }
+        p.desc { font-size: 12px; color: var(--text-muted); margin-bottom: 14px; line-height: 1.45; }
 
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 9px; }
 
         .btn { 
             background: var(--input-bg); color: var(--text-main); border: 1px solid var(--card-border); 
-            padding: 12px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; 
-            transition: all 0.3s ease; width: 100%; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+            padding: 13px; border-radius: 11px; font-size: 13px; font-weight: 600; cursor: pointer; 
+            transition: all 0.3s ease; width: 100%; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
         }
-        .btn:hover { background: var(--card-bg); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .btn:hover { background: var(--card-bg); transform: translateY(-1px); box-shadow: 0 5px 15px rgba(0,0,0,0.06); }
 
-        .btn-primary { background: var(--primary); color: #020c1b !important; border: none; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); }
+        .btn-primary { background: var(--primary); color: #020c1b !important; border: none; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.18); }
         .btn-primary:hover { background: var(--primary-hover); }
 
-        .input-group { margin-bottom: 12px; }
-        .input-box { width: 100%; padding: 12px 14px; border: 1px solid var(--card-border); background: var(--input-bg); color: var(--text-main); border-radius: 10px; font-size: 13px; outline: none; transition: all 0.3s ease; box-sizing: border-box;}
-        .input-box:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1); }
-        .input-box::placeholder { color: var(--text-muted); opacity: 0.7; }
+        .input-group { margin-bottom: 13px; }
+        .input-box { width: 100%; padding: 13px 15px; border: 1px solid var(--card-border); background: var(--input-bg); color: var(--text-main); border-radius: 11px; font-size: 13px; outline: none; transition: all 0.3s ease; box-sizing: border-box;}
+        .input-box:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12); }
+        .input-box::placeholder { color: var(--text-muted); opacity: 0.75; }
 
-        .switch { position: relative; display: inline-block; width: 40px; height: 20px; }
+        .switch { position: relative; display: inline-block; width: 42px; height: 21px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255,255,255,0.2); border: 1px solid var(--card-border); transition: .3s; border-radius: 20px; }
-        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 2px; bottom: 2px; background-color: var(--text-main); transition: .3s; border-radius: 50%; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255,255,255,0.22); border: 1px solid var(--card-border); transition: .3s; border-radius: 21px; }
+        .slider:before { position: absolute; content: ""; height: 15px; width: 15px; left: 2px; bottom: 2px; background-color: var(--text-main); transition: .3s; border-radius: 50%; }
         input:checked + .slider { background-color: var(--primary); border-color: var(--primary); }
-        input:checked + .slider:before { transform: translateX(20px); background-color: #fff; }
+        input:checked + .slider:before { transform: translateX(21px); background-color: #fff; }
 
-        .data-card { background: var(--input-bg); border: 1px solid var(--card-border); padding: 14px; border-radius: 12px; margin-bottom: 14px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-        .clickable-data { color: var(--primary); font-weight: 600; cursor: pointer; padding: 10px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; transition: all 0.2s; display: inline-block; margin: 2px; font-size: 13px; box-sizing: border-box;}
+        .data-card { background: var(--input-bg); border: 1px solid var(--card-border); padding: 15px; border-radius: 13px; margin-bottom: 15px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+        .clickable-data { color: var(--primary); font-weight: 600; cursor: pointer; padding: 11px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 9px; transition: all 0.2s; display: inline-block; margin: 2px; font-size: 13px; box-sizing: border-box;}
         .clickable-data:hover { border-color: var(--primary); transform: scale(1.02); }
 
-        .divider { height: 1px; background: var(--card-border); margin: 14px 0; }
-        .footer { text-align: center; padding: 14px; font-size: 11px; color: var(--text-muted); border-top: 1px solid var(--card-border); background: rgba(0,0,0,0.02); }
-        .dev-link { display: inline-block; margin-top: 8px; font-size: 11px; color: var(--primary); text-decoration: none; font-weight: 600; transition: 0.2s; }
-        .dev-link:hover { opacity: 0.8; }
+        .divider { height: 1px; background: var(--card-border); margin: 15px 0; }
+        .footer { text-align: center; padding: 15px; font-size: 11px; color: var(--text-muted); border-top: 1px solid var(--card-border); background: rgba(0,0,0,0.025); }
 
-        #toast { visibility: hidden; min-width: 180px; background: var(--text-main); color: var(--bg-base); text-align: center; border-radius: 10px; padding: 12px; position: fixed; z-index: 100; bottom: 30px; left: 50%; transform: translate(-50%, 20px); font-size: 12px; font-weight: 600; opacity: 0; transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        #toast { visibility: hidden; min-width: 190px; background: var(--text-main); color: var(--bg-base); text-align: center; border-radius: 11px; padding: 13px; position: fixed; z-index: 100; bottom: 32px; left: 50%; transform: translate(-50%, 20px); font-size: 12px; font-weight: 600; opacity: 0; transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); box-shadow: 0 12px 28px rgba(0,0,0,0.22); }
         #toast.show { visibility: visible; opacity: 1; transform: translate(-50%, 0); }
         .fade-in { animation: fadeIn 0.4s ease forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* =========================================
-           ADMIN PANEL STYLES (Fixed & Isolated)
-           ========================================= */
         .admin-container { 
             background: var(--admin-bg); 
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
             border: 1px solid var(--admin-border); 
-            padding: 35px 30px; 
-            border-radius: 20px; 
-            width: 90%; 
-            max-width: 420px; 
+            padding: 38px 32px; 
+            border-radius: 22px; 
+            width: 92%; 
+            max-width: 430px; 
             text-align: center; 
             box-shadow: var(--shadow); 
             transition: all 0.3s ease;
@@ -200,65 +185,65 @@
         }
 
         .admin-container h2 { 
-            margin-bottom: 25px; 
+            margin-bottom: 26px; 
             color: var(--admin-primary); 
             font-weight: 700; font-size: 22px; letter-spacing: 1px;
-            text-transform: uppercase; text-shadow: 0 0 15px rgba(100, 255, 218, 0.3);
+            text-transform: uppercase; text-shadow: 0 0 16px rgba(100, 255, 218, 0.35);
         }
 
         .admin-select { 
-            width: 100%; padding: 14px 16px; margin-bottom: 15px; 
-            background: var(--admin-input); border: 1px solid rgba(255, 255, 255, 0.1); 
-            color: var(--admin-text); border-radius: 10px; font-size: 14px; outline: none; transition: all 0.3s ease; appearance: none;
+            width: 100%; padding: 14px 16px; margin-bottom: 16px; 
+            background: var(--admin-input); border: 1px solid rgba(255, 255, 255, 0.12); 
+            color: var(--admin-text); border-radius: 11px; font-size: 14px; outline: none; transition: all 0.3s ease; appearance: none;
             background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2364ffda%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-            background-repeat: no-repeat; background-position: right 15px top 50%; background-size: 10px auto;
+            background-repeat: no-repeat; background-position: right 16px top 50%; background-size: 10px auto;
         }
         
-        .admin-select:focus { border-color: var(--admin-primary); box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.15); }
+        .admin-select:focus { border-color: var(--admin-primary); box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.18); }
         .admin-select option { background: #0a192f; color: #fff; }
 
         .admin-btn { 
             width: 100%; padding: 14px; background: var(--admin-primary); color: #020c1b; 
-            border: none; font-weight: 700; font-size: 15px; border-radius: 10px; cursor: pointer; 
-            margin-bottom: 10px; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.5px;
-            box-shadow: 0 4px 15px rgba(100, 255, 218, 0.2);
+            border: none; font-weight: 700; font-size: 15px; border-radius: 11px; cursor: pointer; 
+            margin-bottom: 11px; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.5px;
+            box-shadow: 0 4px 16px rgba(100, 255, 218, 0.22);
         }
-        .admin-btn:hover { background: #52e0c4; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(100, 255, 218, 0.3); }
+        .admin-btn:hover { background: #52e0c4; transform: translateY(-2px); box-shadow: 0 6px 22px rgba(100, 255, 218, 0.32); }
         .admin-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
-        .admin-btn-danger { background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); box-shadow: none; }
-        .admin-btn-danger:hover { background: var(--danger); color: #fff; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4); }
+        .admin-btn-danger { background: rgba(239, 68, 68, 0.12); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.32); box-shadow: none; }
+        .admin-btn-danger:hover { background: var(--danger); color: #fff; box-shadow: 0 4px 16px rgba(239, 68, 68, 0.42); }
 
-        .admin-form-panel { background: rgba(0, 0, 0, 0.2); padding: 20px; border-radius: 15px; margin-bottom: 20px; border: 1px solid rgba(255, 255, 255, 0.05); }
+        .admin-form-panel { background: rgba(0, 0, 0, 0.22); padding: 22px; border-radius: 16px; margin-bottom: 22px; border: 1px solid rgba(255, 255, 255, 0.06); }
 
-        .admin-divider-text { text-align: center; margin: 12px 0; font-size: 12px; color: var(--text-muted); font-weight: 600; letter-spacing: 1px; display: flex; align-items: center; }
-        .admin-divider-text::before, .admin-divider-text::after { content: ''; flex: 1; border-bottom: 1px solid rgba(255, 255, 255, 0.1); margin: 0 10px; }
+        .admin-divider-text { text-align: center; margin: 13px 0; font-size: 12px; color: var(--text-muted); font-weight: 600; letter-spacing: 1px; display: flex; align-items: center; }
+        .admin-divider-text::before, .admin-divider-text::after { content: ''; flex: 1; border-bottom: 1px solid rgba(255, 255, 255, 0.12); margin: 0 10px; }
 
-        input[type=file] { padding: 10px; background: rgba(2, 12, 27, 0.5); border: 1px dashed var(--admin-border); cursor: pointer; color: var(--admin-text); border-radius: 10px; width: 100%; }
-        input[type=file]::file-selector-button { background: rgba(100, 255, 218, 0.1); color: var(--admin-primary); border: 1px solid var(--admin-primary); padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-right: 15px; font-size: 12px; transition: all 0.3s ease; }
+        input[type=file] { padding: 11px; background: rgba(2, 12, 27, 0.55); border: 1px dashed var(--admin-border); cursor: pointer; color: var(--admin-text); border-radius: 11px; width: 100%; }
+        input[type=file]::file-selector-button { background: rgba(100, 255, 218, 0.12); color: var(--admin-primary); border: 1px solid var(--admin-primary); padding: 8px 16px; border-radius: 9px; font-weight: 600; cursor: pointer; margin-right: 15px; font-size: 12px; transition: all 0.3s ease; }
         input[type=file]::file-selector-button:hover { background: var(--admin-primary); color: #020c1b; }
 
-        .admin-list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding: 0 5px; }
+        .admin-list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 13px; padding: 0 5px; }
 
-        .admin-stat-badge { background: rgba(100, 255, 218, 0.1); border: 1px solid rgba(100, 255, 218, 0.2); padding: 6px 12px; border-radius: 8px; display: flex; align-items: center; gap: 8px; box-shadow: inset 0 0 10px rgba(0,0,0,0.2); }
+        .admin-stat-badge { background: rgba(100, 255, 218, 0.12); border: 1px solid rgba(100, 255, 218, 0.22); padding: 6px 13px; border-radius: 9px; display: flex; align-items: center; gap: 9px; box-shadow: inset 0 0 10px rgba(0,0,0,0.2); }
         .admin-stat-label { font-size: 11px; color: var(--admin-text); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
-        .admin-stat-value { background: var(--admin-primary); color: #020c1b; padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: 800; box-shadow: 0 0 10px rgba(100, 255, 218, 0.4); }
+        .admin-stat-value { background: var(--admin-primary); color: #020c1b; padding: 2px 9px; border-radius: 12px; font-size: 12px; font-weight: 800; box-shadow: 0 0 10px rgba(100, 255, 218, 0.45); }
 
-        #adminDataList { max-height: 280px; overflow-y: auto; margin-bottom: 20px; padding-right: 5px; }
+        #adminDataList { max-height: 290px; overflow-y: auto; margin-bottom: 22px; padding-right: 5px; }
         #adminDataList::-webkit-scrollbar { width: 6px; }
         #adminDataList::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.1); border-radius: 10px; }
-        #adminDataList::-webkit-scrollbar-thumb { background: rgba(100, 255, 218, 0.3); border-radius: 10px; }
-        #adminDataList::-webkit-scrollbar-thumb:hover { background: rgba(100, 255, 218, 0.6); }
+        #adminDataList::-webkit-scrollbar-thumb { background: rgba(100, 255, 218, 0.35); border-radius: 10px; }
+        #adminDataList::-webkit-scrollbar-thumb:hover { background: rgba(100, 255, 218, 0.65); }
 
-        .admin-data-card { background: rgba(2, 12, 27, 0.6); padding: 14px; margin-top: 10px; border-radius: 10px; text-align: left; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.2s ease; }
-        .admin-data-card:hover { background: rgba(2, 12, 27, 0.9); border-color: rgba(100, 255, 218, 0.3); transform: translateX(2px); }
+        .admin-data-card { background: rgba(2, 12, 27, 0.65); padding: 15px; margin-top: 11px; border-radius: 11px; text-align: left; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255, 255, 255, 0.06); transition: all 0.2s ease; }
+        .admin-data-card:hover { background: rgba(2, 12, 27, 0.92); border-color: rgba(100, 255, 218, 0.35); transform: translateX(2px); }
         .admin-data-info { display: flex; flex-direction: column; gap: 4px; }
         .admin-data-name { color: var(--admin-primary); font-weight: 600; font-size: 14px; letter-spacing: 0.5px; }
         .admin-data-meta { font-size: 11px; color: var(--text-muted); font-weight: 500; }
-        .admin-delete-btn { background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: 600; transition: 0.2s; }
+        .admin-delete-btn { background: rgba(239, 68, 68, 0.12); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.32); padding: 6px 13px; border-radius: 7px; cursor: pointer; font-size: 11px; font-weight: 600; transition: 0.2s; }
         .admin-delete-btn:hover { background: var(--danger); color: #fff; }
 
-        .close-admin { position: absolute; top: 15px; right: 20px; font-size: 12px; font-weight: bold; color: var(--danger); cursor: pointer; border: 1px solid var(--danger); padding: 4px 8px; border-radius: 6px; transition: 0.3s; }
+        .close-admin { position: absolute; top: 16px; right: 21px; font-size: 12px; font-weight: bold; color: var(--danger); cursor: pointer; border: 1px solid var(--danger); padding: 5px 9px; border-radius: 7px; transition: 0.3s; }
         .close-admin:hover { background: var(--danger); color: #fff; }
 
         .hidden { display: none !important; }
@@ -273,9 +258,6 @@
     <div class="loader-text">AuthGenix</div>
 </div>
 
-<!-- =========================================
-     MAIN APPLICATION VIEW
-     ========================================= -->
 <div class="app-wrapper" id="mainAppWrapper">
     <div class="app-container">
         <div class="header">
@@ -292,7 +274,6 @@
         <div class="content fade-in" id="app-content"></div>
 
         <div class="footer">
-            <!-- SECRET ADMIN TRIGGER (Clickable Footer Text) -->
             <div onclick="openAdminPanel()" style="font-weight: 600; margin-bottom: 4px; letter-spacing: 0.5px; cursor: pointer; display: inline-block;">
                 AuthGenix // Secure Hub
             </div>
@@ -300,28 +281,22 @@
     </div>
 </div>
 
-<!-- =========================================
-     ADMIN PANEL VIEW (HIDDEN BY DEFAULT)
-     ========================================= -->
 <div class="admin-wrapper hidden" id="adminAppWrapper">
     <div class="admin-container">
         
         <div class="close-admin" onclick="closeAdminPanel()">Close [X]</div>
 
-        <!-- Login Section -->
         <div id="loginSection">
-            <h2 style="margin-top: 15px;">🔒 Admin Access</h2>
+            <h2 style="margin-top: 16px;">🔒 Admin Access</h2>
             <input type="email" id="emailInput" class="input-box" placeholder="Administrator Email">
             <input type="password" id="passwordInput" class="input-box" placeholder="Secure Password">
             <button id="loginBtn" class="admin-btn">Authenticate</button>
             <p id="errorMsg" style="color: var(--danger); font-size: 12px; font-weight: 500;"></p>
         </div>
 
-        <!-- Dashboard Section -->
         <div id="dashboardSection" class="hidden">
-            <h2 style="margin-top: 15px;">⚙️ Data Control Hub</h2>
+            <h2 style="margin-top: 16px;">⚙️ Data Control Hub</h2>
             
-            <!-- Data Entry Form -->
             <div class="admin-form-panel">
                 <select id="platformSelect" class="admin-select" style="border-color: rgba(100, 255, 218, 0.5);">
                     <option value="all">🌐 All Platforms (Global)</option>
@@ -347,22 +322,21 @@
                 
                 <div class="admin-divider-text">UPLOAD DATA</div>
 
-                <div style="text-align: left; font-size: 11px; color: var(--text-muted); margin-bottom: 8px; font-weight: 500;">
+                <div style="text-align: left; font-size: 11px; color: var(--text-muted); margin-bottom: 9px; font-weight: 500;">
                     Select a .txt file (One name/username per line):
                 </div>
                 <input type="file" id="fileInput" accept=".txt">
 
-                <button id="addDataBtn" class="admin-btn" style="margin-top: 10px;">Upload Database</button>
+                <button id="addDataBtn" class="admin-btn" style="margin-top: 11px;">Upload Database</button>
             </div>
 
-            <!-- Header with Filter & Count -->
             <div class="admin-list-header">
                 <div class="admin-stat-badge">
                     <span class="admin-stat-label">Total Data</span>
                     <span class="admin-stat-value" id="recordCountText">0</span>
                 </div>
                 
-                <select id="filterPlatform" class="admin-select" style="width: auto; padding: 6px 10px; margin-bottom: 0;">
+                <select id="filterPlatform" class="admin-select" style="width: auto; padding: 7px 11px; margin-bottom: 0;">
                     <option value="all_view">View All</option>
                     <option value="all">Global</option>
                     <option value="fb">Facebook</option>
@@ -371,9 +345,8 @@
                 </select>
             </div>
             
-            <!-- Data List -->
             <div id="adminDataList">
-                <p style="font-size: 12px; color: var(--text-muted); margin-top: 20px;">Connecting to secure server...</p>
+                <p style="font-size: 12px; color: var(--text-muted); margin-top: 22px;">Connecting to secure server...</p>
             </div>
 
             <button id="logoutBtn" class="admin-btn admin-btn-danger">Secure Logout</button>
@@ -383,11 +356,7 @@
 
 <div id="toast">✅ Copied</div>
 
-<!-- =========================================
-     MAIN APP JS LOGIC (NO MODULE)
-     ========================================= -->
 <script>
-    // 1. Move the giant offline data here so the app NEVER hangs, even if Firebase fails.
     const offlineData = {
         bd: {
             male_first: ["Tariq", "Imran", "Mahbub", "Kamrul", "Jalal", "Selim", "Anwar", "Faruk", "Rubel", "Kawsar", "Rassel", "Sohel", "Mamun", "Suman", "Shakil", "Tushar", "Arif", "Asif", "Mehedi", "Rakib", "Sabbir", "Shohag", "Limon", "Nayan", "Palash", "Tuhin", "Shafiq", "Jamal", "Iqbal", "Habib", "Nizam", "Kazi", "Saiful", "Mostafa", "Monir", "Milon", "Biplob", "Pavel", "Ashiq", "Rahat"],
@@ -428,7 +397,6 @@
     };
     window.accountData = JSON.parse(JSON.stringify(offlineData));
 
-    // 2. Hide Preloader immediately when DOM is ready (Fixes the infinite loading issue)
     document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             const preloader = document.getElementById('preloader');
@@ -437,10 +405,9 @@
                 preloader.style.visibility = 'hidden';
                 setTimeout(() => { preloader.style.display = 'none'; }, 500);
             }
-        }, 1000); 
+        }, 800); 
     });
 
-    // Navigation for Admin and App
     function openAdminPanel() {
         document.getElementById('mainAppWrapper').classList.add('hidden');
         document.getElementById('adminAppWrapper').classList.remove('hidden');
@@ -540,7 +507,7 @@
     function autoPasteProcessOTP(targetId) {
         navigator.clipboard.readText().then(text => {
             executeOTPCore(text, targetId, true);
-        }).catch(err => {
+        }).catch(() => {
             document.getElementById(targetId).innerHTML = `<div style="color:var(--danger); font-size:11px; text-align:center; padding:8px; border:1px solid var(--danger); border-radius:6px; margin-top:8px;">⚠️ Browser permission denied</div>`;
         });
     }
@@ -580,7 +547,7 @@
     function autoPasteProcessMail(targetId) {
         navigator.clipboard.readText().then(text => {
             executeMailCore(text, targetId, true);
-        }).catch(err => {
+        }).catch(() => {
             document.getElementById(targetId).innerHTML = `<div style="color:var(--danger); font-size:11px; text-align:center; padding:8px; border:1px solid var(--danger); border-radius:6px; margin-top:8px;">⚠️ Browser permission denied</div>`;
         });
     }
@@ -623,7 +590,7 @@
         navigator.clipboard.readText().then(text => {
             let secret = text.replace(/\s+/g, '').toUpperCase();
             execute2FACore(secret, targetId, true);
-        }).catch(err => {
+        }).catch(() => {
             document.getElementById(targetId).innerHTML = `<div style="color:var(--danger); font-size:11px; text-align:center; padding:8px; border:1px solid var(--danger); border-radius:6px; margin-top:8px;">⚠️ Browser permission denied</div>`;
         });
     }
@@ -651,7 +618,7 @@
                 </div>
             `;
             if(isAuto) { copyText(code, `🔑 Auto Copied: ${code}`); }
-        } catch (e) { 
+        } catch { 
             resultDiv.innerHTML = `
                 <div style="color:var(--danger); font-size:10px; text-align:center; margin-top:8px; padding: 8px; border: 1px dashed var(--danger); border-radius: 8px; background: rgba(239, 68, 68, 0.05);">
                     <span style="font-weight: 600;">Invalid Key:</span> ${displaySecret}
@@ -691,21 +658,10 @@
         }
     }
 
-    function toggleFirst2FABox() { 
-        toggleBoxLogic('first2FAContainer', 'toggle1st2FABtn', 'Quick 2FA (1) Box', 'secretKeyProfile', 'profile2FAResult'); 
-    }
-    
-    function toggleExtra2FABox() { 
-        toggleBoxLogic('extra2FAContainer', 'toggle2FABtn', '2nd 2FA Box', 'secretKeyProfile_2', 'profile2FAResult_2'); 
-    }
-    
-    function toggleOTPBox() { 
-        toggleBoxLogic('otpContainer', 'toggleOTPBtn', 'Quick OTP Box', 'smsTextProfile', 'profileOTPResult'); 
-    }
-    
-    function toggleMailBox() { 
-        toggleBoxLogic('mailContainer', 'toggleMailBtn', 'Mail Box', 'mailTextProfile', 'profileMailResult'); 
-    }
+    function toggleFirst2FABox() { toggleBoxLogic('first2FAContainer', 'toggle1st2FABtn', 'Quick 2FA (1) Box', 'secretKeyProfile', 'profile2FAResult'); }
+    function toggleExtra2FABox() { toggleBoxLogic('extra2FAContainer', 'toggle2FABtn', '2nd 2FA Box', 'secretKeyProfile_2', 'profile2FAResult_2'); }
+    function toggleOTPBox() { toggleBoxLogic('otpContainer', 'toggleOTPBtn', 'Quick OTP Box', 'smsTextProfile', 'profileOTPResult'); }
+    function toggleMailBox() { toggleBoxLogic('mailContainer', 'toggleMailBtn', 'Mail Box', 'mailTextProfile', 'profileMailResult'); }
 
     function getCommonBoxesHTML() {
         return `
@@ -882,9 +838,6 @@
 
     let selPlat = '', selCoun = '';
 
-    // =========================================
-    // MODIFIED: TIKTOK RESTRICTION LOGIC
-    // =========================================
     function showPlatformMenu() {
         renderView(`
             <p class="desc">Select target platform.</p>
@@ -902,23 +855,16 @@
 
     function selectPlatform(p) {
         selPlat = p;
-        
-        let regionHTML = "";
-        if (p === 'tt') {
-            // TikTok selected: Only show BGD
-            regionHTML = `<div class="grid-3"><button class="btn" onclick="selectCountry('bd')">BGD</button></div>`;
-        } else {
-            // Facebook/Instagram selected: Show all countries
-            regionHTML = `
-            <div class="grid-3">
+        let regionHTML = p === 'tt' 
+            ? `<div class="grid-3"><button class="btn" onclick="selectCountry('bd')">BGD</button></div>`
+            : `<div class="grid-3">
                 <button class="btn" onclick="selectCountry('bd')">BGD</button>
                 <button class="btn" onclick="selectCountry('in')">IND</button>
                 <button class="btn" onclick="selectCountry('cn')">CHN</button>
                 <button class="btn" onclick="selectCountry('usa')">USA</button>
                 <button class="btn" onclick="selectCountry('uk')">GBR</button>
                 <button class="btn" onclick="selectCountry('fr')">FRA</button>
-            </div>`;
-        }
+               </div>`;
 
         renderView(`
             <p class="desc">Choose geographic region.</p>
@@ -931,19 +877,12 @@
 
     function selectCountry(c) {
         selCoun = c;
-        
-        let genderHTML = "";
-        if (selPlat === 'tt') {
-            // TikTok selected: Only show Male
-            genderHTML = `<div class="grid-2"><button class="btn" onclick="initIdentityView('male')">Male</button></div>`;
-        } else {
-            // Facebook/Instagram selected: Show both Male and Female
-            genderHTML = `
-            <div class="grid-2">
+        let genderHTML = selPlat === 'tt'
+            ? `<div class="grid-2"><button class="btn" onclick="initIdentityView('male')">Male</button></div>`
+            : `<div class="grid-2">
                 <button class="btn" onclick="initIdentityView('male')">Male</button>
                 <button class="btn" onclick="initIdentityView('female')">Female</button>
-            </div>`;
-        }
+               </div>`;
 
         renderView(`
             <p class="desc">Choose identity type.</p>
@@ -954,9 +893,6 @@
         `, 'Select Gender');
     }
 
-    // =========================================
-    // AUTO DELETE LOGIC FOR NAMES (RANDOM)
-    // =========================================
     function getUniqueFullName(gender) {
         let firstList = window.accountData[selCoun][`${gender}_first`];
         let lastList = window.accountData[selCoun]["last"];
@@ -976,32 +912,27 @@
         let lId = typeof lVal === 'object' && lVal !== null ? lVal.id : null;
 
         if (fId && window.firebaseDeleteDoc && window.firebaseDB) {
-            window.firebaseDeleteDoc(window.firebaseDoc(window.firebaseDB, "names", fId)).catch(e => console.log(e));
+            window.firebaseDeleteDoc(window.firebaseDoc(window.firebaseDB, "names", fId)).catch(() => {});
         }
         if (lId && window.firebaseDeleteDoc && window.firebaseDB) {
-            window.firebaseDeleteDoc(window.firebaseDoc(window.firebaseDB, "names", lId)).catch(e => console.log(e));
+            window.firebaseDeleteDoc(window.firebaseDoc(window.firebaseDB, "names", lId)).catch(() => {});
         }
 
         return { f: fName || "DemoName", l: lName || "DemoLast" };
     }
 
-    // =========================================
-    // AUTO DELETE LOGIC FOR USERNAMES (SEQUENTIAL)
-    // =========================================
     function getSequentialUsername() {
         let userList = window.accountData[selCoun]["username"];
-        
         if(!userList || userList.length === 0) {
             return generateRandomString(10);
         }
 
         let userVal = userList.shift();
-        
         let userName = typeof userVal === 'object' && userVal !== null ? userVal.name : userVal;
         let userId = typeof userVal === 'object' && userVal !== null ? userVal.id : null;
 
         if (userId && window.firebaseDeleteDoc && window.firebaseDB) {
-            window.firebaseDeleteDoc(window.firebaseDoc(window.firebaseDB, "names", userId)).catch(e => console.log(e));
+            window.firebaseDeleteDoc(window.firebaseDoc(window.firebaseDB, "names", userId)).catch(() => {});
         }
 
         return userName;
@@ -1095,9 +1026,6 @@
     showMainMenu();
 </script>
 
-<!-- =========================================
-     FIREBASE & ADMIN LOGIC (MODULE)
-     ========================================= -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -1116,7 +1044,6 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
     
-    // Auto-delete support variables mapped to window
     window.firebaseDB = db;
     window.firebaseDeleteDoc = deleteDoc;
     window.firebaseDoc = doc;
@@ -1143,7 +1070,6 @@
     }
     fetchNamesFromFirebase();
 
-    // --- Admin Panel Listeners ---
     const loginSection = document.getElementById('loginSection');
     const dashboardSection = document.getElementById('dashboardSection');
     const adminDataList = document.getElementById('adminDataList');
