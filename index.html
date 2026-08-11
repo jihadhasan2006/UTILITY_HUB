@@ -66,7 +66,11 @@
             --shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
 
         body {
             background: var(--bg-base);
@@ -87,12 +91,13 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* =========================================
-           NEW PRELOADER STYLES 
-           ========================================= */
+        /* NEW PRELOADER STYLES */
         #preloader {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
             background: var(--bg-base);
             background-size: 200% 200%;
             z-index: 9999;
@@ -146,9 +151,20 @@
             animation: fade-blink 1.5s infinite;
         }
 
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes pulse-glow { 0% { filter: drop-shadow(0 0 5px var(--primary)); transform: scale(0.9); } 100% { filter: drop-shadow(0 0 15px var(--primary)); transform: scale(1.1); } }
-        @keyframes fade-blink { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+        @keyframes spin { 
+            0% { transform: rotate(0deg); } 
+            100% { transform: rotate(360deg); } 
+        }
+        
+        @keyframes pulse-glow { 
+            0% { filter: drop-shadow(0 0 5px var(--primary)); transform: scale(0.9); } 
+            100% { filter: drop-shadow(0 0 15px var(--primary)); transform: scale(1.1); } 
+        }
+        
+        @keyframes fade-blink { 
+            0%, 100% { opacity: 0.4; } 
+            50% { opacity: 1; } 
+        }
         
         /* ========================================= */
 
@@ -177,59 +193,83 @@
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
-            min-height: 54px;
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .logo-icon {
-            width: 24px;
-            height: 24px;
-            stroke: var(--primary);
-            stroke-width: 2.5;
-            fill: none;
-            stroke-linecap: round;
-            stroke-linejoin: round;
+            min-height: 54px; 
         }
         
-        .header h2 {
+        .logo-container { 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+        }
+        
+        .logo-icon { 
+            width: 24px; 
+            height: 24px; 
+            stroke: var(--primary); 
+            stroke-width: 2.5; 
+            fill: none; 
+            stroke-linecap: round; 
+            stroke-linejoin: round; 
+        }
+        
+        .header h2 { 
             font-size: 16px; 
             font-weight: 700; 
             color: var(--text-main); 
-            margin: 0;
-            letter-spacing: 0.5px;
+            margin: 0; 
+            letter-spacing: 0.5px; 
         }
-
-        .header-icons {
-            display: flex;
-            gap: 8px;
+        
+        .header-icons { 
+            display: flex; 
+            gap: 8px; 
         }
 
         .theme-btn { 
             background: var(--input-bg); 
             border: 1px solid var(--card-border); 
-            width: 36px; height: 36px; 
+            width: 36px; 
+            height: 36px; 
             border-radius: 10px; 
             cursor: pointer; 
-            color: var(--text-main);
-            transition: 0.3s;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            color: var(--text-main); 
+            transition: 0.3s; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05); 
             font-size: 16px;
         }
-        .theme-btn:hover { background: var(--card-bg); transform: translateY(-2px); }
+        
+        .theme-btn:hover { 
+            background: var(--card-bg); 
+            transform: translateY(-2px); 
+        }
 
-        .content { padding: 12px 20px 16px; flex-grow: 1; overflow-y: auto; scrollbar-width: none; }
-        .content::-webkit-scrollbar { display: none; }
+        .content { 
+            padding: 12px 20px 16px; 
+            flex-grow: 1; 
+            overflow-y: auto; 
+            scrollbar-width: none; 
+        }
+        
+        .content::-webkit-scrollbar { 
+            display: none; 
+        }
 
-        h3 { font-size: 15px; margin-bottom: 4px; color: var(--text-main); font-weight: 600; }
-        p.desc { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; line-height: 1.4; }
+        h3 { 
+            font-size: 15px; 
+            margin-bottom: 4px; 
+            color: var(--text-main); 
+            font-weight: 600; 
+        }
+        
+        p.desc { 
+            font-size: 12px; 
+            color: var(--text-muted); 
+            margin-bottom: 12px; 
+            line-height: 1.4; 
+        }
 
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
@@ -244,21 +284,30 @@
             font-weight: 600; 
             cursor: pointer; 
             transition: all 0.3s ease; 
-            width: 100%;
-            backdrop-filter: blur(4px);
+            width: 100%; 
+            backdrop-filter: blur(4px); 
             -webkit-backdrop-filter: blur(4px);
         }
-        .btn:hover { background: var(--card-bg); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        
+        .btn:hover { 
+            background: var(--card-bg); 
+            transform: translateY(-1px); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+        }
 
         .btn-primary { 
             background: var(--primary); 
             color: #fff !important; 
             border: none; 
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); 
         }
-        .btn-primary:hover { background: var(--primary-hover); }
+        
+        .btn-primary:hover { 
+            background: var(--primary-hover); 
+        }
 
         .input-group { margin-bottom: 12px; }
+        
         .input-box { 
             width: 100%; 
             padding: 12px 14px; 
@@ -269,16 +318,66 @@
             font-size: 13px; 
             outline: none; 
             transition: all 0.3s ease; 
+            box-sizing: border-box;
         }
-        .input-box:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1); }
-        .input-box::placeholder { color: var(--text-muted); opacity: 0.7; }
+        
+        .input-box:focus { 
+            border-color: var(--primary); 
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1); 
+        }
+        
+        .input-box::placeholder { 
+            color: var(--text-muted); 
+            opacity: 0.7; 
+        }
 
-        .switch { position: relative; display: inline-block; width: 40px; height: 20px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255,255,255,0.2); border: 1px solid var(--card-border); transition: .3s; border-radius: 20px; }
-        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 2px; bottom: 2px; background-color: var(--text-main); transition: .3s; border-radius: 50%; }
-        input:checked + .slider { background-color: var(--primary); border-color: var(--primary); }
-        input:checked + .slider:before { transform: translateX(20px); background-color: #fff; }
+        .switch { 
+            position: relative; 
+            display: inline-block; 
+            width: 40px; 
+            height: 20px; 
+        }
+        
+        .switch input { 
+            opacity: 0; 
+            width: 0; 
+            height: 0; 
+        }
+        
+        .slider { 
+            position: absolute; 
+            cursor: pointer; 
+            top: 0; 
+            left: 0; 
+            right: 0; 
+            bottom: 0; 
+            background-color: rgba(255,255,255,0.2); 
+            border: 1px solid var(--card-border); 
+            transition: .3s; 
+            border-radius: 20px; 
+        }
+        
+        .slider:before { 
+            position: absolute; 
+            content: ""; 
+            height: 14px; 
+            width: 14px; 
+            left: 2px; 
+            bottom: 2px; 
+            background-color: var(--text-main); 
+            transition: .3s; 
+            border-radius: 50%; 
+        }
+        
+        input:checked + .slider { 
+            background-color: var(--primary); 
+            border-color: var(--primary); 
+        }
+        
+        input:checked + .slider:before { 
+            transform: translateX(20px); 
+            background-color: #fff; 
+        }
 
         .data-card { 
             background: var(--input-bg); 
@@ -286,7 +385,7 @@
             padding: 14px; 
             border-radius: 12px; 
             margin-bottom: 14px; 
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px); 
             -webkit-backdrop-filter: blur(8px);
         }
 
@@ -296,16 +395,25 @@
             cursor: pointer; 
             padding: 10px; 
             background: var(--card-bg); 
-            border: 1px solid var(--card-border);
+            border: 1px solid var(--card-border); 
             border-radius: 8px; 
             transition: all 0.2s; 
             display: inline-block; 
             margin: 2px; 
-            font-size: 13px;
+            font-size: 13px; 
+            box-sizing: border-box;
         }
-        .clickable-data:hover { border-color: var(--primary); transform: scale(1.02); }
+        
+        .clickable-data:hover { 
+            border-color: var(--primary); 
+            transform: scale(1.02); 
+        }
 
-        .divider { height: 1px; background: var(--card-border); margin: 14px 0; }
+        .divider { 
+            height: 1px; 
+            background: var(--card-border); 
+            margin: 14px 0; 
+        }
 
         .footer { 
             text-align: center; 
@@ -313,19 +421,22 @@
             font-size: 11px; 
             color: var(--text-muted); 
             border-top: 1px solid var(--card-border); 
-            background: rgba(0,0,0,0.02);
+            background: rgba(0,0,0,0.02); 
         }
         
-        .dev-link {
-            display: inline-block;
-            margin-top: 8px;
-            font-size: 11px;
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-            transition: 0.2s;
+        .dev-link { 
+            display: inline-block; 
+            margin-top: 8px; 
+            font-size: 11px; 
+            color: var(--primary); 
+            text-decoration: none; 
+            font-weight: 600; 
+            transition: 0.2s; 
         }
-        .dev-link:hover { opacity: 0.8; }
+        
+        .dev-link:hover { 
+            opacity: 0.8; 
+        }
 
         #toast { 
             visibility: hidden; 
@@ -346,10 +457,21 @@
             transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
-        #toast.show { visibility: visible; opacity: 1; transform: translate(-50%, 0); }
+        
+        #toast.show { 
+            visibility: visible; 
+            opacity: 1; 
+            transform: translate(-50%, 0); 
+        }
 
-        .fade-in { animation: fadeIn 0.4s ease forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { 
+            animation: fadeIn 0.4s ease forwards; 
+        }
+        
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(8px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
     </style>
 </head>
 <body class="theme-ocean">
@@ -410,7 +532,9 @@
     };
 
     let currentTheme = localStorage.getItem('jih4d_theme') || 'theme-ocean';
-    if (!themeSequence.includes(currentTheme)) currentTheme = 'theme-ocean';
+    if (!themeSequence.includes(currentTheme)) {
+        currentTheme = 'theme-ocean';
+    }
     
     document.body.className = currentTheme;
     updateThemeIcon(currentTheme);
@@ -435,7 +559,6 @@
         }
     }
 
-
     let autoPasteEnabled = false;
     let vaultPassword = localStorage.getItem('jih4d_vault_pass') || '';
     let usedNameCombinations = {};
@@ -459,7 +582,9 @@
         let toast = document.getElementById("toast");
         toast.innerText = message;
         toast.className = "show";
-        setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2000);
+        setTimeout(() => { 
+            toast.className = toast.className.replace("show", ""); 
+        }, 2000);
     }
 
     function toggle2FAMode(checked, manualId, autoId, resultId) {
@@ -495,7 +620,10 @@
 
     function executeOTPCore(text, targetId, isAuto) {
         const resultDiv = document.getElementById(targetId);
-        if (!text.trim()) { resultDiv.innerHTML = ``; return; }
+        if (!text.trim()) { 
+            resultDiv.innerHTML = ``; 
+            return; 
+        }
 
         let match = text.match(/\b\d{3}[\s-]?\d{3,5}\b|\b\d{5,8}\b/);
         
@@ -509,7 +637,9 @@
                     <div style="font-size: 20px; font-weight: 700; color: var(--primary); letter-spacing: 3px;">${code}</div>
                 </div>
             `;
-            if(isAuto) { copyText(code, `💬 Auto Copied: ${code}`); }
+            if(isAuto) { 
+                copyText(code, `💬 Auto Copied: ${code}`); 
+            }
         } else {
             let displaySecret = text.length > 25 ? text.substring(0, 25) + '...' : text;
             resultDiv.innerHTML = `
@@ -535,7 +665,10 @@
 
     function executeMailCore(text, targetId, isAuto) {
         const resultDiv = document.getElementById(targetId);
-        if (!text.trim()) { resultDiv.innerHTML = ``; return; }
+        if (!text.trim()) { 
+            resultDiv.innerHTML = ``; 
+            return; 
+        }
 
         let emails = text.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g);
         
@@ -551,7 +684,9 @@
                 `;
             });
             resultDiv.innerHTML = html;
-            if(isAuto) { copyText(uniqueEmails[0], `📧 Auto Copied: ${uniqueEmails[0]}`); }
+            if(isAuto) { 
+                copyText(uniqueEmails[0], `📧 Auto Copied: ${uniqueEmails[0]}`); 
+            }
         } else {
             let displaySecret = text.length > 25 ? text.substring(0, 25) + '...' : text;
             resultDiv.innerHTML = `
@@ -578,12 +713,20 @@
 
     function execute2FACore(secret, targetId, isAuto) {
         const resultDiv = document.getElementById(targetId);
-        if (!secret) { resultDiv.innerHTML = ``; return; }
+        if (!secret) { 
+            resultDiv.innerHTML = ``; 
+            return; 
+        }
 
         let displaySecret = secret.length > 25 ? secret.substring(0, 25) + '...' : secret;
 
         try {
-            let totp = new OTPAuth.TOTP({ algorithm: 'SHA1', digits: 6, period: 30, secret: OTPAuth.Secret.fromBase32(secret) });
+            let totp = new OTPAuth.TOTP({ 
+                algorithm: 'SHA1', 
+                digits: 6, 
+                period: 30, 
+                secret: OTPAuth.Secret.fromBase32(secret) 
+            });
             let code = totp.generate();
             let pastedKeyHTML = isAuto ? `<div style="font-size: 9px; color: var(--text-muted); margin-bottom: 2px;">Key: ${secret}</div>` : '';
 
@@ -593,7 +736,9 @@
                     <div style="font-size: 20px; font-weight: 700; color: var(--primary); letter-spacing: 3px;">${code}</div>
                 </div>
             `;
-            if(isAuto) { copyText(code, `🔑 Auto Copied: ${code}`); }
+            if(isAuto) { 
+                copyText(code, `🔑 Auto Copied: ${code}`); 
+            }
         } catch (e) { 
             resultDiv.innerHTML = `
                 <div style="color:var(--danger); font-size:10px; text-align:center; margin-top:8px; padding: 8px; border: 1px dashed var(--danger); border-radius: 8px; background: rgba(239, 68, 68, 0.05);">
@@ -619,50 +764,55 @@
     }
 
     // =========================================
-    // NEW UNIQUE NAME DATABASE
+    // UPDATE: ADDED USERNAME ARRAYS TO DATABASE
     // =========================================
     const accountData = {
         bd: {
-            male_first: ["Tariq", "Imran", "Mahbub", "Kamrul", "Jalal", "Selim", "Anwar", "Faruk", "Rubel", "Kawsar", "Rassel", "Sohel", "Mamun", "Suman", "Shakil", "Tushar", "Arif", "Asif", "Mehedi", "Rakib", "Sabbir", "Shohag", "Limon", "Nayan", "Palash", "Tuhin", "Shafiq", "Jamal", "Iqbal", "Habib", "Nizam", "Kazi", "Saiful", "Mostafa", "Monir", "Milon", "Biplob", "Pavel", "Ashiq", "Rahat"],
-            female_first: ["Brishti", "Srabanti", "Mitu", "Ritu", "Tithi", "Toma", "Ripa", "Ruma", "Bithi", "Nipa", "Shimu", "Shila", "Munmun", "Sonia", "Tania", "Moni", "Mukta", "Ratna", "Parveen", "Nasrin", "Shirin", "Jesmin", "Lipi", "Shampa", "Dalia", "Jui", "Maliha", "Farzana", "Roksana", "Shahnaz", "Kohinoor", "Asma", "Rina", "Sharmin", "Lima", "Moushumi", "Tumpa", "Sathi", "Koly", "Priya"],
-            last: ["Sarkar", "Biswas", "Haldar", "Roy", "Barmon", "Karmakar", "Paul", "Das", "Debnath", "Shill", "Siddiqui", "Pasha", "Mirza", "Baqi", "Kibria", "Tarafder", "Gazi", "Mridha", "Khondaker", "Maji", "Khandaker", "Bhuia", "Mia", "Chowdhari", "Uddin", "Mandal", "Gosh", "Baidya", "Sana", "Razzak", "Kadir", "Bari", "Kabir", "Alam", "Ahamed", "Khanam", "Khatun", "Shaha", "Molla", "Akon"]
+            male_first: ["Tariq", "Imran", "Mahbub", "Kamrul", "Jalal", "Selim", "Anwar", "Faruk", "Rubel", "Kawsar", "Rassel", "Sohel", "Mamun", "Suman", "Shakil", "Tushar", "Arif", "Asif", "Mehedi", "Rakib"],
+            female_first: ["Brishti", "Srabanti", "Mitu", "Ritu", "Tithi", "Toma", "Ripa", "Ruma", "Bithi", "Nipa", "Shimu", "Shila", "Munmun", "Sonia", "Tania", "Moni", "Mukta", "Ratna", "Parveen", "Nasrin"],
+            last: ["Sarkar", "Biswas", "Haldar", "Roy", "Barmon", "Karmakar", "Paul", "Das", "Debnath", "Shill", "Siddiqui", "Pasha", "Mirza", "Baqi", "Kibria", "Tarafder", "Gazi", "Mridha", "Khondaker", "Maji"],
+            username: ["bd_tiger_01", "dhaka_vibe", "bangla_star", "ctg_king", "sylhet_pro"]
         },
         usa: {
-            male_first: ["Declan", "Waylon", "Harrison", "Weston", "Silas", "Rowan", "Gael", "Ryder", "Zion", "Braxton", "Enzo", "Milo", "Amir", "Thiago", "Arthur", "Leon", "Felix", "Atticus", "Finley", "Rhett", "Colton", "Brody", "Jasper", "Emmett", "Micah", "Malachi", "Caleb", "Ezekiel", "Lincoln", "Hunter", "Connor", "Landon", "Eli", "Aaron", "Charles", "Christian", "Adrian", "Cameron", "Jordan"],
-            female_first: ["Adalyn", "Madeline", "Eliana", "Melody", "Ariel", "Ruby", "Serenity", "Autumn", "Nevaeh", "Quinn", "Josephine", "Cora", "Valentina", "Sadie", "Delilah", "Samantha", "Sarah", "Leilani", "Eva", "Gemma", "Peyton", "Melanie", "Mackenzie", "Reagan", "Jocelyn", "Clara", "Faith", "Julia", "Sophie", "Sydney", "Liliana", "Aliyah", "Annabelle", "Maria", "Alexandra", "Lucia", "Elena", "Aaliyah", "Gabriella"],
-            last: ["Mitchell", "Carter", "Roberts", "Gomez", "Phillips", "Evans", "Turner", "Diaz", "Parker", "Cruz", "Edwards", "Collins", "Reyes", "Stewart", "Morris", "Morales", "Murphy", "Cook", "Rogers", "Gutierrez", "Ortiz", "Morgan", "Cooper", "Peterson", "Bailey", "Reed", "Kelly", "Howard", "Ramos", "Kim", "Cox", "Ward", "Richardson", "Watson", "Brooks", "Chavez", "Wood", "James", "Bennett", "Gray"]
+            male_first: ["Declan", "Waylon", "Harrison", "Weston", "Silas", "Rowan", "Gael", "Ryder", "Zion", "Braxton", "Enzo", "Milo", "Amir", "Thiago", "Arthur"],
+            female_first: ["Adalyn", "Madeline", "Eliana", "Melody", "Ariel", "Ruby", "Serenity", "Autumn", "Nevaeh", "Quinn", "Josephine", "Cora", "Valentina", "Sadie", "Delilah"],
+            last: ["Mitchell", "Carter", "Roberts", "Gomez", "Phillips", "Evans", "Turner", "Diaz", "Parker", "Cruz", "Edwards", "Collins", "Reyes", "Stewart", "Morris"],
+            username: ["ny_hustler", "cali_dreamer", "texas_star", "miami_heat", "usa_eagle"]
         },
         uk: {
-            male_first: ["Jaxon", "Roman", "Albert", "Stanley", "Louis", "Bobby", "Hudson", "Oakley", "Matthew", "David", "Reggie", "Jenson", "Carter", "Grayson", "Felix", "Gabriel", "Ralph", "Seth", "Riley", "Sonny", "Myles", "Tobias", "Jasper", "Hugo", "Ronnie", "Elliott", "Harvey", "Nathan", "Aidan", "Ryan", "Ellis", "Finn", "Leon", "Milo", "Spencer", "Brody", "Ewan", "Evan", "Bradley", "Declan"],
-            female_first: ["Heidi", "Bonnie", "Lottie", "Nancy", "Clara", "Arabella", "Robyn", "Matilda", "Eleanor", "Orla", "Molly", "Rose", "Layla", "Maisie", "Imogen", "Harriet", "Erin", "Eliza", "Gracie", "Bella", "Megan", "Martha", "Lola", "Lexi", "Lilly", "Chloe", "Darcie", "Hollie", "Hannah", "Amelie", "Abigail", "Evelyn", "Summer", "Eden", "Elsie", "Mabel", "Beatrice", "Ada", "Violet", "Ivy"],
-            last: ["Wood", "Hall", "Macdonald", "Murray", "Kelly", "Clark", "Cooper", "Harrison", "Ward", "Foster", "Chapman", "Richardson", "Pearson", "Webb", "Fisher", "Fletcher", "Gibson", "Ford", "Reynolds", "Hamilton", "Graham", "Shaw", "Simmons", "Hayes", "Dixon", "Hunt", "Palmer", "Holmes", "Mills", "Barnes", "Knight", "Matthews", "Barker", "Stevens", "Jenkins", "Dunn", "Perry", "Butler", "Russell"]
+            male_first: ["Jaxon", "Roman", "Albert", "Stanley", "Louis", "Bobby", "Hudson", "Oakley", "Matthew", "David", "Reggie", "Jenson", "Carter", "Grayson", "Felix"],
+            female_first: ["Heidi", "Bonnie", "Lottie", "Nancy", "Clara", "Arabella", "Robyn", "Matilda", "Eleanor", "Orla", "Molly", "Rose", "Layla", "Maisie", "Imogen"],
+            last: ["Wood", "Hall", "Macdonald", "Murray", "Kelly", "Clark", "Cooper", "Harrison", "Ward", "Foster", "Chapman", "Richardson", "Pearson", "Webb", "Fisher"],
+            username: ["london_boy", "uk_vibe", "british_star", "royal_crown", "uk_drill"]
         },
         fr: {
-            male_first: ["Gaspard", "Côme", "Léandre", "Auguste", "Oscar", "Joseph", "Simon", "Antoine", "Bastien", "Gauthier", "Théodore", "Célestin", "Maxence", "Charles", "Achille", "Ambroise", "Cyprien", "Edgar", "Gustave", "Emile", "Hector", "Marin", "Paul", "Basile", "Gabin", "Robin", "Mael", "Eloi", "Camille", "Valentin", "Corentin", "Benoit", "Romain", "Damien", "Florian", "Guillaume", "Mathieu", "Nicolas", "Alexandre", "Julien"],
-            female_first: ["Apolline", "Capucine", "Marguerite", "Joséphine", "Héloïse", "Garance", "Constance", "Clémence", "Mathilde", "Adélaïde", "Aglaé", "Blanche", "Céleste", "Zélie", "Pénélope", "Suzanne", "Castille", "Philomène", "Bérénice", "Olympe", "Isaure", "Victoire", "Coline", "Solène", "Justine", "Claire", "Marion", "Céline", "Audrey", "Elodie", "Amélie", "Coralie", "Aurore", "Mélanie", "Lucie", "Sophie", "Marie", "Léa", "Anaïs", "Manon"],
-            last: ["Caron", "Fontaine", "Rousseau", "Vincent", "Muller", "Lefevre", "Faure", "Andre", "Mercier", "Blanc", "Guerin", "Boyer", "Garnier", "Chevalier", "Francois", "Legrand", "Gauthier", "Perrin", "Robin", "Clement", "Morin", "Nicolas", "Henry", "Roussel", "Mathieu", "Gautier", "Masson", "Marchand", "Duval", "Denis", "Dumont", "Marie", "Lemaire", "Noel", "Meyer", "Dufour", "Meunier", "Brun", "Blanchard", "Giraud"]
+            male_first: ["Gaspard", "Côme", "Léandre", "Auguste", "Oscar", "Joseph", "Simon", "Antoine", "Bastien", "Gauthier", "Théodore", "Célestin", "Maxence", "Charles", "Achille"],
+            female_first: ["Apolline", "Capucine", "Marguerite", "Joséphine", "Héloïse", "Garance", "Constance", "Clémence", "Mathilde", "Adélaïde", "Aglaé", "Blanche", "Céleste", "Zélie", "Pénélope"],
+            last: ["Caron", "Fontaine", "Rousseau", "Vincent", "Muller", "Lefevre", "Faure", "Andre", "Mercier", "Blanc", "Guerin", "Boyer", "Garnier", "Chevalier", "Francois"],
+            username: ["paris_love", "french_vibe", "oui_oui", "france_star", "paris_night"]
         },
         in: {
-            male_first: ["Ved", "Rishaan", "Kiaan", "Pratyush", "Daksh", "Yuvan", "Advik", "Ahan", "Ishaan", "Ayush", "Tejas", "Gautam", "Ritesh", "Anurag", "Harsh", "Pulkit", "Mayank", "Nitin", "Tarun", "Piyush", "Mohit", "Kapil", "Saurabh", "Ashish", "Amit", "Manish", "Sunil", "Anil", "Deepak", "Ravi", "Sanjay", "Suresh", "Ramesh", "Mukesh", "Rajesh", "Prakash", "Ganesh", "Mahesh", "Vijay", "Ajay"],
-            female_first: ["Amaira", "Pari", "Kyra", "Miraya", "Ira", "Nyra", "Prisha", "Aisha", "Kajal", "Shikha", "Jyoti", "Kiran", "Nisha", "Rekha", "Seema", "Sushma", "Geeta", "Sunita", "Anita", "Kavita", "Sarita", "Renu", "Anu", "Preeti", "Mamta", "Reena", "Meena", "Shilpa", "Vandana", "Rachna", "Sonam", "Shweta", "Anjali", "Bhavna", "Divya", "Poonam", "Shalini", "Alka", "Radha", "Meera"],
-            last: ["Kaur", "Iyer", "Chauhan", "Bhat", "Rao", "Nair", "Saxena", "Deshmukh", "Chakraborty", "Sengupta", "Pillai", "Shukla", "Pandey", "Ghosh", "Jha", "Mishra", "Naidu", "Bose", "Menon", "Mathur", "Trivedi", "Upadhyay", "Dixit", "Bhagwat", "Dubey", "Yadav", "Rajput", "Thakur", "Singh", "Sharma", "Varma", "Reddy", "Patel", "Das", "Jain", "Agrawal", "Garg", "Bansal", "Khatri", "Soni"]
+            male_first: ["Ved", "Rishaan", "Kiaan", "Pratyush", "Daksh", "Yuvan", "Advik", "Ahan", "Ishaan", "Ayush", "Tejas", "Gautam", "Ritesh", "Anurag", "Harsh"],
+            female_first: ["Amaira", "Pari", "Kyra", "Miraya", "Ira", "Nyra", "Prisha", "Aisha", "Kajal", "Shikha", "Jyoti", "Kiran", "Nisha", "Rekha", "Seema"],
+            last: ["Kaur", "Iyer", "Chauhan", "Bhat", "Rao", "Nair", "Saxena", "Deshmukh", "Chakraborty", "Sengupta", "Pillai", "Shukla", "Pandey", "Ghosh", "Jha"],
+            username: ["mumbai_star", "delhi_vibe", "india_king", "desi_boy", "indian_pro"]
         },
         cn: {
-            male_first: ["Kun", "Bolin", "Zhihao", "Mingyu", "Yuchen", "Zixuan", "Haoran", "Yuxuan", "Zitao", "Yihang", "Jinhai", "Guanyu", "Tianyi", "Haoyu", "Shize", "Zihan", "Yuting", "Bojing", "Chuanli", "Deshi", "Enlai", "Fuhua", "Guangli", "Huan", "Jianyu", "Kang", "Liling", "Ping", "Qian", "Ru", "Shen", "Ting", "Wu", "Xiang", "Yan", "Zheng", "Minghua", "Jianguo", "Weimin", "Guoqiang"],
-            female_first: ["Ying", "Ling", "Hui", "Rong", "Fei", "Shu", "Chun", "Yue", "Xue", "Yuan", "Zhi", "Ming", "Yi", "Bin", "Yu", "Jing", "Bo", "Wen", "Feng", "Jie", "Xin", "Yong", "Hua", "Dong", "Hai", "Long", "Shan", "Ping", "Gang", "Rui", "Hong", "Lin", "Guo", "Yang", "Xuan", "Shi", "Chen", "Zhen", "Jin", "Xiang"],
-            last: ["Liao", "Chou", "Chu", "Gao", "Zheng", "He", "Guo", "Lin", "Luo", "Liang", "Xie", "Song", "Tang", "Han", "Feng", "Dong", "Cheng", "Cao", "Yuan", "Cui", "Jia", "Pan", "Du", "Ding", "Ren", "Lu", "Yao", "Shen", "Zhong", "Jiang", "Qiu", "Shi", "Xue", "Hou", "Luan", "Duan", "Gong", "Hao", "Lei", "Fang"]
+            male_first: ["Kun", "Bolin", "Zhihao", "Mingyu", "Yuchen", "Zixuan", "Haoran", "Yuxuan", "Zitao", "Yihang", "Jinhai", "Guanyu", "Tianyi", "Haoyu", "Shize"],
+            female_first: ["Ying", "Ling", "Hui", "Rong", "Fei", "Shu", "Chun", "Yue", "Xue", "Yuan", "Zhi", "Ming", "Yi", "Bin", "Yu"],
+            last: ["Liao", "Chou", "Chu", "Gao", "Zheng", "He", "Guo", "Lin", "Luo", "Liang", "Xie", "Song", "Tang", "Han", "Feng"],
+            username: ["china_dragon", "beijing_star", "shanghai_vibe", "cn_king", "asian_pro"]
         }
     };
     
     const countryNames = {'bd': 'Bangladesh', 'usa': 'USA', 'uk': 'UK', 'fr': 'France', 'in': 'India', 'cn': 'China'};
-
     const contentDiv = document.getElementById('app-content');
     
     function renderView(html, title = '') {
         document.getElementById('page-title').innerText = title;
-        contentDiv.classList.remove("fade-in");
+        contentDiv.classList.remove("fade-in"); 
         void contentDiv.offsetWidth; 
-        contentDiv.innerHTML = html;
+        contentDiv.innerHTML = html; 
         contentDiv.classList.add("fade-in");
     }
 
@@ -689,65 +839,12 @@
             
             <div class="data-card">
                 <input type="text" id="customNameInput" class="input-box" placeholder="Enter Custom Name (e.g., John Doe)">
-                <a href="https://wa.me/8801613894599" target="_blank" class="dev-link">Contact Developer (JIH4D)</a>
                 <button class="btn btn-primary" style="margin-top: 10px;" onclick="generateCustomIdentity()">Generate Username</button>
             </div>
 
             <div class="data-card fade-in" style="text-align:center; margin-bottom: 14px; min-height: 40px; display: none;" id="custom-identity-result"></div>
 
-            <div class="data-card fade-in" id="first2FAContainer" style="display: none; margin-bottom: 5px;">
-                ${getToggleUI('Quick 2FA (1)', 'toggle2FAMode', 'manualProfile2FA', 'autoProfile2FA', 'profile2FAResult')}
-                <div id="manualProfile2FA" style="display: ${autoPasteEnabled ? 'none' : 'block'};">
-                    <input type="text" id="secretKeyProfile" class="input-box" placeholder="PASTE SECRET KEY 1 HERE" oninput="manualProcess2FA('secretKeyProfile', 'profile2FAResult')">
-                </div>
-                <div id="autoProfile2FA" style="display: ${autoPasteEnabled ? 'block' : 'none'};">
-                    <button class="btn btn-primary" onclick="autoPasteProcess2FA('profile2FAResult')">Auto Paste & Decrypt 1</button>
-                </div>
-                <div id="profile2FAResult"></div>
-            </div>
-
-            <div class="data-card fade-in" id="extra2FAContainer" style="display: none; margin-bottom: 5px;">
-                ${getToggleUI('Quick 2FA (2)', 'toggle2FAMode', 'manualProfile2FA_2', 'autoProfile2FA_2', 'profile2FAResult_2')}
-                <div id="manualProfile2FA_2" style="display: ${autoPasteEnabled ? 'none' : 'block'};">
-                    <input type="text" id="secretKeyProfile_2" class="input-box" placeholder="PASTE SECRET KEY 2 HERE" oninput="manualProcess2FA('secretKeyProfile_2', 'profile2FAResult_2')">
-                </div>
-                <div id="autoProfile2FA_2" style="display: ${autoPasteEnabled ? 'block' : 'none'};">
-                    <button class="btn btn-primary" onclick="autoPasteProcess2FA('profile2FAResult_2')">Auto Paste & Decrypt 2</button>
-                </div>
-                <div id="profile2FAResult_2"></div>
-            </div>
-
-            <div class="data-card fade-in" id="otpContainer" style="display: none; margin-bottom: 5px;">
-                ${getToggleUI('Quick OTP', 'toggleOTPMode', 'manualProfileOTP', 'autoProfileOTP', 'profileOTPResult')}
-                <div id="manualProfileOTP" style="display: ${autoPasteEnabled ? 'none' : 'block'};">
-                    <input type="text" id="smsTextProfile" class="input-box" placeholder="PASTE FULL SMS HERE" oninput="manualProcessOTP('smsTextProfile', 'profileOTPResult')">
-                </div>
-                <div id="autoProfileOTP" style="display: ${autoPasteEnabled ? 'block' : 'none'};">
-                    <button class="btn btn-primary" onclick="autoPasteProcessOTP('profileOTPResult')">Auto Paste & Extract</button>
-                </div>
-                <div id="profileOTPResult"></div>
-            </div>
-
-            <div class="data-card fade-in" id="mailContainer" style="display: none; margin-bottom: 5px;">
-                ${getToggleUI('Extract Mail', 'toggleOTPMode', 'manualProfileMail', 'autoProfileMail', 'profileMailResult')}
-                <div id="manualProfileMail" style="display: ${autoPasteEnabled ? 'none' : 'block'};">
-                    <input type="text" id="mailTextProfile" class="input-box" placeholder="PASTE TEXT TO EXTRACT MAIL" oninput="manualProcessMail('mailTextProfile', 'profileMailResult')">
-                </div>
-                <div id="autoProfileMail" style="display: ${autoPasteEnabled ? 'block' : 'none'};">
-                    <button class="btn btn-primary" onclick="autoPasteProcessMail('profileMailResult')">Auto Paste & Extract Mail</button>
-                </div>
-                <div id="profileMailResult"></div>
-            </div>
-
-            <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 4px; margin-bottom: 10px; padding: 0 4px;">
-                <span id="toggle1st2FABtn" onclick="toggleFirst2FABox()" style="color: var(--primary); font-size: 11px; cursor: pointer; font-weight: 600; padding: 4px;">+ Add Quick 2FA (1) Box</span>
-                <span id="toggle2FABtn" onclick="toggleExtra2FABox()" style="color: var(--primary); font-size: 11px; cursor: pointer; font-weight: 600; padding: 4px;">+ Add 2nd 2FA Box</span>
-                <span id="toggleOTPBtn" onclick="toggleOTPBox()" style="color: var(--primary); font-size: 11px; cursor: pointer; font-weight: 600; padding: 4px;">+ Add Quick OTP Box</span>
-                <span id="toggleMailBtn" onclick="toggleMailBox()" style="color: var(--primary); font-size: 11px; cursor: pointer; font-weight: 600; padding: 4px;">+ Add Mail Box</span>
-            </div>
-
-            <div class="divider"></div>
-            <button class="btn" style="grid-column: span 2;" onclick="showMainMenu()">Back to Hub</button>
+            ${getCommonBoxesHTML()}
         `, 'Custom Name');
     }
 
@@ -756,15 +853,14 @@
         let resultDiv = document.getElementById('custom-identity-result');
         
         if (!inputVal) {
-            showToastMessage("⚠️ Please enter a name first");
-            return;
+            return showToastMessage("⚠️ Please enter a name first");
         }
 
         let formattedCounter = String(customCounter).padStart(2, '0');
         let baseUsername = inputVal.toLowerCase().replace(/\s+/g, '_');
         let generatedUsername = `${baseUsername}_${formattedCounter}`;
         
-        customCounter++;
+        customCounter++; 
         localStorage.setItem('jih4d_custom_counter', customCounter);
         
         let resultTextHTML = `
@@ -775,12 +871,10 @@
         let passwordBlockHTML = vaultPassword ? `
             <div class="divider fade-in" style="margin: 10px 0;"></div>
             <div class="fade-in" style="font-size:11px; color:var(--text-muted); margin-bottom:6px; font-weight: 500;">Vault Password</div>
-            <div class="clickable-data fade-in" style="font-size: 13px; width:100%; text-align:center;" onclick="copyText('${vaultPassword.replace(/'/g, "\\'")}', '🔑 Password Copied!')">
-                ${vaultPassword}
-            </div>
+            <div class="clickable-data fade-in" style="font-size: 13px; width:100%; text-align:center;" onclick="copyText('${vaultPassword.replace(/'/g, "\\'")}', '🔑 Password Copied!')">${vaultPassword}</div>
         ` : '';
-
-        resultDiv.style.display = 'block';
+        
+        resultDiv.style.display = 'block'; 
         resultDiv.innerHTML = resultTextHTML + passwordBlockHTML;
     }
 
@@ -790,15 +884,12 @@
             
             <div class="data-card">
                 ${getToggleUI('Extract Code', 'toggleOTPMode', 'manualMainOTP', 'autoMainOTP', 'otpResult')}
-
                 <div id="manualMainOTP" style="display: ${autoPasteEnabled ? 'none' : 'block'};">
                     <input type="text" id="smsText" class="input-box" placeholder="PASTE FULL SMS HERE" oninput="manualProcessOTP('smsText', 'otpResult')">
                 </div>
-
                 <div id="autoMainOTP" style="display: ${autoPasteEnabled ? 'block' : 'none'};">
                     <button class="btn btn-primary" onclick="autoPasteProcessOTP('otpResult')">Auto Paste & Extract</button>
                 </div>
-
                 <div id="otpResult"></div>
             </div>
 
@@ -813,15 +904,12 @@
             
             <div class="data-card">
                 ${getToggleUI('Decrypt Token', 'toggle2FAMode', 'manualMain2FA', 'autoMain2FA', 'totpResult')}
-
                 <div id="manualMain2FA" style="display: ${autoPasteEnabled ? 'none' : 'block'};">
                     <input type="text" id="secretKey" class="input-box" placeholder="PASTE SECRET KEY HERE" oninput="manualProcess2FA('secretKey', 'totpResult')">
                 </div>
-
                 <div id="autoMain2FA" style="display: ${autoPasteEnabled ? 'block' : 'none'};">
                     <button class="btn btn-primary" onclick="autoPasteProcess2FA('totpResult')">Auto Paste & Decrypt</button>
                 </div>
-
                 <div id="totpResult"></div>
             </div>
 
@@ -890,15 +978,16 @@
         let lastList = accountData[selCoun]["last"];
         
         if (!usedNameCombinations[listKey] || !usedNameCombinations[listKey].firstsQueue) {
-            usedNameCombinations[listKey] = {
-                firstsQueue: shuffleArray(firstList),
-                lastsQueue: shuffleArray(lastList)
+            usedNameCombinations[listKey] = { 
+                firstsQueue: shuffleArray(firstList), 
+                lastsQueue: shuffleArray(lastList) 
             };
         }
 
         if (usedNameCombinations[listKey].firstsQueue.length === 0) {
             usedNameCombinations[listKey].firstsQueue = shuffleArray(firstList);
         }
+
         if (usedNameCombinations[listKey].lastsQueue.length === 0) {
             usedNameCombinations[listKey].lastsQueue = shuffleArray(lastList);
         }
@@ -909,8 +998,33 @@
         return { f, l };
     }
 
+    // =========================================
+    // UPDATE: SEQUENTIAL USERNAME LOGIC
+    // =========================================
+    function getSequentialUsername() {
+        let userList = accountData[selCoun]["username"];
+        if(!userList || userList.length === 0) {
+            return generateRandomString(10);
+        }
+
+        let storageKey = `jih4d_username_idx_${selCoun}`;
+        let userIndex = parseInt(localStorage.getItem(storageKey)) || 0;
+        
+        // যদি সিরিয়াল লিস্টের বাইরে চলে যায়, তবে আবার প্রথম থেকে শুরু হবে
+        if (userIndex >= userList.length) {
+            userIndex = 0; 
+        }
+
+        let selectedUser = userList[userIndex];
+        
+        userIndex++;
+        localStorage.setItem(storageKey, userIndex);
+
+        return selectedUser;
+    }
+
     function generateRandomString(length) {
-        const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        const chars = 'abcdefghijklmnopqrstuvwxyz0123456789'; 
         let result = '';
         for (let i = 0; i < length; i++) {
             result += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -923,36 +1037,49 @@
         let f = uniqueNameObj.f;
         let l = uniqueNameObj.l;
         
-        let textToCopy = '';
-        let resultTextHTML = '';
+        // Count for Badge
+        let firstCount = accountData[selCoun][`${g}_first`] ? accountData[selCoun][`${g}_first`].length : 0;
+        let lastCount = accountData[selCoun]["last"] ? accountData[selCoun]["last"].length : 0;
+        let userCount = accountData[selCoun]["username"] ? accountData[selCoun]["username"].length : 0;
+        
+        // Status Badge HTML
+        let statsBadgeHTML = `
+            <div class="fade-in" style="font-size: 9px; color: var(--primary); margin-bottom: 12px; background: rgba(0,0,0,0.2); padding: 4px 10px; border-radius: 6px; display: inline-block; border: 1px solid var(--card-border); letter-spacing: 0.5px;">
+                DB: ${firstCount} First | ${lastCount} Last | ${userCount} Users
+            </div><br>
+        `;
+        
+        let resultTextHTML = statsBadgeHTML;
 
         if (selPlat === 'fb') {
-            textToCopy = `${f} ${l}`;
-            resultTextHTML = `
+            let textToCopy = `${f} ${l}`;
+            resultTextHTML += `
                 <div class="clickable-data fade-in" style="font-size: 16px; width:100%; text-align:center; margin-bottom:8px;" onclick="copyText('${textToCopy}', '👤 Name Copied!')">${textToCopy}</div>
                 <div style="display:flex; gap:8px;" class="fade-in">
                     <div class="clickable-data" style="flex:1; text-align:center;" onclick="copyText('${f}', '👤 First Name Copied!')">${f}</div>
                     <div class="clickable-data" style="flex:1; text-align:center;" onclick="copyText('${l}', '👤 Last Name Copied!')">${l}</div>
-                </div>`;
+                </div>
+            `;
         } else if (selPlat === 'ig') {
             let formattedCounter = String(igCounter).padStart(2, '0');
-            textToCopy = `${f.toLowerCase()}_${l.toLowerCase()}_${formattedCounter}`;
+            let textToCopy = `${f.toLowerCase()}_${l.toLowerCase()}_${formattedCounter}`;
             let fullName = `${f} ${l}`;
-            igCounter++;
+            
+            igCounter++; 
             localStorage.setItem('jih4d_ig_counter', igCounter); 
             
-            resultTextHTML = `
+            resultTextHTML += `
                 <div class="clickable-data fade-in" style="font-size: 16px; width:100%; text-align:center; margin-bottom:8px;" onclick="copyText('${fullName}', '👤 Name Copied!')">${fullName}</div>
                 <div class="clickable-data fade-in" style="font-size: 15px; width:100%; text-align:center;" onclick="copyText('${textToCopy}', '📸 Username Copied!')">${textToCopy}</div>
             `;
         } else if (selPlat === 'tt') {
             let fullName = `${f} ${l}`;
-            let ttName = generateRandomString(15);
+            let ttName = getSequentialUsername(); // সিরিয়াল অনুযায়ী ইউজারনেম কল করা হচ্ছে
             
-            resultTextHTML = `
+            resultTextHTML += `
                 <div class="clickable-data fade-in" style="font-size: 16px; width:100%; text-align:center; margin-bottom:8px;" onclick="copyText('${fullName}', '👤 Name Copied!')">${fullName}</div>
-                <div class="fade-in" style="font-size:11px; color:var(--text-muted); margin-bottom:4px; font-weight: 500;">Tiktok Name</div>
-                <div class="clickable-data fade-in" style="font-size: 15px; width:100%; text-align:center;" onclick="copyText('${ttName}', '🎵 Tiktok Name Copied!')">${ttName}</div>
+                <div class="fade-in" style="font-size:11px; color:var(--text-muted); margin-bottom:4px; font-weight: 500;">Tiktok Username</div>
+                <div class="clickable-data fade-in" style="font-size: 15px; width:100%; text-align:center;" onclick="copyText('${ttName}', '🎵 Tiktok Username Copied!')">${ttName}</div>
             `;
         }
 
@@ -967,76 +1094,40 @@
         document.getElementById('identity-data-box').innerHTML = resultTextHTML + passwordBlockHTML;
     }
 
-    function toggleFirst2FABox() {
-        let container = document.getElementById('first2FAContainer');
-        let btn = document.getElementById('toggle1st2FABtn');
+    function toggleBoxLogic(containerId, btnId, boxName, inpId, resId) {
+        let container = document.getElementById(containerId); 
+        let btn = document.getElementById(btnId);
         
-        if (container.style.display === 'none' || container.style.display === '') {
-            container.style.display = 'block';
-            btn.innerText = "- Remove Quick 2FA (1)";
-        } else {
-            container.style.display = 'none';
-            btn.innerText = "+ Add Quick 2FA (1) Box";
-            let inp = document.getElementById('secretKeyProfile');
-            if(inp) inp.value = '';
-            document.getElementById('profile2FAResult').innerHTML = '';
+        if (container.style.display === 'none' || container.style.display === '') { 
+            container.style.display = 'block'; 
+            btn.innerText = `- Remove ${boxName}`; 
+        } else { 
+            container.style.display = 'none'; 
+            btn.innerText = `+ Add ${boxName}`; 
+            let inp = document.getElementById(inpId); 
+            if(inp) inp.value = ''; 
+            document.getElementById(resId).innerHTML = ''; 
         }
     }
 
-    function toggleExtra2FABox() {
-        let container = document.getElementById('extra2FAContainer');
-        let btn = document.getElementById('toggle2FABtn');
-        
-        if (container.style.display === 'none' || container.style.display === '') {
-            container.style.display = 'block';
-            btn.innerText = "- Remove 2nd 2FA Box";
-        } else {
-            container.style.display = 'none';
-            btn.innerText = "+ Add 2nd 2FA Box";
-            let inp = document.getElementById('secretKeyProfile_2');
-            if(inp) inp.value = '';
-            document.getElementById('profile2FAResult_2').innerHTML = '';
-        }
+    function toggleFirst2FABox() { 
+        toggleBoxLogic('first2FAContainer', 'toggle1st2FABtn', 'Quick 2FA (1) Box', 'secretKeyProfile', 'profile2FAResult'); 
+    }
+    
+    function toggleExtra2FABox() { 
+        toggleBoxLogic('extra2FAContainer', 'toggle2FABtn', '2nd 2FA Box', 'secretKeyProfile_2', 'profile2FAResult_2'); 
+    }
+    
+    function toggleOTPBox() { 
+        toggleBoxLogic('otpContainer', 'toggleOTPBtn', 'Quick OTP Box', 'smsTextProfile', 'profileOTPResult'); 
+    }
+    
+    function toggleMailBox() { 
+        toggleBoxLogic('mailContainer', 'toggleMailBtn', 'Mail Box', 'mailTextProfile', 'profileMailResult'); 
     }
 
-    function toggleOTPBox() {
-        let container = document.getElementById('otpContainer');
-        let btn = document.getElementById('toggleOTPBtn');
-        
-        if (container.style.display === 'none' || container.style.display === '') {
-            container.style.display = 'block';
-            btn.innerText = "- Remove Quick OTP";
-        } else {
-            container.style.display = 'none';
-            btn.innerText = "+ Add Quick OTP Box";
-            let inp = document.getElementById('smsTextProfile');
-            if(inp) inp.value = '';
-            document.getElementById('profileOTPResult').innerHTML = '';
-        }
-    }
-
-    function toggleMailBox() {
-        let container = document.getElementById('mailContainer');
-        let btn = document.getElementById('toggleMailBtn');
-        
-        if (container.style.display === 'none' || container.style.display === '') {
-            container.style.display = 'block';
-            btn.innerText = "- Remove Mail Box";
-        } else {
-            container.style.display = 'none';
-            btn.innerText = "+ Add Mail Box";
-            let inp = document.getElementById('mailTextProfile');
-            if(inp) inp.value = '';
-            document.getElementById('profileMailResult').innerHTML = '';
-        }
-    }
-
-    function initIdentityView(g) {
-        let pageDynamicTitle = `${countryNames[selCoun]} - ${g.charAt(0).toUpperCase() + g.slice(1)}`;
-
-        renderView(`
-            <div class="data-card" style="text-align:center; margin-bottom: 14px; min-height: 80px;" id="identity-data-box"></div>
-
+    function getCommonBoxesHTML() {
+        return `
             <div class="data-card fade-in" id="first2FAContainer" style="display: none; margin-bottom: 5px;">
                 ${getToggleUI('Quick 2FA (1)', 'toggle2FAMode', 'manualProfile2FA', 'autoProfile2FA', 'profile2FAResult')}
                 <div id="manualProfile2FA" style="display: ${autoPasteEnabled ? 'none' : 'block'};">
@@ -1088,12 +1179,24 @@
                 <span id="toggleMailBtn" onclick="toggleMailBox()" style="color: var(--primary); font-size: 11px; cursor: pointer; font-weight: 600; padding: 4px;">+ Add Mail Box</span>
             </div>
 
-            <div class="grid-2" style="margin-top:16px;">
+            <div class="divider"></div>
+            <button class="btn" style="grid-column: span 2;" onclick="showMainMenu()">Back to Hub</button>
+        `;
+    }
+
+    function initIdentityView(g) {
+        let pageDynamicTitle = `${countryNames[selCoun]} - ${g.charAt(0).toUpperCase() + g.slice(1)}`;
+        renderView(`
+            <div class="data-card" style="text-align:center; margin-bottom: 14px; min-height: 80px;" id="identity-data-box"></div>
+            
+            ${getCommonBoxesHTML()}
+
+            <div class="grid-2" style="margin-top:-14px;">
                 <button class="btn btn-primary" style="grid-column: span 2;" onclick="generateIdentityData('${g}')">Generate Again</button>
                 <button class="btn" style="grid-column: span 2;" onclick="selectCountry(selCoun)">Back</button>
             </div>
         `, pageDynamicTitle);
-
+        
         generateIdentityData(g);
     }
 
