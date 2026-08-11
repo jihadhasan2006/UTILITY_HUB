@@ -357,43 +357,14 @@
 <div id="toast">✅ Copied</div>
 
 <script>
+    // ফাঁকা ডাটাবেস স্ট্রাকচার (যাতে কোডে কোনো এরর না আসে)
     const offlineData = {
-        bd: {
-            male_first: ["Tariq", "Imran", "Mahbub", "Kamrul", "Jalal", "Selim", "Anwar", "Faruk", "Rubel", "Kawsar", "Rassel", "Sohel", "Mamun", "Suman", "Shakil", "Tushar", "Arif", "Asif", "Mehedi", "Rakib", "Sabbir", "Shohag", "Limon", "Nayan", "Palash", "Tuhin", "Shafiq", "Jamal", "Iqbal", "Habib", "Nizam", "Kazi", "Saiful", "Mostafa", "Monir", "Milon", "Biplob", "Pavel", "Ashiq", "Rahat"],
-            female_first: ["Brishti", "Srabanti", "Mitu", "Ritu", "Tithi", "Toma", "Ripa", "Ruma", "Bithi", "Nipa", "Shimu", "Shila", "Munmun", "Sonia", "Tania", "Moni", "Mukta", "Ratna", "Parveen", "Nasrin", "Shirin", "Jesmin", "Lipi", "Shampa", "Dalia", "Jui", "Maliha", "Farzana", "Roksana", "Shahnaz", "Kohinoor", "Asma", "Rina", "Sharmin", "Lima", "Moushumi", "Tumpa", "Sathi", "Koly", "Priya"],
-            last: ["Sarkar", "Biswas", "Haldar", "Roy", "Barmon", "Karmakar", "Paul", "Das", "Debnath", "Shill", "Siddiqui", "Pasha", "Mirza", "Baqi", "Kibria", "Tarafder", "Gazi", "Mridha", "Khondaker", "Maji", "Khandaker", "Bhuia", "Mia", "Chowdhari", "Uddin", "Mandal", "Gosh", "Baidya", "Sana", "Razzak", "Kadir", "Bari", "Kabir", "Alam", "Ahamed", "Khanam", "Khatun", "Shaha", "Molla", "Akon"],
-            username: ["bd_tiger_01", "dhaka_vibe", "bangla_star", "ctg_king", "sylhet_pro"]
-        },
-        usa: {
-            male_first: ["Declan", "Waylon", "Harrison", "Weston", "Silas", "Rowan", "Gael", "Ryder", "Zion", "Braxton", "Enzo", "Milo", "Amir", "Thiago", "Arthur", "Leon", "Felix", "Atticus", "Finley", "Rhett", "Colton", "Brody", "Jasper", "Emmett", "Micah", "Malachi", "Caleb", "Ezekiel", "Lincoln", "Hunter", "Connor", "Landon", "Eli", "Aaron", "Charles", "Christian", "Adrian", "Cameron", "Jordan"],
-            female_first: ["Adalyn", "Madeline", "Eliana", "Melody", "Ariel", "Ruby", "Serenity", "Autumn", "Nevaeh", "Quinn", "Josephine", "Cora", "Valentina", "Sadie", "Delilah", "Samantha", "Sarah", "Leilani", "Eva", "Gemma", "Peyton", "Melanie", "Mackenzie", "Reagan", "Jocelyn", "Clara", "Faith", "Julia", "Sophie", "Sydney", "Liliana", "Aliyah", "Annabelle", "Maria", "Alexandra", "Lucia", "Elena", "Aaliyah", "Gabriella"],
-            last: ["Mitchell", "Carter", "Roberts", "Gomez", "Phillips", "Evans", "Turner", "Diaz", "Parker", "Cruz", "Edwards", "Collins", "Reyes", "Stewart", "Morris", "Morales", "Murphy", "Cook", "Rogers", "Gutierrez", "Ortiz", "Morgan", "Cooper", "Peterson", "Bailey", "Reed", "Kelly", "Howard", "Ramos", "Kim", "Cox", "Ward", "Richardson", "Watson", "Brooks", "Chavez", "Wood", "James", "Bennett", "Gray"],
-            username: ["ny_hustler", "cali_dreamer", "texas_star", "miami_heat", "usa_eagle"]
-        },
-        uk: {
-            male_first: ["Jaxon", "Roman", "Albert", "Stanley", "Louis", "Bobby", "Hudson", "Oakley", "Matthew", "David", "Reggie", "Jenson", "Carter", "Grayson", "Felix", "Gabriel", "Ralph", "Seth", "Riley", "Sonny", "Myles", "Tobias", "Jasper", "Hugo", "Ronnie", "Elliott", "Harvey", "Nathan", "Aidan", "Ryan", "Ellis", "Finn", "Leon", "Milo", "Spencer", "Brody", "Ewan", "Evan", "Bradley", "Declan"],
-            female_first: ["Heidi", "Bonnie", "Lottie", "Nancy", "Clara", "Arabella", "Robyn", "Matilda", "Eleanor", "Orla", "Molly", "Rose", "Layla", "Maisie", "Imogen", "Harriet", "Erin", "Eliza", "Gracie", "Bella", "Megan", "Martha", "Lola", "Lexi", "Lilly", "Chloe", "Darcie", "Hollie", "Hannah", "Amelie", "Abigail", "Evelyn", "Summer", "Eden", "Elsie", "Mabel", "Beatrice", "Ada", "Violet", "Ivy"],
-            last: ["Wood", "Hall", "Macdonald", "Murray", "Kelly", "Clark", "Cooper", "Harrison", "Ward", "Foster", "Chapman", "Richardson", "Pearson", "Webb", "Fisher", "Fletcher", "Gibson", "Ford", "Reynolds", "Hamilton", "Graham", "Shaw", "Simmons", "Hayes", "Dixon", "Hunt", "Palmer", "Holmes", "Mills", "Barnes", "Knight", "Matthews", "Barker", "Stevens", "Jenkins", "Dunn", "Perry", "Butler", "Russell"],
-            username: ["london_boy", "uk_vibe", "british_star", "royal_crown", "uk_drill"]
-        },
-        fr: {
-            male_first: ["Gaspard", "Côme", "Léandre", "Auguste", "Oscar", "Joseph", "Simon", "Antoine", "Bastien", "Gauthier", "Théodore", "Célestin", "Maxence", "Charles", "Achille", "Ambroise", "Cyprien", "Edgar", "Gustave", "Emile", "Hector", "Marin", "Paul", "Basile", "Gabin", "Robin", "Mael", "Eloi", "Camille", "Valentin", "Corentin", "Benoit", "Romain", "Damien", "Florian", "Guillaume", "Mathieu", "Nicolas", "Alexandre", "Julien"],
-            female_first: ["Apolline", "Capucine", "Marguerite", "Joséphine", "Héloïse", "Garance", "Constance", "Clémence", "Mathilde", "Adélaïde", "Aglaé", "Blanche", "Céleste", "Zélie", "Pénélope", "Suzanne", "Castille", "Philomène", "Bérénice", "Olympe", "Isaure", "Victoire", "Coline", "Solène", "Justine", "Claire", "Marion", "Céline", "Audrey", "Elodie", "Amélie", "Coralie", "Aurore", "Mélanie", "Lucie", "Sophie", "Marie", "Léa", "Anaïs", "Manon"],
-            last: ["Caron", "Fontaine", "Rousseau", "Vincent", "Muller", "Lefevre", "Faure", "Andre", "Mercier", "Blanc", "Guerin", "Boyer", "Garnier", "Chevalier", "Francois", "Legrand", "Gauthier", "Perrin", "Robin", "Clement", "Morin", "Nicolas", "Henry", "Roussel", "Mathieu", "Gautier", "Masson", "Marchand", "Duval", "Denis", "Dumont", "Marie", "Lemaire", "Noel", "Meyer", "Dufour", "Meunier", "Brun", "Blanchard", "Giraud"],
-            username: ["paris_love", "french_vibe", "oui_oui", "france_star", "paris_night"]
-        },
-        in: {
-            male_first: ["Ved", "Rishaan", "Kiaan", "Pratyush", "Daksh", "Yuvan", "Advik", "Ahan", "Ishaan", "Ayush", "Tejas", "Gautam", "Ritesh", "Anurag", "Harsh", "Pulkit", "Mayank", "Nitin", "Tarun", "Piyush", "Mohit", "Kapil", "Saurabh", "Ashish", "Amit", "Manish", "Sunil", "Anil", "Deepak", "Ravi", "Sanjay", "Suresh", "Ramesh", "Mukesh", "Rajesh", "Prakash", "Ganesh", "Mahesh", "Vijay", "Ajay"],
-            female_first: ["Amaira", "Pari", "Kyra", "Miraya", "Ira", "Nyra", "Prisha", "Aisha", "Kajal", "Shikha", "Jyoti", "Kiran", "Nisha", "Rekha", "Seema", "Sushma", "Geeta", "Sunita", "Anita", "Kavita", "Sarita", "Renu", "Anu", "Preeti", "Mamta", "Reena", "Meena", "Shilpa", "Vandana", "Rachna", "Sonam", "Shweta", "Anjali", "Bhavna", "Divya", "Poonam", "Shalini", "Alka", "Radha", "Meera"],
-            last: ["Kaur", "Iyer", "Chauhan", "Bhat", "Rao", "Nair", "Saxena", "Deshmukh", "Chakraborty", "Sengupta", "Pillai", "Shukla", "Pandey", "Ghosh", "Jha", "Mishra", "Naidu", "Bose", "Menon", "Mathur", "Trivedi", "Upadhyay", "Dixit", "Bhagwat", "Dubey", "Yadav", "Rajput", "Thakur", "Singh", "Sharma", "Varma", "Reddy", "Patel", "Das", "Jain", "Agrawal", "Garg", "Bansal", "Khatri", "Soni"],
-            username: ["mumbai_star", "delhi_vibe", "india_king", "desi_boy", "indian_pro"]
-        },
-        cn: {
-            male_first: ["Kun", "Bolin", "Zhihao", "Mingyu", "Yuchen", "Zixuan", "Haoran", "Yuxuan", "Zitao", "Yihang", "Jinhai", "Guanyu", "Tianyi", "Haoyu", "Shize", "Zihan", "Yuting", "Bojing", "Chuanli", "Deshi", "Enlai", "Fuhua", "Guangli", "Huan", "Jianyu", "Kang", "Liling", "Ping", "Qian", "Ru", "Shen", "Ting", "Wu", "Xiang", "Yan", "Zheng", "Minghua", "Jianguo", "Weimin", "Guoqiang"],
-            female_first: ["Ying", "Ling", "Hui", "Rong", "Fei", "Shu", "Chun", "Yue", "Xue", "Yuan", "Zhi", "Ming", "Yi", "Bin", "Yu", "Jing", "Bo", "Wen", "Feng", "Jie", "Xin", "Yong", "Hua", "Dong", "Hai", "Long", "Shan", "Ping", "Gang", "Rui", "Hong", "Lin", "Guo", "Yang", "Xuan", "Shi", "Chen", "Zhen", "Jin", "Xiang"],
-            last: ["Liao", "Chou", "Chu", "Gao", "Zheng", "He", "Guo", "Lin", "Luo", "Liang", "Xie", "Song", "Tang", "Han", "Feng", "Dong", "Cheng", "Cao", "Yuan", "Cui", "Jia", "Pan", "Du", "Ding", "Ren", "Lu", "Yao", "Shen", "Zhong", "Jiang", "Qiu", "Shi", "Xue", "Hou", "Luan", "Duan", "Gong", "Hao", "Lei", "Fang"],
-            username: ["china_dragon", "beijing_star", "shanghai_vibe", "cn_king", "asian_pro"]
-        }
+        bd: { male_first: [], female_first: [], last: [], username: [] },
+        usa: { male_first: [], female_first: [], last: [], username: [] },
+        uk: { male_first: [], female_first: [], last: [], username: [] },
+        fr: { male_first: [], female_first: [], last: [], username: [] },
+        in: { male_first: [], female_first: [], last: [], username: [] },
+        cn: { male_first: [], female_first: [], last: [], username: [] }
     };
     window.accountData = JSON.parse(JSON.stringify(offlineData));
 
