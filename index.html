@@ -170,16 +170,17 @@
         .fade-in { animation: fadeIn 0.4s ease forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* Admin Panel Improved Styles */
         .admin-container { 
             background: var(--admin-bg); 
-            backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
             border: 1px solid var(--admin-border); 
             padding: 38px 32px; 
-            border-radius: 22px; 
+            border-radius: 24px; 
             width: 92%; 
-            max-width: 430px; 
+            max-width: 440px; 
             text-align: center; 
-            box-shadow: var(--shadow); 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6); 
             transition: all 0.3s ease;
             position: relative;
         }
@@ -192,59 +193,67 @@
         }
 
         .admin-select { 
-            width: 100%; padding: 14px 16px; margin-bottom: 16px; 
+            width: 100%; padding: 13px 16px; margin-bottom: 12px; 
             background: var(--admin-input); border: 1px solid rgba(255, 255, 255, 0.12); 
-            color: var(--admin-text); border-radius: 11px; font-size: 14px; outline: none; transition: all 0.3s ease; appearance: none;
+            color: var(--admin-text); border-radius: 10px; font-size: 13px; outline: none; transition: all 0.3s ease; appearance: none;
             background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2364ffda%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-            background-repeat: no-repeat; background-position: right 16px top 50%; background-size: 10px auto;
+            background-repeat: no-repeat; background-position: right 14px top 50%; background-size: 10px auto;
         }
         
-        .admin-select:focus { border-color: var(--admin-primary); box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.18); }
+        .admin-select:focus { border-color: var(--admin-primary); box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.15); }
         .admin-select option { background: #0a192f; color: #fff; }
 
         .admin-btn { 
             width: 100%; padding: 14px; background: var(--admin-primary); color: #020c1b; 
-            border: none; font-weight: 700; font-size: 15px; border-radius: 11px; cursor: pointer; 
+            border: none; font-weight: 700; font-size: 14px; border-radius: 11px; cursor: pointer; 
             margin-bottom: 11px; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.5px;
             box-shadow: 0 4px 16px rgba(100, 255, 218, 0.22);
         }
         .admin-btn:hover { background: #52e0c4; transform: translateY(-2px); box-shadow: 0 6px 22px rgba(100, 255, 218, 0.32); }
         .admin-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
-        .admin-btn-danger { background: rgba(239, 68, 68, 0.12); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.32); box-shadow: none; }
+        .admin-btn-danger { background: rgba(239, 68, 68, 0.12); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.32); box-shadow: none; margin-top: 10px;}
         .admin-btn-danger:hover { background: var(--danger); color: #fff; box-shadow: 0 4px 16px rgba(239, 68, 68, 0.42); }
 
-        .admin-form-panel { background: rgba(0, 0, 0, 0.22); padding: 22px; border-radius: 16px; margin-bottom: 22px; border: 1px solid rgba(255, 255, 255, 0.06); }
+        .admin-form-panel { background: rgba(2, 12, 27, 0.45); padding: 22px; border-radius: 18px; margin-bottom: 22px; border: 1px solid rgba(100, 255, 218, 0.1); }
 
-        .admin-divider-text { text-align: center; margin: 13px 0; font-size: 12px; color: var(--text-muted); font-weight: 600; letter-spacing: 1px; display: flex; align-items: center; }
-        .admin-divider-text::before, .admin-divider-text::after { content: ''; flex: 1; border-bottom: 1px solid rgba(255, 255, 255, 0.12); margin: 0 10px; }
+        .admin-divider-text { text-align: center; margin: 16px 0; font-size: 12px; color: var(--admin-primary); font-weight: 700; letter-spacing: 1px; display: flex; align-items: center; }
+        .admin-divider-text::before, .admin-divider-text::after { content: ''; flex: 1; border-bottom: 1px dashed rgba(100, 255, 218, 0.2); margin: 0 12px; }
 
-        input[type=file] { padding: 11px; background: rgba(2, 12, 27, 0.55); border: 1px dashed var(--admin-border); cursor: pointer; color: var(--admin-text); border-radius: 11px; width: 100%; }
-        input[type=file]::file-selector-button { background: rgba(100, 255, 218, 0.12); color: var(--admin-primary); border: 1px solid var(--admin-primary); padding: 8px 16px; border-radius: 9px; font-weight: 600; cursor: pointer; margin-right: 15px; font-size: 12px; transition: all 0.3s ease; }
+        .upload-zone {
+            background: rgba(2, 12, 27, 0.4); border: 1px dashed rgba(100, 255, 218, 0.3); padding: 14px; border-radius: 12px; margin-bottom: 14px; transition: all 0.3s;
+        }
+        .upload-zone:hover { background: rgba(100, 255, 218, 0.05); border-color: var(--admin-primary); }
+
+        input[type=file] { width: 100%; color: var(--text-muted); font-size: 12px; outline: none; cursor: pointer; }
+        input[type=file]::file-selector-button { background: rgba(100, 255, 218, 0.12); color: var(--admin-primary); border: 1px solid var(--admin-primary); padding: 8px 14px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-right: 12px; font-size: 11px; transition: all 0.3s ease; }
         input[type=file]::file-selector-button:hover { background: var(--admin-primary); color: #020c1b; }
 
-        .admin-list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 13px; padding: 0 5px; }
+        .admin-list-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; padding: 0 5px; }
 
-        .admin-stat-badge { background: rgba(100, 255, 218, 0.12); border: 1px solid rgba(100, 255, 218, 0.22); padding: 6px 13px; border-radius: 9px; display: flex; align-items: center; gap: 9px; box-shadow: inset 0 0 10px rgba(0,0,0,0.2); }
-        .admin-stat-label { font-size: 11px; color: var(--admin-text); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
-        .admin-stat-value { background: var(--admin-primary); color: #020c1b; padding: 2px 9px; border-radius: 12px; font-size: 12px; font-weight: 800; box-shadow: 0 0 10px rgba(100, 255, 218, 0.45); }
+        .admin-stat-badge { background: rgba(100, 255, 218, 0.12); border: 1px solid rgba(100, 255, 218, 0.22); padding: 6px 12px; border-radius: 9px; display: flex; align-items: center; gap: 8px; box-shadow: inset 0 0 10px rgba(0,0,0,0.2); }
+        .admin-stat-label { font-size: 10px; color: var(--admin-text); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+        .admin-stat-value { background: var(--admin-primary); color: #020c1b; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 800; }
 
-        #adminDataList { max-height: 290px; overflow-y: auto; margin-bottom: 22px; padding-right: 5px; }
-        #adminDataList::-webkit-scrollbar { width: 6px; }
-        #adminDataList::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.1); border-radius: 10px; }
-        #adminDataList::-webkit-scrollbar-thumb { background: rgba(100, 255, 218, 0.35); border-radius: 10px; }
-        #adminDataList::-webkit-scrollbar-thumb:hover { background: rgba(100, 255, 218, 0.65); }
+        .admin-delete-all-btn { background: rgba(239, 68, 68, 0.15); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.4); padding: 6px 12px; border-radius: 9px; cursor: pointer; font-size: 11px; font-weight: 700; transition: all 0.3s ease; display: flex; align-items: center; gap: 5px; }
+        .admin-delete-all-btn:hover { background: var(--danger); color: #fff; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4); }
 
-        .admin-data-card { background: rgba(2, 12, 27, 0.65); padding: 15px; margin-top: 11px; border-radius: 11px; text-align: left; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255, 255, 255, 0.06); transition: all 0.2s ease; }
-        .admin-data-card:hover { background: rgba(2, 12, 27, 0.92); border-color: rgba(100, 255, 218, 0.35); transform: translateX(2px); }
-        .admin-data-info { display: flex; flex-direction: column; gap: 4px; }
+        #adminDataList { max-height: 280px; overflow-y: auto; margin-bottom: 16px; padding-right: 6px; }
+        #adminDataList::-webkit-scrollbar { width: 5px; }
+        #adminDataList::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); border-radius: 10px; }
+        #adminDataList::-webkit-scrollbar-thumb { background: rgba(100, 255, 218, 0.4); border-radius: 10px; }
+        #adminDataList::-webkit-scrollbar-thumb:hover { background: rgba(100, 255, 218, 0.8); }
+
+        .admin-data-card { background: rgba(2, 12, 27, 0.65); padding: 14px; margin-top: 10px; border-radius: 12px; text-align: left; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.2s ease; }
+        .admin-data-card:hover { background: rgba(2, 12, 27, 0.95); border-color: rgba(100, 255, 218, 0.4); transform: translateX(3px); }
+        .admin-data-info { display: flex; flex-direction: column; gap: 5px; }
         .admin-data-name { color: var(--admin-primary); font-weight: 600; font-size: 14px; letter-spacing: 0.5px; }
-        .admin-data-meta { font-size: 11px; color: var(--text-muted); font-weight: 500; }
-        .admin-delete-btn { background: rgba(239, 68, 68, 0.12); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.32); padding: 6px 13px; border-radius: 7px; cursor: pointer; font-size: 11px; font-weight: 600; transition: 0.2s; }
+        .admin-data-meta { font-size: 10px; color: var(--text-muted); font-weight: 500; display: flex; align-items: center; gap: 5px; }
+        .admin-delete-btn { background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 10px; font-weight: 600; transition: 0.2s; }
         .admin-delete-btn:hover { background: var(--danger); color: #fff; }
 
-        .close-admin { position: absolute; top: 16px; right: 21px; font-size: 12px; font-weight: bold; color: var(--danger); cursor: pointer; border: 1px solid var(--danger); padding: 5px 9px; border-radius: 7px; transition: 0.3s; }
-        .close-admin:hover { background: var(--danger); color: #fff; }
+        .close-admin { position: absolute; top: 18px; right: 22px; font-size: 11px; font-weight: bold; color: var(--danger); cursor: pointer; border: 1px solid rgba(239, 68, 68, 0.4); padding: 6px 10px; border-radius: 8px; transition: 0.3s; background: rgba(239, 68, 68, 0.1); }
+        .close-admin:hover { background: var(--danger); color: #fff; border-color: var(--danger); }
 
         .hidden { display: none !important; }
     </style>
@@ -295,48 +304,55 @@
         </div>
 
         <div id="dashboardSection" class="hidden">
-            <h2 style="margin-top: 16px;">⚙️ Data Control Hub</h2>
+            <h2 style="margin-top: 10px;">⚙️ Data Control Hub</h2>
             
             <div class="admin-form-panel">
-                <select id="platformSelect" class="admin-select" style="border-color: rgba(100, 255, 218, 0.5);">
+                <select id="platformSelect" class="admin-select" style="border-color: rgba(100, 255, 218, 0.4);">
                     <option value="all">🌐 All Platforms (Global)</option>
                     <option value="fb">📘 Facebook Only</option>
                     <option value="ig">📸 Instagram Only</option>
                     <option value="tt">🎵 TikTok Only</option>
                 </select>
 
-                <select id="countrySelect" class="admin-select">
-                    <option value="bd">🇧🇩 Bangladesh (BD)</option>
-                    <option value="usa">🇺🇸 United States (USA)</option>
-                    <option value="uk">🇬🇧 United Kingdom (UK)</option>
-                    <option value="fr">🇫🇷 France (FR)</option>
-                    <option value="in">🇮🇳 India (IN)</option>
-                    <option value="cn">🇨🇳 China (CN)</option>
-                </select>
-                
-                <select id="categorySelect" class="admin-select">
-                    <option value="male_full">👨 Male Full Name (Auto Split)</option>
-                    <option value="female_full">👩 Female Full Name (Auto Split)</option>
-                    <option value="username">@ Username (Sequential)</option>
-                </select>
-                
-                <div class="admin-divider-text">UPLOAD DATA</div>
-
-                <div style="text-align: left; font-size: 11px; color: var(--text-muted); margin-bottom: 9px; font-weight: 500;">
-                    Select a .txt file (One name/username per line):
+                <div style="display: flex; gap: 10px;">
+                    <select id="countrySelect" class="admin-select">
+                        <option value="bd">🇧🇩 BGD</option>
+                        <option value="usa">🇺🇸 USA</option>
+                        <option value="uk">🇬🇧 UK</option>
+                        <option value="fr">🇫🇷 FRA</option>
+                        <option value="in">🇮🇳 IND</option>
+                        <option value="cn">🇨🇳 CHN</option>
+                    </select>
+                    
+                    <select id="categorySelect" class="admin-select">
+                        <option value="male_full">👨 Male</option>
+                        <option value="female_full">👩 Female</option>
+                        <option value="username">@ User</option>
+                    </select>
                 </div>
-                <input type="file" id="fileInput" accept=".txt">
+                
+                <div class="admin-divider-text">UPLOAD DATABASE</div>
 
-                <button id="addDataBtn" class="admin-btn" style="margin-top: 11px;">Upload Database</button>
+                <div class="upload-zone">
+                    <div style="font-size: 10px; color: var(--text-muted); margin-bottom: 8px; font-weight: 500;">
+                        📁 Select a .txt file (One name/username per line)
+                    </div>
+                    <input type="file" id="fileInput" accept=".txt">
+                </div>
+
+                <button id="addDataBtn" class="admin-btn" style="margin-top: 5px;">Upload Data</button>
             </div>
 
             <div class="admin-list-header">
-                <div class="admin-stat-badge">
-                    <span class="admin-stat-label">Total Data</span>
-                    <span class="admin-stat-value" id="recordCountText">0</span>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                    <div class="admin-stat-badge">
+                        <span class="admin-stat-label">Total</span>
+                        <span class="admin-stat-value" id="recordCountText">0</span>
+                    </div>
+                    <button id="deleteAllBtn" class="admin-delete-all-btn hidden" onclick="deleteAllFilteredData()">🗑️ Delete All</button>
                 </div>
                 
-                <select id="filterPlatform" class="admin-select" style="width: auto; padding: 7px 11px; margin-bottom: 0;">
+                <select id="filterPlatform" class="admin-select" style="width: auto; padding: 6px 10px; margin-bottom: 0; font-size: 11px;">
                     <option value="all_view">View All</option>
                     <option value="all">Global</option>
                     <option value="fb">Facebook</option>
@@ -357,7 +373,6 @@
 <div id="toast">✅ Copied</div>
 
 <script>
-    // ফাঁকা ডাটাবেস স্ট্রাকচার (যাতে কোডে কোনো এরর না আসে)
     const offlineData = {
         bd: { male_first: [], female_first: [], last: [], username: [] },
         usa: { male_first: [], female_first: [], last: [], username: [] },
@@ -367,6 +382,9 @@
         cn: { male_first: [], female_first: [], last: [], username: [] }
     };
     window.accountData = JSON.parse(JSON.stringify(offlineData));
+
+    // For Delete All tracking
+    window.currentFilteredDocIds = [];
 
     document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
@@ -705,6 +723,9 @@
             <div class="data-card">
                 <h3 style="font-size: 14px; margin-bottom: 10px;">Vault Configuration</h3>
                 <input type="text" class="input-box" placeholder="Set global password here..." value="${vaultPassword}" oninput="saveVaultPassword(this.value)">
+                <div style="text-align: center; margin-top: 12px;">
+                    <a href="javascript:void(0)" style="color: var(--primary); font-size: 11px; font-weight: 700; text-decoration: none; letter-spacing: 0.5px;">Contact Developer (JIH4D)</a>
+                </div>
             </div>
 
             <div class="grid-2" style="margin-top: 16px;">
@@ -1108,8 +1129,6 @@
                 const fullName = namesArray[i].trim();
                 if (!fullName) continue;
 
-                const timestamp = Date.now() + i;
-
                 if (category === 'male_full' || category === 'female_full') {
                     const parts = fullName.split(/\s+/);
                     if (parts.length >= 2) {
@@ -1117,20 +1136,20 @@
                         const lastName = parts.slice(1).join(' '); 
                         const firstCategory = category === 'male_full' ? 'male_first' : 'female_first';
 
-                        batch.set(doc(collection(db, "names")), { platform, country, category: firstCategory, name: firstName, timestamp });
+                        batch.set(doc(collection(db, "names")), { platform, country, category: firstCategory, name: firstName });
                         operationsCounter++;
 
-                        batch.set(doc(collection(db, "names")), { platform, country, category: 'last', name: lastName, timestamp });
+                        batch.set(doc(collection(db, "names")), { platform, country, category: 'last', name: lastName });
                         operationsCounter++;
                         addedCount++;
                     } else {
                         const firstCategory = category === 'male_full' ? 'male_first' : 'female_first';
-                        batch.set(doc(collection(db, "names")), { platform, country, category: firstCategory, name: fullName, timestamp });
+                        batch.set(doc(collection(db, "names")), { platform, country, category: firstCategory, name: fullName });
                         operationsCounter++;
                         addedCount++;
                     }
                 } else {
-                    batch.set(doc(collection(db, "names")), { platform, country, category, name: fullName, timestamp });
+                    batch.set(doc(collection(db, "names")), { platform, country, category, name: fullName });
                     operationsCounter++;
                     addedCount++;
                 }
@@ -1163,6 +1182,8 @@
 
     async function loadAdminData() {
         adminDataList.innerHTML = '<p style="font-size: 12px; color: var(--text-muted); margin-top: 20px;">Fetching records...</p>';
+        window.currentFilteredDocIds = []; // Reset tracked items
+        
         try {
             const selectedFilter = filterPlatform.value;
             const querySnapshot = await getDocs(collection(db, "names"));
@@ -1177,6 +1198,8 @@
                 if (selectedFilter !== 'all_view' && itemPlatform !== selectedFilter) return;
 
                 count++;
+                window.currentFilteredDocIds.push(docSnap.id); // Track id for "Delete All"
+
                 let platLabel = 'GLOBAL';
                 let platColor = '#a59fb3';
                 
@@ -1200,6 +1223,14 @@
 
             recordCountText.innerText = count;
             adminDataList.innerHTML = html || "<p style='font-size: 12px; color: var(--text-muted); margin-top: 20px; text-align: center;'>No records found.</p>";
+            
+            const deleteAllBtn = document.getElementById('deleteAllBtn');
+            if(count > 0) {
+                deleteAllBtn.classList.remove('hidden');
+            } else {
+                deleteAllBtn.classList.add('hidden');
+            }
+
         } catch (e) {
             adminDataList.innerHTML = `<p style="color:var(--danger); font-size: 12px;">Error: ${e.message}</p>`;
         }
@@ -1210,6 +1241,51 @@
             await deleteDoc(doc(db, "names", docId));
             loadAdminData(); 
             fetchNamesFromFirebase();
+        }
+    }
+
+    // Function to delete all filtered data
+    window.deleteAllFilteredData = async function() {
+        if (window.currentFilteredDocIds.length === 0) return;
+        
+        if(confirm(`Are you sure you want to delete all ${window.currentFilteredDocIds.length} visible records? This action cannot be undone.`)) {
+            
+            const deleteAllBtn = document.getElementById('deleteAllBtn');
+            deleteAllBtn.innerHTML = "Deleting...";
+            deleteAllBtn.disabled = true;
+
+            try {
+                let batch = writeBatch(db);
+                let opCount = 0;
+                let totalDeleted = 0;
+
+                for (let i = 0; i < window.currentFilteredDocIds.length; i++) {
+                    const docId = window.currentFilteredDocIds[i];
+                    batch.delete(doc(db, "names", docId));
+                    opCount++;
+                    totalDeleted++;
+
+                    // Firestore batch delete max 500 operations at a time
+                    if (opCount === 500) {
+                        await batch.commit();
+                        batch = writeBatch(db);
+                        opCount = 0;
+                    }
+                }
+                
+                if (opCount > 0) {
+                    await batch.commit();
+                }
+                
+                alert(`✅ Successfully deleted ${totalDeleted} records.`);
+                loadAdminData(); 
+                fetchNamesFromFirebase();
+            } catch (error) {
+                alert("Error deleting records: " + error.message);
+            } finally {
+                deleteAllBtn.innerHTML = "🗑️ Delete All";
+                deleteAllBtn.disabled = false;
+            }
         }
     }
 </script>
